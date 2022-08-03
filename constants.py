@@ -1,0 +1,10 @@
+LABELS = ['start_end',
+          'scan',
+          'decision',
+          'print',
+          'process',
+          'arrow_line_up',
+          'arrow_line_down',
+          'arrow_line_right',
+          'arrow_line_left',
+          'pointer']
