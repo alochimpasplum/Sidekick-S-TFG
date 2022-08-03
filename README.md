@@ -2,12 +2,13 @@
 
 ```mermaid
 classDiagram
-    class RawBlock
-    RawBlock: +UUID id
-    RawBlock: +LABEL obj_type
-    RawBlock: +float xmin
-    RawBlock: +float xmax
-    RawBlock: +float ymin
-    RawBlock: +float xmax
-    RawBlock: +float confidence
+    class Block
+    Block: +string id
+    Block: +LABEL obj_type
+    Block: +float x_min
+    Block: +float x_max
+    Block: +float y_min
+    Block: +float x_max
+    Block: +float confidence
+    Block: +List~string~ Next_Blocks
 ```
