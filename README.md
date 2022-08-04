@@ -3,7 +3,7 @@
 ```mermaid
 classDiagram
     class Block
-    Block: +string id
+    Block: +int id
     Block: +LABEL obj_type
     Block: +float x_min
     Block: +float x_max
@@ -11,4 +11,5 @@ classDiagram
     Block: +float x_max
     Block: +float confidence
     Block: +List~string~ Next_Blocks
+    Block: +to_string() string
 ```
