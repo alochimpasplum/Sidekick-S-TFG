@@ -25,7 +25,9 @@ def detect(img: str, make_tests: bool = False) -> [Block]:
                                 entry['ymax'], entry['confidence'], entry['name'])
             results_list.append(temp)
 
+    print("before removing", len(results_list))
     results_list = _remove_duplicates(results_list, make_tests)
+    print("after removing", len(results_list))
 
     if make_tests:
         show_detections(results_list, img)
@@ -33,34 +35,32 @@ def detect(img: str, make_tests: bool = False) -> [Block]:
     return results_list
 
 
-def _remove_duplicates(blocks: [Block], make_tests: bool) -> [Block]:
-    result: [Block] = []
+def _remove_duplicates(blocks: [Block], make_tests: bool = False) -> [Block]:
+    ids: [int] = []
 
     for block_a in blocks:
+        temp: Block = block_a
         for block_b in blocks:
             if block_a != block_b:
-                if _check_if_is_same_block(block_a, block_b, make_tests):
-                    temp: Block = _block_best_confidence(block_a, block_b)
-                    append_or_not: bool = True
-                    for block in result:
-                        if block.id == temp.id:
-                            append_or_not = False
+                if _check_if_same_position(block_a, block_b):
+                    temp = _block_best_confidence(block_a, block_b)
 
-                    if make_tests:
-                        print(block_a.objet_type, block_b.objet_type, temp.objet_type, append_or_not, "\n")
+        if not (temp.id in ids):
+            ids.append(temp.id)
 
-                    if append_or_not:
-                        result.append(temp)
-                else:
-                    result.append(block_a)
+    result: [Block] = []
+
+    for item in blocks:
+        if item.id in ids:
+            result.append(item)
 
     return result
 
 
-def _check_if_is_same_block(block_a: Block, block_b: Block, make_tests: bool) -> bool:
-    x_min: int = block_a.x_min - block_b.x_min
+def _check_if_same_position(block_a: Block, block_b: Block, make_tests: bool = False) -> bool:
     is_same_or_not: bool = False
 
+    x_min: int = block_a.x_min - block_b.x_min
     if x_min < 0:
         x_min *= -1
 
@@ -76,8 +76,8 @@ def _check_if_is_same_block(block_a: Block, block_b: Block, make_tests: bool) ->
     if y_max < 0:
         y_max *= -1
 
-    if (x_min < Constants.DUPLICATE_THRESHOLD) and (x_min < Constants.DUPLICATE_THRESHOLD) and (
-            x_min < Constants.DUPLICATE_THRESHOLD) and (x_min < Constants.DUPLICATE_THRESHOLD):
+    if (x_min < Constants.DUPLICATE_THRESHOLD) and (x_max < Constants.DUPLICATE_THRESHOLD) and (
+            y_min < Constants.DUPLICATE_THRESHOLD) and (y_max < Constants.DUPLICATE_THRESHOLD):
         is_same_or_not = True
 
     if make_tests:
@@ -94,3 +94,4 @@ def _block_best_confidence(block_a: Block, block_b: Block) -> Block:
         return block_a
     if block_a.confidence < block_b.confidence:
         return block_b
+

@@ -2,4 +2,4 @@
 CONFIDENCE_THRESHOLD = 0.5
 
 # Value used to get double detections
-DUPLICATE_THRESHOLD = 5
+DUPLICATE_THRESHOLD = 20

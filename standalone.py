@@ -3,7 +3,7 @@ from FlowchartObjectDetection import detect
 
 
 def main():
-    result = detect('./TestStuff/HelloWorld.jpg', True)
+    result = detect('./TestStuff/HelloWorld2.jpg', True)
 
 
 if __name__ == "__main__":
