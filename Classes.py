@@ -11,7 +11,8 @@ class Block:
     y_min: float
     y_max: float
     confidence: float
-    Next_Blocks: List[str]
+    Next_Blocks: [int]
+    Previous_Blocks: [int]
 
     def __init__(self, id, x_min, y_min, x_max, y_max, confidence, name):
         self.id = id
@@ -27,4 +28,4 @@ class Block:
 
     def to_string(self):
         return "id: {}, object_type: {}, x_min: {}, x_max: {}, y_min: {}, y_max: {}, confidence: {}".format(
-            self.id, self.objet_type, self.x_min, self.x_max, self.y_max, self.y_max, self.confidence)
+            self.id, self.objet_type, self.x_min, self.x_max, self.y_max, self.y_min, self.confidence)

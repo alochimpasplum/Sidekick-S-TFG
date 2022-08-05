@@ -1,15 +1,45 @@
 import cv2
+import numpy
+
 from Classes import Block
+from Enums import LABEL
+from PIL import Image
 
 
-def show_detections(blocks: [Block], img) -> None:
-    img = cv2.imread(img)
+def show_detections(blocks: [Block], image: Image) -> None:
+    img = cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2BGR)
     font = cv2.FONT_HERSHEY_SIMPLEX
 
     for block in blocks:
-        cv2.rectangle(img, (int(block.x_max), int(block.y_max)), (int(block.x_min), int(block.y_min)), (0, 255, 0), 4)
+        color: [int, int, int] = _get_color(block)
+        cv2.rectangle(img, (int(block.x_max), int(block.y_max)), (int(block.x_min), int(block.y_min)), color, 4)
         cv2.putText(img, str(block.objet_type.name),
-                    (int(block.x_max), int((block.y_max+block.y_min)/2)), font, 2, (0, 255, 0), 4)
+                    (int(block.x_max), int((block.y_max+block.y_min)/2)), font, 2, color, 1)
 
+    # img = cv2.resize(img, (720, 1280))
     cv2.imshow('image', img)
+    cv2.imwrite('./output.jpg', img)
     cv2.waitKey(0)
+
+
+def _get_color(block: Block) -> [int, int, int]:
+    if block.objet_type == LABEL.start_end:
+        return 255, 192, 192
+    if block.objet_type == LABEL.scan:
+        return 255, 0, 0
+    if block.objet_type == LABEL.decision:
+        return 255, 255, 0
+    if block.objet_type == LABEL.print:
+        return 128, 128, 0
+    if block.objet_type == LABEL.process:
+        return 0, 255, 0
+    if block.objet_type == LABEL.arrow_line_up:
+        return 0, 255, 255
+    if block.objet_type == LABEL.arrow_line_down:
+        return 0, 0, 255
+    if block.objet_type == LABEL.arrow_line_right:
+        return 255, 0, 255
+    if block.objet_type == LABEL.arrow_line_left:
+        return 128, 0, 128
+    if block.objet_type == LABEL.pointer:
+        return 192, 192, 192
