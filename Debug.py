@@ -15,6 +15,8 @@ def show_detections(blocks: [Block], image: Image) -> Image:
         cv2.rectangle(img, (int(block.x_max), int(block.y_max)), (int(block.x_min), int(block.y_min)), color, 4)
         cv2.putText(img, str(block.objet_type.name),
                     (int(block.x_max), int((block.y_max+block.y_min)/2)), font, 2, color, 1)
+        cv2.putText(img, "ID:" + str(block.id),
+                    (int(block.x_max), int(block.y_max)), font, 1, (0, 0, 0), 1)
 
     img: Image = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     return img

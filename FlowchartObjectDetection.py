@@ -6,14 +6,18 @@ from PIL import Image, ImageOps
 import torch
 import json
 import Constants
+import Math_Calcs
 
 
 def detect(img: Image, make_tests: bool = False) -> None:
     img = _improve_image(img)
     blocks: [Block] = _get_blocks(img)
-    blocks = _sort_arrows(blocks)
-    # distancia de un punto a una recta!!!!
+    show_detections(blocks, img).show()
 
+    blocks = _sort_arrows(blocks)
+    for block in blocks:
+        print(block.id, block.objet_type)
+    _find_neighbours(blocks)
     if make_tests:
         show_detections(blocks, img).show()
 
@@ -72,19 +76,19 @@ def _remove_duplicates(blocks: [Block]) -> [Block]:
 def _check_if_same_position(block_a: Block, block_b: Block) -> bool:
     is_same_or_not: bool = False
 
-    x_min: int = block_a.x_min - block_b.x_min
+    x_min: float = block_a.x_min - block_b.x_min
     if x_min < 0:
         x_min *= -1
 
-    x_max: int = block_a.x_max - block_b.x_max
+    x_max: float = block_a.x_max - block_b.x_max
     if x_max < 0:
         x_max *= -1
 
-    y_min: int = block_a.y_min - block_b.y_min
+    y_min: float = block_a.y_min - block_b.y_min
     if y_min < 0:
         y_min *= -1
 
-    y_max: int = block_a.y_max - block_b.y_max
+    y_max: float = block_a.y_max - block_b.y_max
     if y_max < 0:
         y_max *= -1
 
@@ -110,8 +114,7 @@ def _sort_arrows(blocks: [Block]) -> [Block]:
     for block in blocks:
         if block.objet_type == LABEL.pointer:
             pointers.append(block)
-        elif (block.objet_type == LABEL.arrow_line_down) or (block.objet_type == LABEL.arrow_line_up) or (
-                block.objet_type == LABEL.arrow_line_left) or (block.objet_type == LABEL.arrow_line_right):
+        elif "arrow" in block.objet_type.name:
             arrows.append(block)
         else:
             result.append(block)
@@ -120,16 +123,19 @@ def _sort_arrows(blocks: [Block]) -> [Block]:
         for pointer in pointers:
             is_inside: bool = _is_block_inside(arrow, pointer)
             if is_inside:
+                print(arrow.id, pointer.id)
                 arrow.objet_type = _get_arrow_side(arrow, pointer)
                 result.append(arrow)
+
+    # TODO: continuar aqui. Hay que eliminar los duplicados
 
     return result
 
 
 def _is_block_inside(block_outside: Block, block_inside: Block) -> bool:
 
-    inside_center_x: int = (block_inside.x_max + block_inside.x_min) / 2
-    inside_center_y: int = (block_inside.y_max + block_inside.y_min) / 2
+    inside_center_x: float = (block_inside.x_max + block_inside.x_min) / 2
+    inside_center_y: float = (block_inside.y_max + block_inside.y_min) / 2
 
     x_inside: bool = (inside_center_x > block_outside.x_min) and (inside_center_x < block_outside.x_max)
     y_inside: bool = (inside_center_y > block_outside.y_min) and (inside_center_y < block_outside.y_max)
@@ -138,13 +144,45 @@ def _is_block_inside(block_outside: Block, block_inside: Block) -> bool:
 
 
 def _get_arrow_side(arrow: Block, pointer: Block) -> LABEL:
-    pointer_inside_x: int = (pointer.x_max + pointer.x_min) / 2
-    pointer_inside_y: int = (pointer.y_max + pointer.y_min) / 2
+    pointer_inside_x: float = (pointer.x_max + pointer.x_min) / 2
+    pointer_inside_y: float = (pointer.y_max + pointer.y_min) / 2
     distances = {
-        LABEL.arrow_line_up: arrow.y_max - pointer_inside_y,
-        LABEL.arrow_line_down: pointer_inside_y - arrow.y_min,
-        LABEL.arrow_line_right: pointer_inside_x - arrow.x_min,
-        LABEL.arrow_line_left: arrow.x_max - pointer_inside_x
+        LABEL.arrow_line_up: ((arrow.y_max + arrow.y_min) / 2) - pointer_inside_y,
+        LABEL.arrow_line_down: pointer_inside_y - ((arrow.y_max + arrow.y_min) / 2),
+        LABEL.arrow_line_right: pointer_inside_x - ((arrow.x_max + arrow.x_min) / 2),
+        LABEL.arrow_line_left: ((arrow.x_max + arrow.x_min) / 2) - pointer_inside_x
     }
-    distances_list = sorted(distances.items(), key=lambda x:x[1])
+    distances_list = sorted(distances.items(), key=lambda x: x[1])
     return distances_list[3][0]
+
+
+def _find_neighbours(blocks: [Block]) -> None:
+    for block in blocks:
+        if "arrow" in block.objet_type.name:
+            neighbours: ([int], [int]) = _find_block_neighbours(block, blocks)
+            block.Next_Blocks = neighbours[0]
+            block.Previous_Blocks = neighbours[1]
+
+
+def _find_block_neighbours(block: Block, blocks: [Block]) -> (int, int):
+    next_neighbour: [int] = []
+    previous_neighbour: [int] = []
+    neighbour: Block
+    for neighbour in blocks:
+        if neighbour != block:
+            line: [[int, int], [int, int]]
+            point: [int, int]
+            if block.objet_type == LABEL.arrow_line_down:
+                # C, D
+                line = ((neighbour.x_min, neighbour.y_max), (neighbour.x_max, neighbour.y_max))
+                point = ((block.x_max + block.x_min) / 2, block.y_max)
+                if Math_Calcs.distance_point_to_line(line, point) < Constants.NEIGHBOUR_THRESHOLD:
+                    previous_neighbour.append(neighbour.id)
+
+                # A, B
+                line = ((neighbour.x_min, neighbour.y_min), (neighbour.x_max, neighbour.y_min))
+                point = ((block.x_max + block.x_min) / 2, block.y_min)
+                if Math_Calcs.distance_point_to_line(line, point) < Constants.NEIGHBOUR_THRESHOLD:
+                    next_neighbour.append(neighbour.id)
+
+    return next_neighbour, previous_neighbour

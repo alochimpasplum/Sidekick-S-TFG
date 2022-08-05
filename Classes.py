@@ -27,5 +27,16 @@ class Block:
                 self.objet_type = entry
 
     def to_string(self):
-        return "id: {}, object_type: {}, x_min: {}, x_max: {}, y_min: {}, y_max: {}, confidence: {}".format(
+        string: str = "id: {}, object_type: {}, x_min: {}, x_max: {}, y_min: {}, y_max: {}, confidence: {}\n".format(
             self.id, self.objet_type, self.x_min, self.x_max, self.y_max, self.y_min, self.confidence)
+
+        string += "next blocks count: {}\n".format(len(self.Next_Blocks))
+        neighbour: id
+        for i, neighbour in enumerate(self.Next_Blocks):
+            string += "-Neighbour {}: {}\n".format(i, neighbour)
+
+        string += "previous blocks count: {}\n".format(len(self.Previous_Blocks))
+        neighbour: id
+        for i, neighbour in enumerate(self.Previous_Blocks):
+            string += "-Neighbour {}: {}\n".format(i, neighbour)
+        print(string)
