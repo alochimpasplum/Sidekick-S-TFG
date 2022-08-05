@@ -127,7 +127,7 @@ def _sort_arrows(blocks: [Block]) -> [Block]:
                 arrow.objet_type = _get_arrow_side(arrow, pointer)
                 result.append(arrow)
 
-    # TODO: continuar aqui. Hay que eliminar los duplicados
+    # TODO: Add a system which improve pointer detection in order to avoid double pointers in the same arrow
 
     return result
 

@@ -1,5 +1,20 @@
 # Sidekick-S-api
 
+## Objects detected by model
+![Object list](https://raw.githubusercontent.com/dbetm/handwritten-flowchart-with-cnn/master/model/set_shapes.png)
+#### Original dataset
+- Author: ISC UPIIZ students
+- Title: Flowchart 3b
+- Version: 3.0
+- Date: May 2020.
+- Editors: Onder F. Campos and David Betancourt.
+- Publisher Location: Zacatecas, Mexico.
+- Electronic Retrieval Location: https://www.kaggle.com/davbetm/flowchart-3b
+
+#### Used dataset (added pointer detection)
+- Electronic Retrieval Location: https://app.roboflow.com/yolo-umkl5/flowchart-etfvh/1
+
+## Classes
 ```mermaid
 classDiagram
     class Block
@@ -14,3 +29,12 @@ classDiagram
     Block: +List~int~ Next_Blocks
     Block: +to_string() string
 ```
+
+## Limitations
+- Maintain a good separation between arrows in arrow chains
+- [ ] TODO: add images to show how to draw arrows
+- On print output, draw pointer arrow on 
+
+## TODO-List
+- Improve double pointer detection in arrow chains to avoid double detection in the same arrow
+  - FlowchartObjectDetection._sort_arrows()
