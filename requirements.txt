@@ -12,5 +12,4 @@ protobuf==3.20.1
 psutil==5.9.1
 numpy==1.23.1
 Pillow==9.2.0
-pytesseract==0.3.9
 Flask==2.2.1

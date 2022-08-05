@@ -2,20 +2,25 @@
 from Classes import Block
 from Debug import show_detections
 from Enums import LABEL
-from PIL import Image
+from PIL import Image, ImageOps
 import torch
 import json
 import Constants
-import pytesseract
 
 
 def detect(img: Image, make_tests: bool = False) -> None:
+    img = _improve_image(img)
     blocks: [Block] = _get_blocks(img)
     blocks = _sort_arrows(blocks)
-    _ocr_detection(img)
+    # distancia de un punto a una recta!!!!
 
     if make_tests:
-        show_detections(blocks, img)
+        show_detections(blocks, img).show()
+
+
+def _improve_image(img: Image) -> Image:
+    temp: Image = ImageOps.grayscale(img)
+    return temp
 
 
 def _get_blocks(image: Image) -> [Block]:
@@ -143,7 +148,3 @@ def _get_arrow_side(arrow: Block, pointer: Block) -> LABEL:
     }
     distances_list = sorted(distances.items(), key=lambda x:x[1])
     return distances_list[3][0]
-
-
-def _ocr_detection(img: str) -> None:
-    print(pytesseract.image_to_string(img))

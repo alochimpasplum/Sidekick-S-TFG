@@ -17,11 +17,9 @@ def hello_world():
 
 @app.route('/getDetectedImage', methods=['GET'])
 def get_detected_image():
-    print(len(request.files))
-
     files = request.files.get('image')
 
-    detect(Image.open(files).convert('L'), True)
+    detect(Image.open(files), True)
 
     return send_file("./TestStuff/HelloWorld.jpg", mimetype='image/jpeg')
 
