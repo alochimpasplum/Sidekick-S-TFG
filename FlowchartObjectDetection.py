@@ -12,11 +12,7 @@ import Math_Calcs
 def detect(img: Image, make_tests: bool = False) -> None:
     img = _improve_image(img)
     blocks: [Block] = _get_blocks(img)
-    show_detections(blocks, img).show()
-
     blocks = _sort_arrows(blocks)
-    for block in blocks:
-        print(block.id, block.objet_type)
     _find_neighbours(blocks)
     if make_tests:
         show_detections(blocks, img).show()
@@ -123,12 +119,11 @@ def _sort_arrows(blocks: [Block]) -> [Block]:
         for pointer in pointers:
             is_inside: bool = _is_block_inside(arrow, pointer)
             if is_inside:
-                print(arrow.id, pointer.id)
                 arrow.objet_type = _get_arrow_side(arrow, pointer)
                 result.append(arrow)
 
+    # TODO: Remove duplicates
     # TODO: Add a system which improve pointer detection in order to avoid double pointers in the same arrow
-
     return result
 
 
@@ -157,32 +152,76 @@ def _get_arrow_side(arrow: Block, pointer: Block) -> LABEL:
 
 
 def _find_neighbours(blocks: [Block]) -> None:
+    block: Block
     for block in blocks:
         if "arrow" in block.objet_type.name:
             neighbours: ([int], [int]) = _find_block_neighbours(block, blocks)
             block.Next_Blocks = neighbours[0]
             block.Previous_Blocks = neighbours[1]
+            print("block: {}, next block: {}, previous block: {}".format(
+                block.id, block.Next_Blocks, block.Previous_Blocks))
 
 
 def _find_block_neighbours(block: Block, blocks: [Block]) -> (int, int):
-    next_neighbour: [int] = []
-    previous_neighbour: [int] = []
+    previous_neighbour: {int, int} = {}
+    next_neighbour: {int, int} = {}
     neighbour: Block
     for neighbour in blocks:
         if neighbour != block:
-            line: [[int, int], [int, int]]
-            point: [int, int]
+            a: [int, int]
+            b: [int, int]
+            p: [int, int]
             if block.objet_type == LABEL.arrow_line_down:
-                # C, D
-                line = ((neighbour.x_min, neighbour.y_max), (neighbour.x_max, neighbour.y_max))
-                point = ((block.x_max + block.x_min) / 2, block.y_max)
-                if Math_Calcs.distance_point_to_line(line, point) < Constants.NEIGHBOUR_THRESHOLD:
-                    previous_neighbour.append(neighbour.id)
+                # C, D => bottom limit => Previous block
+                a = (neighbour.x_min, neighbour.y_max)
+                b = (neighbour.x_max, neighbour.y_max)
+                p = ((block.x_max + block.x_min) / 2, block.y_min)
+                previous_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
 
-                # A, B
-                line = ((neighbour.x_min, neighbour.y_min), (neighbour.x_max, neighbour.y_min))
-                point = ((block.x_max + block.x_min) / 2, block.y_min)
-                if Math_Calcs.distance_point_to_line(line, point) < Constants.NEIGHBOUR_THRESHOLD:
-                    next_neighbour.append(neighbour.id)
+                # A, B => upper limit => Next block
+                a = (neighbour.x_min, neighbour.y_min)
+                b = (neighbour.x_max, neighbour.y_min)
+                p = ((block.x_max + block.x_min) / 2, block.y_max)
+                next_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
 
-    return next_neighbour, previous_neighbour
+            if block.objet_type == LABEL.arrow_line_up:
+                # A, B => upper limit => Previous block
+                a = (neighbour.x_min, neighbour.y_min)
+                b = (neighbour.x_max, neighbour.y_min)
+                p = ((block.x_max + block.x_min) / 2, block.y_max)
+                previous_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
+
+                # C, D => bottom limit => Next block
+                a = (neighbour.x_min, neighbour.y_max)
+                b = (neighbour.x_max, neighbour.y_max)
+                p = ((block.x_max + block.x_min) / 2, block.y_min)
+                next_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
+
+            if block.objet_type == LABEL.arrow_line_left:
+                # C, D => bottom limit => Next block
+                a = (neighbour.x_max, neighbour.y_min)
+                b = (neighbour.x_max, neighbour.y_max)
+                p = (block.x_min, (block.y_min + block.y_max) / 2)
+                next_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
+
+                # C, D => bottom limit => Previous block
+                a = (neighbour.x_min, neighbour.y_min)
+                b = (neighbour.x_min, neighbour.y_max)
+                p = (block.x_max, (block.y_min + block.y_max) / 2)
+                previous_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
+
+            if block.objet_type == LABEL.arrow_line_right:
+                # C, D => bottom limit => Next block
+                a = (neighbour.x_min, neighbour.y_min)
+                b = (neighbour.x_min, neighbour.y_max)
+                p = (block.x_max, (block.y_min + block.y_max) / 2)
+                next_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
+
+                # C, D => bottom limit => Previous block
+                a = (neighbour.x_max, neighbour.y_min)
+                b = (neighbour.x_max, neighbour.y_max)
+                p = (block.x_min, (block.y_min + block.y_max) / 2)
+                previous_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
+
+    return sorted(next_neighbour.items(), key=lambda x: x[1])[0][0], sorted(
+        previous_neighbour.items(), key=lambda x: x[1])[0][0]

@@ -11,8 +11,8 @@ class Block:
     y_min: float
     y_max: float
     confidence: float
-    Next_Blocks: [int]
-    Previous_Blocks: [int]
+    Next_Blocks: [int] = []
+    Previous_Blocks: [int] = []
 
     def __init__(self, id, x_min, y_min, x_max, y_max, confidence, name):
         self.id = id
