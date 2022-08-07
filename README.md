@@ -18,27 +18,26 @@
 ```mermaid
 classDiagram
     class Block
-    Block: +int id
-    Block: +LABEL obj_type
-    Block: +float x_min
-    Block: +float x_max
-    Block: +float y_min
-    Block: +float x_max
-    Block: +float confidence
-    Block: +List~int~ Previous_Blocks
-    Block: +List~int~ Next_Blocks
-    Block: +to_string() string
-```
-```mermaid
-classDiagram
+      Block: +int id
+      Block: +LABEL obj_type
+      Block: +float x_min
+      Block: +float x_max
+      Block: +float y_min
+      Block: +float x_max
+      Block: +float confidence
+      Block: +List~int~ Previous_Blocks
+      Block: +List~int~ Next_Blocks
+      Block: +to_string() string
+      
     class Text
-    Text: +int id
-    Text: +float x_min
-    Text: +float x_max
-    Text: +float y_min
-    Text: +float x_max
-    Text: +float confidence
-    Text: +to_string() string
+      Text: +int id
+      Text: +float x_min
+      Text: +float x_max
+      Text: +float y_min
+      Text: +float x_max
+      Text: +float confidence
+      Text: +to_string() string
+
 ```
 
 ## Limitations
