@@ -28,12 +28,22 @@ classDiagram
     Block: +List~int~ Previous_Blocks
     Block: +List~int~ Next_Blocks
     Block: +to_string() string
+
+classDiagram
+    class Text
+    Text: +int id
+    Text: +float x_min
+    Text: +float x_max
+    Text: +float y_min
+    Text: +float x_max
+    Text: +float confidence
+    Text: +to_string() string
 ```
 
 ## Limitations
 - Maintain a good separation between arrows in arrow chains
 - [ ] TODO: add images to show how to draw arrows
-- On print output, draw pointer arrow on 
+- All letters must be lowercase
 
 ## TODO-List
 - Improve double pointer detection in arrow chains to avoid double detection in the same arrow
