@@ -6,7 +6,7 @@ from Enums import LABEL
 from PIL import Image
 
 
-def show_detections(blocks: [Block], image: Image) -> Image:
+def get_detections(blocks: [Block], image: Image) -> Image:
     img = cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2BGR)
     font = cv2.FONT_HERSHEY_SIMPLEX
 
@@ -22,7 +22,7 @@ def show_detections(blocks: [Block], image: Image) -> Image:
     return img
 
 
-def show_ocr(texts: [Text], image: Image) -> Image:
+def get_ocr(texts: [Text], image: Image) -> Image:
     img = cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2BGR)
     font = cv2.FONT_HERSHEY_SIMPLEX
 

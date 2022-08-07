@@ -4,10 +4,9 @@ from PIL import Image
 
 
 def main():
-    img: Image = Image.open('./TestStuff/HelloWorld2.jpg')
-    detect(img, True)
+    img: Image = Image.open('./TestStuff/Helloworld6.jpg')
+    detect(img)
 
 
 if __name__ == "__main__":
     main()
-

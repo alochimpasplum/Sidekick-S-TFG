@@ -1,5 +1,4 @@
 from Enums import LABEL
-from typing import List
 
 
 class Block:
@@ -11,6 +10,7 @@ class Block:
     y_min: float
     y_max: float
     confidence: float
+    text: [any] = []
     Next_Blocks: [int] = []
     Previous_Blocks: [int] = []
 
@@ -26,7 +26,7 @@ class Block:
             if entry.name == name:
                 self.objet_type = entry
 
-    def to_string(self):
+    def to_string(self) -> str:
         string: str = "id: {}, object_type: {}, x_min: {}, x_max: {}, y_min: {}, y_max: {}, confidence: {}\n".format(
             self.id, self.objet_type, self.x_min, self.x_max, self.y_max, self.y_min, self.confidence)
 
@@ -40,7 +40,11 @@ class Block:
         for i, neighbour in enumerate(self.Previous_Blocks):
             string += "-Neighbour {}: {}\n".format(i, neighbour)
 
-        print(string)
+        if self.text is not None:
+            for t in self.text:
+                string += "text: {}".format(t.text)
+
+        return string
 
 
 class Text:
@@ -62,7 +66,7 @@ class Text:
         self.confidence = confidence
         self.text = text
 
-    def to_string(self):
+    def to_string(self) -> str:
         string: str = "id: {}, x_min: {}, x_max: {}, y_min: {}, y_max: {}, confidence: {}, text: {}\n".format(
             self.id, self.x_min, self.x_max, self.y_max, self.y_min, self.confidence, self.text)
-        print(string)
+        return string

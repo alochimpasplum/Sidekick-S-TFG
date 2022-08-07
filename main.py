@@ -19,7 +19,7 @@ def hello_world():
 def get_detected_image():
     files = request.files.get('image')
 
-    detect(Image.open(files), True)
+    detect(Image.open(files))
 
     return send_file("./TestStuff/HelloWorld.jpg", mimetype='image/jpeg')
 
