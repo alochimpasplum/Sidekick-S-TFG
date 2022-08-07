@@ -1,8 +1,10 @@
 # Functions in this file handles everything related to flowchart object detection
+from PIL import Image
 from Classes import Block
 from Debug import show_detections
 from Enums import LABEL
-from PIL import Image, ImageOps
+from ocr import get_text
+from Image_Correction import correct_image
 import torch
 import json
 import Constants
@@ -10,17 +12,12 @@ import Math_Calcs
 
 
 def detect(img: Image, make_tests: bool = False) -> None:
-    img = _improve_image(img)
+    img: Image = correct_image(img)
     blocks: [Block] = _get_blocks(img)
     blocks = _sort_arrows(blocks)
-    _find_neighbours(blocks)
-    if make_tests:
-        show_detections(blocks, img).show()
-
-
-def _improve_image(img: Image) -> Image:
-    temp: Image = ImageOps.grayscale(img)
-    return temp
+    blocks = _find_neighbours(blocks)
+    get_text(img, blocks)
+    show_detections(blocks, img).show()
 
 
 def _get_blocks(image: Image) -> [Block]:
@@ -151,18 +148,19 @@ def _get_arrow_side(arrow: Block, pointer: Block) -> LABEL:
     return distances_list[3][0]
 
 
-def _find_neighbours(blocks: [Block]) -> None:
+def _find_neighbours(blocks: [Block]) -> [Block]:
     block: Block
     for block in blocks:
         if "arrow" in block.objet_type.name:
-            neighbours: ([int], [int]) = _find_block_neighbours(block, blocks)
-            block.Next_Blocks = neighbours[0]
-            block.Previous_Blocks = neighbours[1]
-            print("block: {}, next block: {}, previous block: {}".format(
-                block.id, block.Next_Blocks, block.Previous_Blocks))
+            neighbours: [[int], [int]] = _find_block_neighbours(block, blocks)
+            block.Next_Blocks = [neighbours[0]]
+            block.Previous_Blocks = [neighbours[1]]
+            print(block.Next_Blocks)
+            print(block.Previous_Blocks)
+    return blocks
 
 
-def _find_block_neighbours(block: Block, blocks: [Block]) -> (int, int):
+def _find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
     previous_neighbour: {int, int} = {}
     next_neighbour: {int, int} = {}
     neighbour: Block

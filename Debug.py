@@ -1,7 +1,7 @@
 import cv2
 import numpy
 
-from Classes import Block
+from Classes import Block, Text
 from Enums import LABEL
 from PIL import Image
 
@@ -17,6 +17,22 @@ def show_detections(blocks: [Block], image: Image) -> Image:
                     (int(block.x_max), int((block.y_max+block.y_min)/2)), font, 2, color, 1)
         cv2.putText(img, "ID:" + str(block.id),
                     (int(block.x_max), int(block.y_max)), font, 1, (0, 0, 0), 1)
+
+    img: Image = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    return img
+
+
+def show_ocr(texts: [Text], image: Image) -> Image:
+    img = cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2BGR)
+    font = cv2.FONT_HERSHEY_SIMPLEX
+
+    for text in texts:
+        color: [int, int, int] = (0, 0, 255)
+        cv2.rectangle(img, (int(text.x_max), int(text.y_max)), (int(text.x_min), int(text.y_min)), color, 4)
+        cv2.putText(img, str(text.confidence),
+                    (int(text.x_max), int((text.y_max + text.y_min) / 2)), font, 2, color, 1)
+        cv2.putText(img, str(text.text),
+                    (int(text.x_max), int(text.y_max)), font, 2, color, 1)
 
     img: Image = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     return img
