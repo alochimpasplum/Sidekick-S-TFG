@@ -25,12 +25,16 @@ def get_text(img: Image, blocks: [Block]) -> [Block]:
 def _get_inner_texts(texts: [Text], blocks: [Block]) -> [[Block], [Text]]:
     outer_texts: [Text] = []
     block: Block
+    text: Text
     for text in texts:
         is_outside: bool = True
         for block in blocks:
-            if _is_text_inner(text, block):
+            if __is_text_inner(text, block):
                 is_outside = False
-                block.text.append(text)
+                if block.text is not None:
+                    block.text = __mix_texts(block.text, text)
+                else:
+                    block.text = text
 
         if is_outside:
             outer_texts.append(text)
@@ -38,7 +42,26 @@ def _get_inner_texts(texts: [Text], blocks: [Block]) -> [[Block], [Text]]:
     return [blocks, outer_texts]
 
 
-def _is_text_inner(text: Text, block: Block) -> bool:
+def __is_text_inner(text: Text, block: Block) -> bool:
     center_x: float = (text.x_max + text.x_min) / 2
     center_y: float = (text.y_max + text.y_min) / 2
     return block.x_max > center_x > block.x_min and block.y_max > center_y > block.y_min
+
+
+def __mix_texts(text_a: Text, text_b: Text) -> Text:
+    text: Text = Text(text_a.id, text_a.x_min, text_a.y_min, text_a.x_max, text_a.y_max, text_a.confidence, text_a.text)
+    is_text_a_left: bool = text_a.x_min < text_b.x_min
+
+    if is_text_a_left:
+        text.text = "{} {}".format(text_a.text, text_b.text)
+        text.x_min = text_a.x_min
+        text.x_max = text_b.x_max
+
+    else:
+        text.text = "{} {}".format(text_b.text, text_a.text)
+        text.x_min = text_b.x_min
+        text.x_max = text_a.x_max
+
+    text.confidence = (text_a.confidence + text_b.confidence) / 2
+
+    return text

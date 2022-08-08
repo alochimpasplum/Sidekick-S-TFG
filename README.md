@@ -44,6 +44,7 @@ classDiagram
 - Maintain a good separation between arrows in arrow chains
 - [ ] TODO: add images to show how to draw arrows
 - All letters must be lowercase
+- Letters in only one line
 
 ## TODO-List
 - Improve double pointer detection in arrow chains to avoid double detection in the same arrow

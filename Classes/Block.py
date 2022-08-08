@@ -6,12 +6,12 @@ class Block:
     """This class handles the blocks on pictures"""
     id:  int
     objet_type: LABEL
+    text: Text
     x_min: float
     x_max: float
     y_min: float
     y_max: float
     confidence: float
-    text: [Text] = [Text]
     Next_Blocks: [int] = [int]
     Previous_Blocks: [int] = [int]
 
@@ -22,6 +22,7 @@ class Block:
         self.x_max = x_max
         self.y_max = y_max
         self.confidence = confidence
+        self.text = None
 
         for entry in LABEL:
             if entry.name == name:
@@ -42,8 +43,6 @@ class Block:
             string += "-Neighbour {}: {}\n".format(i, neighbour)
 
         if self.text is not None:
-            for t in self.text:
-                print(type(t))
-                # string += "text: {}".format(t.to_string())
+            string += "Text:\n{}".format(self.text.to_string())
 
         return string
