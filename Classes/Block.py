@@ -15,6 +15,8 @@ class Block:
     Next_Blocks: [int] = []
     Previous_Blocks: [int] = []
 
+    #todo: incluir un método para unir los textos y generar un único texto dentro de la clase
+
     def __init__(self, id, x_min, y_min, x_max, y_max, confidence, name):
         self.id = id
         self.x_min = x_min
