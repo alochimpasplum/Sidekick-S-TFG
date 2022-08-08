@@ -49,6 +49,7 @@ def __is_text_inner(text: Text, block: Block) -> bool:
 
 
 def __mix_texts(text_a: Text, text_b: Text) -> Text:
+    # TODO: ¿Que pasa cuando hay tres textos y ya he evaluado los textos de los extremos?
     text: Text = Text(text_a.id, text_a.x_min, text_a.y_min, text_a.x_max, text_a.y_max, text_a.confidence, text_a.text)
     is_text_a_left: bool = text_a.x_min < text_b.x_min
 
