@@ -11,15 +11,15 @@ import Math_Calcs
 
 def detect_blocks(img: Image) -> [Block]:
     img: Image = correct_image(img)
-    blocks: [Block] = _get_blocks(img)
+    blocks: [Block] = __get_blocks(img)
     blocks = _sort_arrows(blocks)
-    blocks = _find_neighbours(blocks)
+    blocks = __find_neighbours(blocks)
     get_text(img, blocks)
     # Debug.get_detections(blocks, img).show()
     return blocks
 
 
-def _get_blocks(image: Image) -> [Block]:
+def __get_blocks(image: Image) -> [Block]:
     # Model
     model = torch.hub.load('ultralytics/yolov5', 'custom', path='./TestStuff/best(L).pt', force_reload=True)
 
@@ -38,20 +38,20 @@ def _get_blocks(image: Image) -> [Block]:
                                 entry['ymax'], entry['confidence'], entry['name'])
             results_list.append(temp)
 
-    results_list = _remove_duplicates(results_list)
+    results_list = __remove_duplicates(results_list)
 
     return results_list
 
 
-def _remove_duplicates(blocks: [Block]) -> [Block]:
+def __remove_duplicates(blocks: [Block]) -> [Block]:
     ids: [int] = []
 
     for block_a in blocks:
         temp: Block = block_a
         for block_b in blocks:
             if block_a != block_b:
-                if _check_if_same_position(block_a, block_b):
-                    temp = _block_best_confidence(block_a, block_b)
+                if __check_if_same_position(block_a, block_b):
+                    temp = __block_best_confidence(block_a, block_b)
 
         if not (temp.id in ids):
             ids.append(temp.id)
@@ -65,7 +65,7 @@ def _remove_duplicates(blocks: [Block]) -> [Block]:
     return result
 
 
-def _check_if_same_position(block_a: Block, block_b: Block) -> bool:
+def __check_if_same_position(block_a: Block, block_b: Block) -> bool:
     is_same_or_not: bool = False
 
     x_min: float = block_a.x_min - block_b.x_min
@@ -91,7 +91,7 @@ def _check_if_same_position(block_a: Block, block_b: Block) -> bool:
     return is_same_or_not
 
 
-def _block_best_confidence(block_a: Block, block_b: Block) -> Block:
+def __block_best_confidence(block_a: Block, block_b: Block) -> Block:
     if block_a.confidence >= block_b.confidence:
         return block_a
     if block_a.confidence < block_b.confidence:
@@ -113,9 +113,9 @@ def _sort_arrows(blocks: [Block]) -> [Block]:
 
     for arrow in arrows:
         for pointer in pointers:
-            is_inside: bool = _is_block_inside(arrow, pointer)
+            is_inside: bool = __is_block_inside(arrow, pointer)
             if is_inside:
-                arrow.objet_type = _get_arrow_side(arrow, pointer)
+                arrow.objet_type = __get_arrow_side(arrow, pointer)
                 result.append(arrow)
 
     # TODO: Remove duplicates
@@ -123,7 +123,7 @@ def _sort_arrows(blocks: [Block]) -> [Block]:
     return result
 
 
-def _is_block_inside(block_outside: Block, block_inside: Block) -> bool:
+def __is_block_inside(block_outside: Block, block_inside: Block) -> bool:
 
     inside_center_x: float = (block_inside.x_max + block_inside.x_min) / 2
     inside_center_y: float = (block_inside.y_max + block_inside.y_min) / 2
@@ -134,7 +134,7 @@ def _is_block_inside(block_outside: Block, block_inside: Block) -> bool:
     return x_inside and y_inside
 
 
-def _get_arrow_side(arrow: Block, pointer: Block) -> LABEL:
+def __get_arrow_side(arrow: Block, pointer: Block) -> LABEL:
     pointer_inside_x: float = (pointer.x_max + pointer.x_min) / 2
     pointer_inside_y: float = (pointer.y_max + pointer.y_min) / 2
     distances = {
@@ -147,17 +147,17 @@ def _get_arrow_side(arrow: Block, pointer: Block) -> LABEL:
     return distances_list[3][0]
 
 
-def _find_neighbours(blocks: [Block]) -> [Block]:
+def __find_neighbours(blocks: [Block]) -> [Block]:
     block: Block
     for block in blocks:
         if "arrow" in block.objet_type.name:
-            neighbours: [[int], [int]] = _find_block_neighbours(block, blocks)
+            neighbours: [[int], [int]] = __find_block_neighbours(block, blocks)
             block.Next_Blocks = [neighbours[0]]
             block.Previous_Blocks = [neighbours[1]]
     return blocks
 
 
-def _find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
+def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
     previous_neighbour: {int, int} = {}
     next_neighbour: {int, int} = {}
     neighbour: Block

@@ -12,7 +12,7 @@ def get_detections(blocks: [Block], image: Image) -> Image:
     font = cv2.FONT_HERSHEY_SIMPLEX
 
     for block in blocks:
-        color: [int, int, int] = _get_color(block)
+        color: [int, int, int] = __get_color(block)
         cv2.rectangle(img, (int(block.x_max), int(block.y_max)), (int(block.x_min), int(block.y_min)), color, 4)
         cv2.putText(img, str(block.objet_type.name),
                     (int(block.x_max), int((block.y_max+block.y_min)/2)), font, 2, color, 1)
@@ -39,7 +39,7 @@ def get_ocr(texts: [Text], image: Image) -> Image:
     return img
 
 
-def _get_color(block: Block) -> [int, int, int]:
+def __get_color(block: Block) -> [int, int, int]:
     if block.objet_type == LABEL.start_end:
         return 255, 192, 192
     if block.objet_type == LABEL.scan:
