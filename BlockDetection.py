@@ -1,9 +1,8 @@
 from PIL import Image
-from Classes import Block
+from Classes.Block import Block
 from Enums import LABEL
 from ocr import get_text
 from Image_Correction import correct_image
-import Debug
 import torch
 import json
 import Constants
@@ -16,7 +15,7 @@ def detect_blocks(img: Image) -> [Block]:
     blocks = _sort_arrows(blocks)
     blocks = _find_neighbours(blocks)
     get_text(img, blocks)
-    Debug.get_detections(blocks, img).show()
+    # Debug.get_detections(blocks, img).show()
     return blocks
 
 

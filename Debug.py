@@ -1,7 +1,8 @@
 import cv2
 import numpy
 
-from Classes import Block, Text
+from Classes.Text import Text
+from Classes.Block import Block
 from Enums import LABEL
 from PIL import Image
 
