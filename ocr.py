@@ -21,10 +21,8 @@ def get_text(img: Image, blocks: [Block]) -> [Block]:
     blocks = temp[0]
     # todo: continuar aqui con los textos exteriores (condicionales)
 
-    """
-        for b in blocks:
+    for b in blocks:
         print(b.to_string())
-    """
 
 
 def __get_inner_texts(texts: [Text], blocks: [Block]) -> [[Block], [Text]]:
@@ -36,6 +34,7 @@ def __get_inner_texts(texts: [Text], blocks: [Block]) -> [[Block], [Text]]:
         block.Texts = txt
         for t in txt:
             inner_texts.append(t)
+        block.sort_text()
 
     outer_texts: [Text] = texts
     for t in inner_texts:

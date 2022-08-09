@@ -11,11 +11,9 @@ class Block:
     y_min: float
     y_max: float
     confidence: float
-    Texts: [Text] = []
-    Next_Blocks: [int] = []
-    Previous_Blocks: [int] = []
-
-    #todo: incluir un método para unir los textos y generar un único texto dentro de la clase
+    Texts: [Text] = [Text]
+    Next_Blocks: [int] = [int]
+    Previous_Blocks: [int] = [int]
 
     def __init__(self, id, x_min, y_min, x_max, y_max, confidence, name):
         self.id = id
@@ -28,6 +26,22 @@ class Block:
         for entry in LABEL:
             if entry.name == name:
                 self.objet_type = entry
+
+    def sort_text(self) -> None:
+        if len(self.Texts) > 0:
+            self.Texts.sort(key=lambda x: x.x_min)
+            id: int = self.Texts[0].id
+            x_min: float = self.Texts[0].x_min
+            y_min: float = self.Texts[0].y_min
+            x_max: float = self.Texts[len(self.Texts) - 1].x_max
+            y_max: float = self.Texts[len(self.Texts) - 1].y_max
+            confidence: float = sum(x.confidence for x in self.Texts) / len(self.Texts)
+            txt: str = ""
+            for t in self.Texts:
+                txt += "{} ".format(t.text)
+            text: Text = Text(id, x_min, y_min, x_max, y_max, confidence, txt)
+            self.Texts.clear()
+            self.Texts.append(text)
 
     def to_string(self) -> str:
         string: str = "id: {}, object_type: {}, x_min: {}, x_max: {}, y_min: {}, y_max: {}, confidence: {}\n".format(

@@ -27,6 +27,7 @@ classDiagram
       Block: +float confidence
       Block: +List~int~ Previous_Blocks
       Block: +List~int~ Next_Blocks
+      Block: +sort_text()
       Block: +to_string() string
       
     class Text
