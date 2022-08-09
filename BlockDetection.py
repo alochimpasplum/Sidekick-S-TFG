@@ -14,7 +14,8 @@ def detect_blocks(img: Image) -> [Block]:
     blocks: [Block] = __get_blocks(img)
     blocks = _sort_arrows(blocks)
     blocks = __find_neighbours(blocks)
-    get_text(img, blocks)
+    blocks = get_text(img, blocks)
+    __sort_blocks(blocks)
     # Debug.get_detections(blocks, img).show()
     return blocks
 
@@ -152,8 +153,8 @@ def __find_neighbours(blocks: [Block]) -> [Block]:
     for block in blocks:
         if "arrow" in block.objet_type.name:
             neighbours: [[int], [int]] = __find_block_neighbours(block, blocks)
-            block.Next_Blocks = [neighbours[0]]
-            block.Previous_Blocks = [neighbours[1]]
+            block.Next_Blocks = neighbours[0]
+            block.Previous_Blocks = neighbours[1]
     return blocks
 
 
@@ -218,5 +219,12 @@ def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
                 p = (block.x_min, (block.y_min + block.y_max) / 2)
                 previous_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
 
-    return sorted(next_neighbour.items(), key=lambda x: x[1])[0][0], sorted(
-        previous_neighbour.items(), key=lambda x: x[1])[0][0]
+    return [[sorted(next_neighbour.items(), key=lambda x: x[1])[0][0]], [sorted(
+        previous_neighbour.items(), key=lambda x: x[1])[0][0]]]
+
+
+def __sort_blocks(blocks: [Block]) -> None:
+    block: Block
+    for block in blocks:
+        if "arrow" in block.objet_type.name and len(block.Next_Blocks) > 0:
+            print(type(block.Next_Blocks[0]))

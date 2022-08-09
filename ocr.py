@@ -22,7 +22,7 @@ def get_text(img: Image, blocks: [Block]) -> [Block]:
     temp: [[Block], [Text]] = __get_inner_texts(texts, blocks)
     blocks = __get_outer_text(temp[0], temp[1])
 
-    Debug.get_detections(blocks, img).show()
+    return blocks
 
 
 def __get_inner_texts(texts: [Text], blocks: [Block]) -> [[Block], [Text]]:
