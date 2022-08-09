@@ -1,7 +1,6 @@
-import copy
-
 import easyocr
 import numpy as np
+import Debug
 from PIL import Image
 from Classes.Text import Text
 from Classes.Block import Block
@@ -21,8 +20,7 @@ def get_text(img: Image, blocks: [Block]) -> [Block]:
     blocks = temp[0]
     # todo: continuar aqui con los textos exteriores (condicionales)
 
-    for b in blocks:
-        print(b.to_string())
+    Debug.get_detections(blocks, img).show()
 
 
 def __get_inner_texts(texts: [Text], blocks: [Block]) -> [[Block], [Text]]:

@@ -11,13 +11,24 @@ def get_detections(blocks: [Block], image: Image) -> Image:
     img = cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2BGR)
     font = cv2.FONT_HERSHEY_SIMPLEX
 
+    block: Block
     for block in blocks:
         color: [int, int, int] = __get_color(block)
+        # Block stuff
         cv2.rectangle(img, (int(block.x_max), int(block.y_max)), (int(block.x_min), int(block.y_min)), color, 4)
         cv2.putText(img, str(block.objet_type.name),
                     (int(block.x_max), int((block.y_max+block.y_min)/2)), font, 2, color, 1)
         cv2.putText(img, "ID:" + str(block.id),
                     (int(block.x_max), int(block.y_max)), font, 1, (0, 0, 0), 1)
+        # Text stuff
+        if len(block.Texts) > 0:
+            cv2.rectangle(img, (int(block.Texts[0].x_max), int(block.Texts[0].y_max)),
+                          (int(block.Texts[0].x_min), int(block.Texts[0].y_min)), (255, 255, 255), -1)
+            cv2.rectangle(img, (int(block.Texts[0].x_max), int(block.Texts[0].y_max)),
+                          (int(block.Texts[0].x_min), int(block.Texts[0].y_min)), color, 1)
+            cv2.putText(img, str(block.Texts[0].text),
+                        (int(block.Texts[0].x_min),
+                         int(block.Texts[0].y_max)), font, 2, (0, 0, 0), 1)
 
     img: Image = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     return img
