@@ -228,3 +228,7 @@ def __sort_blocks(blocks: [Block]) -> None:
     for block in blocks:
         if "arrow" in block.objet_type.name and len(block.Next_Blocks) > 0:
             print(type(block.Next_Blocks[0]))
+            print(block.Next_Blocks[0])
+            temp: [Block] = [x for x in blocks if x.id == block.Next_Blocks[0]]
+            print(temp.id)
+            # todo: continuar aqui
