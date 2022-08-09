@@ -6,8 +6,8 @@ import cv2
 def correct_image(img: Image) -> Image:
     image = np.array(img)
     image = __set_grayscale(image)
-    image = __equalization(image)
-    image = __gaussian_blur(image)
+    # image = __equalization(image)
+    # image = __gaussian_blur(image)
     # image = __median_blur(image)
 
     return Image.fromarray(cv2.cvtColor(image, cv2.COLOR_GRAY2RGB))

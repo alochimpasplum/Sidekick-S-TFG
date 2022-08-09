@@ -4,7 +4,7 @@ from PIL import Image
 
 
 def main():
-    img: Image = Image.open('./TestStuff/Helloworld6.jpg')
+    img: Image = Image.open('./TestStuff/HelloWorld7.jpg')
     detect(img)
 
 

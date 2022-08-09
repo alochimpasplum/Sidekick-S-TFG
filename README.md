@@ -46,7 +46,10 @@ classDiagram
 - [ ] TODO: add images to show how to draw arrows
 - All letters must be lowercase
 - Letters in only one line
+- Conditionals must stay in the nearest arrow to Decision block
+- [ ] TODO: add images to show how to draw this conditionals
 
 ## TODO-List
 - Improve double pointer detection in arrow chains to avoid double detection in the same arrow
   - FlowchartObjectDetection._sort_arrows()
+- Improve OCR detection
