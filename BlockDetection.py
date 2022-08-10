@@ -9,7 +9,6 @@ import torch
 import json
 import Constants
 import Math_Calcs
-import os
 
 
 def detect_blocks(img: Image) -> [Block]:
@@ -25,7 +24,7 @@ def detect_blocks(img: Image) -> [Block]:
 
 def __get_blocks(image: Image) -> [Block]:
     # Model
-    model = torch.hub.load(os.path.abspath('./yolov5'), 'custom', source='local', path='./TestStuff/best(L).pt', force_reload=True)
+    model = torch.hub.load('./yolov5', 'custom', source='local', path='./TestStuff/best(L).pt', force_reload=True)
 
     # Inference
     results = model(image)

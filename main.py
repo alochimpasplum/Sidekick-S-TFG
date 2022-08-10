@@ -1,10 +1,9 @@
 from flask import Flask, jsonify, request, send_file
 from PIL import Image
-
-import Debug
 from Classes.Block import Block
 
 import FlowchartObjectDetection
+import JsonOperations
 
 
 def create_app():
@@ -28,12 +27,39 @@ def get_detected_image():
         files = request.files.get('image')
         img: Image = Image.open(files)
         img = FlowchartObjectDetection.get_detected_image(img)
-        img.show()
 
         return send_file(img, mimetype='image/jpeg')
     except BaseException as error:
         print(error)
-        err: str = "Fallo en la "
+        err: str = "Error during image inferring"
+        return err, 400
+
+
+@app.route('/getBlocksFromImage', methods=['GET'])
+def get_detected_blocks():
+    try:
+        files = request.files.get('image')
+        img: Image = Image.open(files)
+        blocks: [Block] = FlowchartObjectDetection.get_blocks(img)
+
+        return JsonOperations.block_list_to_block_json(blocks)
+    except BaseException as error:
+        print(error)
+        err: str = "Error during image inferring"
+        return err, 400
+
+
+@app.route('/getMermaidFromImage', methods=['GET'])
+def get_detected_mermaid():
+    try:
+        files = request.files.get('image')
+        img: Image = Image.open(files)
+        blocks: [Block] = FlowchartObjectDetection.get_blocks(img)
+
+        return JsonOperations.block_list_to_mermaid_json(blocks)
+    except BaseException as error:
+        print(error)
+        err: str = "Error during image inferring"
         return err, 400
 
 

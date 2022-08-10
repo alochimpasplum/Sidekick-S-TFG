@@ -5,5 +5,7 @@ CONFIDENCE_THRESHOLD = 0.4
 DUPLICATE_THRESHOLD = 20
 
 # Value used to limit arrow do-while loop
-
 DO_WHILE_LOOPS = 10
+
+# Value used to set block ID prefix
+BLOCK_PREFIX = "Block"

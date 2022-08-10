@@ -2,6 +2,7 @@
 import sys
 import FlowchartObjectDetection
 import Debug
+import JsonOperations
 from PIL import Image
 from Classes.Block import Block
 
@@ -14,7 +15,7 @@ def main():
     except IndexError:
         img = Image.open('./TestStuff/HelloWorld7.jpg')
     blocks: [Block] = FlowchartObjectDetection.get_blocks(img)
-    Debug.print_blocks(blocks)
+    JsonOperations.block_list_to_block_json(blocks)
 
 
 if __name__ == "__main__":
