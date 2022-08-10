@@ -1,7 +1,9 @@
 # Class used to test api functions locally
 import sys
-from FlowchartObjectDetection import detect
+import FlowchartObjectDetection
+import Debug
 from PIL import Image
+from Classes.Block import Block
 
 
 def main():
@@ -11,7 +13,8 @@ def main():
         img = Image.open(dropped_file)
     except IndexError:
         img = Image.open('./TestStuff/HelloWorld7.jpg')
-    detect(img)
+    blocks: [Block] = FlowchartObjectDetection.get_blocks(img)
+    Debug.print_blocks(blocks)
 
 
 if __name__ == "__main__":
