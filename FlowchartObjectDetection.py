@@ -6,7 +6,8 @@ import Debug
 
 
 def get_detected_image(img: Image) -> Image:
-    return Debug.get_detections(get_blocks(img), img)
+    blocks: [Block] = get_blocks(img)
+    return Debug.get_detections(blocks, img)
 
 
 def get_blocks(img: Image) -> [Block]:
