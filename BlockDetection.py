@@ -1,8 +1,12 @@
+import copy
+
 from PIL import Image
 from Classes.Block import Block
+from Classes.Text import Text
 from Enums import LABEL
 from ocr import get_text
 from Image_Correction import correct_image
+import Debug
 import torch
 import json
 import Constants
@@ -15,8 +19,8 @@ def detect_blocks(img: Image) -> [Block]:
     blocks = _sort_arrows(blocks)
     blocks = __find_neighbours(blocks)
     blocks = get_text(img, blocks)
-    __sort_blocks(blocks)
-    # Debug.get_detections(blocks, img).show()
+    blocks = __sort_blocks(blocks)
+
     return blocks
 
 
@@ -223,12 +227,30 @@ def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
         previous_neighbour.items(), key=lambda x: x[1])[0][0]]]
 
 
-def __sort_blocks(blocks: [Block]) -> None:
+def __sort_blocks(blocks: [Block]) -> [Block]:
     block: Block
     for block in blocks:
-        if "arrow" in block.objet_type.name and len(block.Next_Blocks) > 0:
-            print(type(block.Next_Blocks[0]))
-            print(block.Next_Blocks[0])
-            temp: [Block] = [x for x in blocks if x.id == block.Next_Blocks[0]]
-            print(temp.id)
-            # todo: continuar aqui
+        if "arrow" in block.objet_type.name and len(block.Previous_Blocks) > 0:
+            prev_temp: [Block] = [x for x in blocks if x.id == block.Previous_Blocks[0]]
+            if "arrow" not in prev_temp[0].objet_type.name:
+                is_found: bool = False
+                loops: int = Constants.DO_WHILE_LOOPS
+                index: int = block.Next_Blocks[0]
+                next_temp: [Block] = []
+                while loops > 0:
+                    next_temp = [x for x in blocks if x.id == index]
+                    if "arrow" not in next_temp[0].objet_type.name:
+                        loops = 0
+                        is_found = True
+                    else:
+                        index = next_temp[0].Next_Blocks[0]
+                        loops -= 1
+
+                if is_found:
+                    temp_blocks: [int] = prev_temp[0].Next_Blocks[:]
+                    temp_blocks.append(next_temp[0].id)
+                    prev_temp[0].Next_Blocks = temp_blocks
+                    if len(block.Texts) > 0:
+                        temp_text: [Text] = block.Texts[:]
+                        prev_temp[0].Next_Blocks_Conditionals[next_temp[0].id] = temp_text[0].text
+    return blocks

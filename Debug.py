@@ -80,3 +80,8 @@ def __get_color(block: Block) -> [int, int, int]:
         return 128, 0, 128
     if block.objet_type == LABEL.pointer:
         return 192, 192, 192
+
+
+def print_blocks(blocks: [Block]) -> None:
+    for block in blocks:
+        print(block.to_string())

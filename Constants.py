@@ -3,3 +3,7 @@ CONFIDENCE_THRESHOLD = 0.4
 
 # Value used to get double detections
 DUPLICATE_THRESHOLD = 20
+
+# Value used to limit arrow do-while loop
+
+DO_WHILE_LOOPS = 10

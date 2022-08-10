@@ -1,3 +1,5 @@
+import json
+
 from Enums import LABEL
 from Classes.Text import Text
 
@@ -14,6 +16,7 @@ class Block:
     Texts: [Text] = []
     Next_Blocks: [int] = []
     Previous_Blocks: [int] = []
+    Next_Blocks_Conditionals: {int, str} = {}
 
     def __init__(self, id, x_min, y_min, x_max, y_max, confidence, name):
         self.id = id
@@ -56,6 +59,11 @@ class Block:
         neighbour: int
         for i, neighbour in enumerate(self.Previous_Blocks):
             string += "-Neighbour {}: {}\n".format(i, neighbour)
+
+        if "decision" in self.objet_type.name:
+            string += "Conditional next neigbours: {}\n".format(len(self.Next_Blocks_Conditionals))
+            string += json.dumps(self.Next_Blocks_Conditionals)
+            string += "\n"
 
         string += "Inner texts: {}\n".format(len(self.Texts))
         for text in self.Texts:
