@@ -42,7 +42,7 @@ def block_list_to_block_json(blocks: [Block]) -> str:
     return json.dumps(response)
 
 
-def block_list_to_mermaid_json(blocks: [Block]) -> str:
+def block_list_to_mermaid_json(blocks: [Block], image_with_detections: str) -> str:
     response: {} = {}
     mermaid_blocks: [] = []
     mermaid: str = "flowchart TD\n"
@@ -58,4 +58,5 @@ def block_list_to_mermaid_json(blocks: [Block]) -> str:
 
     response['mermaid_blocks'] = mermaid_blocks
     response['mermaid_code'] = mermaid
+    response['image_with_detections'] = image_with_detections
     return json.dumps(response)

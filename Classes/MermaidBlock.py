@@ -4,12 +4,12 @@ import Constants
 
 class MermaidBlock:
     """This class is used to exchange block information between frontend and backend"""
-    block_name: str
-    text: str
+    block_name: str = ""
+    text: str = ""
     previous_blocks: {} = {}
     next_blocks: {} = {}
     next_blocks_conditionals: {} = {}
-    object_type: str
+    object_type: str = ""
 
     def __init__(self, block: Block):
         self.block_name = "{}{}".format(Constants.BLOCK_PREFIX, str(block.id))
