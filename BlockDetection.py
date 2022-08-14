@@ -245,10 +245,10 @@ def __sort_blocks(blocks: [Block]) -> [Block]:
                         loops -= 1
 
                 if is_found:
-                    temp_blocks: [int] = prev_temp[0].Next_Blocks[:]
+                    temp_blocks: [int] = [x for x in prev_temp[0].Next_Blocks]
                     temp_blocks.append(next_temp[0].id)
                     prev_temp[0].Next_Blocks = temp_blocks
                     if len(block.Texts) > 0:
-                        temp_text: [Text] = block.Texts[:]
+                        temp_text: [Text] = [x for x in block.Texts]
                         prev_temp[0].Next_Blocks_Conditionals[next_temp[0].id] = temp_text[0].text
     return blocks

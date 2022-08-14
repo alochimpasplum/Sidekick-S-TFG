@@ -1,7 +1,7 @@
 from Classes.Block import Block
 from Classes.Text import Text
-from Classes.MermaidFlowchartBlock import MermaidFlowchartBlock
 from Enums import LABEL
+import Constants
 import json
 
 
@@ -44,8 +44,23 @@ def block_list_to_block_json(blocks: [Block]) -> str:
 
 def block_list_to_mermaid_json(blocks: [Block]) -> str:
     response: [] = []
+    block: Block
     for block in blocks:
         if "arrow" not in block.objet_type.name:
-            item: MermaidFlowchartBlock = MermaidFlowchartBlock(block)
-            response.append(item.to_dict())
+            block_response: {} = {}
+            block_response['block_name'] = "{}{}".format(Constants.BLOCK_PREFIX, str(block.id))
+            texts: [Text] = [x for x in block.Texts]
+            texts_response: [] = []
+            for text in texts:
+                block_text: {} = {}
+                block_text['text'] = text.text
+                texts_response.append(block_text)
+            block_response['text'] = texts_response
+            block_response['previous_blocks'] = [str(x) for x in block.Previous_Blocks]
+            block_response['next_blocks'] = [str(x) for x in block.Next_Blocks]
+            block_response['next_blocks_conditionals'] = block.Next_Blocks_Conditionals
+            block_response['object_type'] = block.objet_type.name
+
+            response.append(block_response)
+
     return json.dumps(response)
