@@ -1,8 +1,8 @@
 from Classes.Block import Block
 from Classes.Text import Text
-from Enums import LABEL
-import Constants
+from Classes.MermaidBlock import MermaidBlock
 import json
+import os
 
 
 def block_list_to_block_json(blocks: [Block]) -> str:
@@ -43,24 +43,19 @@ def block_list_to_block_json(blocks: [Block]) -> str:
 
 
 def block_list_to_mermaid_json(blocks: [Block]) -> str:
-    response: [] = []
+    response: {} = {}
+    mermaid_blocks: [] = []
+    mermaid: str = "flowchart TD\n"
     block: Block
     for block in blocks:
         if "arrow" not in block.objet_type.name:
-            block_response: {} = {}
-            block_response['block_name'] = "{}{}".format(Constants.BLOCK_PREFIX, str(block.id))
-            texts: [Text] = [x for x in block.Texts]
-            texts_response: [] = []
-            for text in texts:
-                block_text: {} = {}
-                block_text['text'] = text.text
-                texts_response.append(block_text)
-            block_response['text'] = texts_response
-            block_response['previous_blocks'] = [str(x) for x in block.Previous_Blocks]
-            block_response['next_blocks'] = [str(x) for x in block.Next_Blocks]
-            block_response['next_blocks_conditionals'] = block.Next_Blocks_Conditionals
-            block_response['object_type'] = block.objet_type.name
+            block_response: MermaidBlock = MermaidBlock(block)
+            mermaid_blocks.append(block_response.to_json())
+            if len(block_response.text) > 0:
+                mermaid += "\t{}[{}]\n".format(block_response.block_name, block_response.text)
+            else:
+                mermaid += "\t{}[{}]\n".format(block_response.block_name, block_response.block_name)
 
-            response.append(block_response)
-
+    response['mermaid_blocks'] = mermaid_blocks
+    response['mermaid_code'] = mermaid
     return json.dumps(response)

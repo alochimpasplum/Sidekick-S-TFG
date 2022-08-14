@@ -1,9 +1,12 @@
 from flask import Flask, jsonify, request, send_file
 from PIL import Image
+
+import Debug
 from Classes.Block import Block
 
 import FlowchartObjectDetection
 import JsonOperations
+import ImgbbUploadFile
 
 
 def create_app():
@@ -55,6 +58,7 @@ def get_detected_mermaid():
         files = request.files.get('image')
         img: Image = Image.open(files)
         blocks: [Block] = FlowchartObjectDetection.get_blocks(img)
+        ImgbbUploadFile.upload_image(Debug.get_detections(blocks, img))
 
         return JsonOperations.block_list_to_mermaid_json(blocks)
     except BaseException as error:

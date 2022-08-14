@@ -12,5 +12,4 @@ def get_detected_image(img: Image) -> Image:
 
 def get_blocks(img: Image) -> [Block]:
     blocks: [Block] = detect_blocks(img)
-    Debug.get_detections(blocks, img).show()
     return blocks

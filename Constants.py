@@ -9,3 +9,12 @@ DO_WHILE_LOOPS = 10
 
 # Value used to set block ID prefix
 BLOCK_PREFIX = "Block"
+
+# IMGBB URL
+IMGBB_URL = "https://api.imgbb.com/1/upload"
+
+# API key for upload images
+IMGBB_API_KEY = "bc8ef0e80f038925f3dadfbb769b87f7"
+
+# Expiration time for uploaded images
+IMGBB_EXPIRATION_TIME = 3600
