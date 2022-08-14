@@ -1,3 +1,5 @@
+import copy
+
 from PIL import Image
 from Classes.Block import Block
 from Classes.Text import Text
@@ -250,5 +252,7 @@ def __sort_blocks(blocks: [Block]) -> [Block]:
                     prev_temp[0].Next_Blocks = temp_blocks
                     if len(block.Texts) > 0:
                         temp_text: [Text] = [x for x in block.Texts]
-                        prev_temp[0].Next_Blocks_Conditionals[next_temp[0].id] = temp_text[0].text
+                        temp_dict = copy.deepcopy(prev_temp[0].Next_Blocks_Conditionals)
+                        temp_dict[next_temp[0].id] = temp_text[0].text
+                        prev_temp[0].Next_Blocks_Conditionals = copy.deepcopy(temp_dict)
     return blocks
