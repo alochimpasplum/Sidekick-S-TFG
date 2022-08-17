@@ -12,3 +12,32 @@ class LABEL(Enum):
     arrow_line_right = 7
     arrow_line_left = 8
     pointer = 9
+
+
+mermaid_delete_characters: () = (
+    '(',
+    ')',
+    '[',
+    ']',
+    '>',
+    '{',
+    '}',
+    '/',
+    '\\'
+)
+
+block_open: {} = {
+    'start_end': '([',
+    'scan': '[/',
+    'decision': '{{',
+    'print': '[\\',
+    'process': '['
+}
+
+block_close: {} = {
+    'start_end': '])',
+    'scan': '/]',
+    'decision': '}}',
+    'print': '/]',
+    'process': ']'
+}

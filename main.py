@@ -58,7 +58,12 @@ def get_detected_mermaid():
         files = request.files.get('image')
         img: Image = Image.open(files)
         blocks: [Block] = FlowchartObjectDetection.get_blocks(img)
-        image_with_detections: str = ImgbbUploadFile.upload_image(Debug.get_detections(blocks, img))
+        image_with_detections: str
+        try:
+            image_with_detections = ImgbbUploadFile.upload_image(Debug.get_detections(blocks, img))
+        except BaseException as error:
+            print("No se ha podido subir la imagen \n {}".format(error))
+            image_with_detections = ""
 
         return JsonOperations.block_list_to_mermaid_json(blocks, image_with_detections)
     except BaseException as error:

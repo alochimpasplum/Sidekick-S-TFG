@@ -1,6 +1,7 @@
 from Classes.Block import Block
 from Classes.Text import Text
 from Classes.MermaidBlock import MermaidBlock
+import MermaidOperations
 import json
 import os
 
@@ -45,18 +46,16 @@ def block_list_to_block_json(blocks: [Block]) -> str:
 def block_list_to_mermaid_json(blocks: [Block], image_with_detections: str) -> str:
     response: {} = {}
     mermaid_blocks: [] = []
-    mermaid: str = "flowchart TD\n"
+    mermaid_blocks_json: [] = []
+
     block: Block
     for block in blocks:
         if "arrow" not in block.objet_type.name:
             block_response: MermaidBlock = MermaidBlock(block)
-            mermaid_blocks.append(block_response.to_json())
-            if len(block_response.text) > 0:
-                mermaid += "\t{}[{}]\n".format(block_response.block_name, block_response.text)
-            else:
-                mermaid += "\t{}[{}]\n".format(block_response.block_name, block_response.block_name)
+            mermaid_blocks.append(block_response)
+            mermaid_blocks_json.append(block_response.to_json())
 
-    response['mermaid_blocks'] = mermaid_blocks
-    response['mermaid_code'] = mermaid
+    response['mermaid_blocks'] = mermaid_blocks_json
+    response['mermaid_code'] = MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)
     response['image_with_detections'] = image_with_detections
     return json.dumps(response)
