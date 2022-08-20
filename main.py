@@ -38,7 +38,7 @@ def get_detected_image():
         return err, 400
 
 
-@app.route('/getBlocksFromImage', methods=['GET'])
+@app.route('/getBlocksFromImage', methods=['POST'])
 def get_detected_blocks():
     try:
         files = request.files.get('image')
@@ -52,7 +52,7 @@ def get_detected_blocks():
         return err, 400
 
 
-@app.route('/getMermaidFromImage', methods=['GET'])
+@app.route('/getMermaidFromImage', methods=['POST'])
 def get_detected_mermaid():
     try:
         files = request.files.get('image')
