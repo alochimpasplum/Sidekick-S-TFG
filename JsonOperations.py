@@ -56,7 +56,6 @@ def block_list_to_mermaid_json(blocks: [Block], image_with_detections: str) -> s
             mermaid_blocks_json.append(block_response.to_json())
 
     response['mermaid_blocks'] = mermaid_blocks_json
-    #todo: fix
-    #response['mermaid_code'] = MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)
+    response['mermaid_code'] = MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)
     response['image_with_detections'] = image_with_detections
     return json.dumps(response)

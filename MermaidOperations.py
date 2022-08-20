@@ -26,5 +26,7 @@ def mermaid_blocks_to_mermaid_code(blocks: [MermaidBlock]) -> str:
                 mermaid += "\t{}-->{}\n".format(block.block_name, next_block)
 
     print(mermaid)
+    mermaid = mermaid.replace("\n", "<br>")
+    mermaid = mermaid.replace("\t", "")
 
     return mermaid
