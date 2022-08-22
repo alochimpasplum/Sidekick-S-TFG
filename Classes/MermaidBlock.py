@@ -29,7 +29,7 @@ class MermaidBlock:
         self.object_type = block.objet_type.name
 
     def to_json(self) -> {}:
-        block_response: {} ={
+        block_response: {} = {
             'block_name': self.block_name,
             'text': self.text,
             'previous_blocks': self.previous_blocks,

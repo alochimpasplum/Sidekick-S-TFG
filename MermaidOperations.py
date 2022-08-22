@@ -1,6 +1,7 @@
 from Classes.MermaidBlock import MermaidBlock
 from Enums import mermaid_delete_characters, block_open, block_close
 import Constants
+import base64
 
 
 def mermaid_blocks_to_mermaid_code(blocks: [MermaidBlock]) -> str:
@@ -25,8 +26,8 @@ def mermaid_blocks_to_mermaid_code(blocks: [MermaidBlock]) -> str:
             for next_block in block.next_blocks:
                 mermaid += "\t{}-->{}\n".format(block.block_name, next_block)
 
-    print(mermaid)
-    mermaid = mermaid.replace("\n", "<br>")
-    mermaid = mermaid.replace("\t", "")
+    graphbytes = mermaid.encode("ascii")
+    base64_bytes = base64.b64encode(graphbytes)
+    base64_string = base64_bytes.decode("ascii")
 
-    return mermaid
+    return base64_string
