@@ -51,11 +51,19 @@ def block_list_to_mermaid_json(blocks: [Block], image_with_detections: str) -> s
     block: Block
     for block in blocks:
         if "arrow" not in block.objet_type.name:
-            block_response: MermaidBlock = MermaidBlock(block)
+            block_response: MermaidBlock = MermaidBlock(block=block)
             mermaid_blocks.append(block_response)
             mermaid_blocks_json.append(block_response.to_json())
 
     response['mermaid_blocks'] = mermaid_blocks_json
-    response['mermaid_code'] = MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)
+    response['image_mermaid'] = MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)
     response['image_with_detections'] = image_with_detections
     return json.dumps(response)
+
+
+def json_to_mermaid_image(data: str) -> str:
+    raw_blocks = json.loads(data)
+    mermaid_blocks: [MermaidBlock] = []
+    for item in raw_blocks:
+        mermaid_blocks.append(MermaidBlock(json_dictionary=item))
+    return MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)

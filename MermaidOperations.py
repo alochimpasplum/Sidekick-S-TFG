@@ -1,11 +1,15 @@
+from PIL import Image
 from Classes.MermaidBlock import MermaidBlock
 from Enums import mermaid_delete_characters, block_open, block_close
 import Constants
 import base64
+import requests
+import io
+import ImgbbUploadFile
 
 
 def mermaid_blocks_to_mermaid_code(blocks: [MermaidBlock]) -> str:
-    mermaid: str = "flowchart TD\n"
+    mermaid: str = "flowchart LR\n"
     block: MermaidBlock
     for block in blocks:
         if len(block.text) > 0:
@@ -29,5 +33,12 @@ def mermaid_blocks_to_mermaid_code(blocks: [MermaidBlock]) -> str:
     graphbytes = mermaid.encode("ascii")
     base64_bytes = base64.b64encode(graphbytes)
     base64_string = base64_bytes.decode("ascii")
+    image_with_detections: str
+    try:
+        img = Image.open(io.BytesIO(requests.get('https://mermaid.ink/img/' + base64_string).content))
+        image_with_detections = ImgbbUploadFile.upload_image(img)
+    except BaseException as error:
+        print("No se ha podido subir la imagen \n {}".format(error))
+        image_with_detections = ""
 
-    return base64_string
+    return image_with_detections
