@@ -41,3 +41,8 @@ block_close: {} = {
     'print': '/]',
     'process': ']'
 }
+
+supported_languages: [] = [
+    'pseudocode',
+    'python'
+]

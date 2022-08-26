@@ -1,5 +1,5 @@
 import json
-
+from Enums import supported_languages
 from flask import Flask, jsonify, request, send_file, abort
 from PIL import Image
 
@@ -84,6 +84,20 @@ def get_mermaid_img():
         return {'image_mermaid': url}
     else:
         abort(400)
+
+
+@app.route('/getSupportedLanguages', methods=['GET'])
+def get_supported_languages():
+    return {'SupportedLanguages': supported_languages}
+
+
+@app.route('/getCode', methods=['GET'])
+def get_code():
+    languajes: str = request.args.get("Languages", "")
+    mermaid_blocks: str = request.args.get("MermaidBlocks", "")
+    print(languajes)
+    print(mermaid_blocks)
+    return {'message': "hello world"}
 
 
 if __name__ == '__main__':

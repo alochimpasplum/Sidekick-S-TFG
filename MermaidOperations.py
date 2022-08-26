@@ -30,8 +30,8 @@ def mermaid_blocks_to_mermaid_code(blocks: [MermaidBlock]) -> str:
             for next_block in block.next_blocks:
                 mermaid += "\t{}-->{}\n".format(block.block_name, next_block)
 
-    graphbytes = mermaid.encode("ascii")
-    base64_bytes = base64.b64encode(graphbytes)
+    graph_bytes = mermaid.encode("ascii")
+    base64_bytes = base64.b64encode(graph_bytes)
     base64_string = base64_bytes.decode("ascii")
     image_with_detections: str
     try:
