@@ -229,6 +229,8 @@ def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
 
 def __sort_blocks(blocks: [Block]) -> [Block]:
     block: Block
+
+    # Get next blocks
     for block in blocks:
         if "arrow" in block.objet_type.name and len(block.Previous_Blocks) > 0:
             prev_temp: [Block] = [x for x in blocks if x.id == block.Previous_Blocks[0]]
@@ -255,4 +257,16 @@ def __sort_blocks(blocks: [Block]) -> [Block]:
                         temp_dict = copy.deepcopy(prev_temp[0].Next_Blocks_Conditionals)
                         temp_dict[next_temp[0].id] = temp_text[0].text
                         prev_temp[0].Next_Blocks_Conditionals = copy.deepcopy(temp_dict)
+
+    # Get previous blocks
+    next_block_candidate: Block
+    for block in blocks:
+        if "arrow" not in block.objet_type.name and len(block.Next_Blocks) > 0:
+            next_blocks: [Block] = [x for x in blocks]
+            for next_block_candidate in next_blocks:
+                if "arrow" not in next_block_candidate.objet_type.name and block.id in next_block_candidate.Next_Blocks:
+                    block.Previous_Blocks.append(copy.deepcopy(next_block_candidate.id))
+                    # todo: esto sigue copiando TODO, seguir aquí
+
+
     return blocks

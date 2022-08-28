@@ -2,7 +2,7 @@ from PIL import Image
 from Classes.MermaidBlock import MermaidBlock
 from Enums import mermaid_delete_characters, block_open, block_close
 import Constants
-import base64
+import Base64
 import requests
 import io
 import ImgbbUploadFile
@@ -30,9 +30,7 @@ def mermaid_blocks_to_mermaid_code(blocks: [MermaidBlock]) -> str:
             for next_block in block.next_blocks:
                 mermaid += "\t{}-->{}\n".format(block.block_name, next_block)
 
-    graph_bytes = mermaid.encode("ascii")
-    base64_bytes = base64.b64encode(graph_bytes)
-    base64_string = base64_bytes.decode("ascii")
+    base64_string = Base64.encode(mermaid)
     image_with_detections: str
     try:
         img = Image.open(io.BytesIO(requests.get('https://mermaid.ink/img/' + base64_string).content))
