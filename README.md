@@ -41,6 +41,14 @@ classDiagram
 
 ```
 
+## Operations in Process box
+- Print:
+  - Write some text inside
+  - Write any variable without anything
+  - Write any concatenation of text + variable + text
+  - Write "print" and the text to print (or concatenation)
+  - [ ] TODO: add images to show how to print
+
 ## Limitations
 - Maintain a good separation between arrows in arrow chains
 - [ ] TODO: add images to show how to draw arrows
@@ -48,6 +56,7 @@ classDiagram
 - Letters in only one line
 - Conditionals must stay in the nearest arrow to Decision block
 - [ ] TODO: add images to show how to draw this conditionals
+- Not allowed staked conditionals
 
 ## TODO-List
 - Improve double pointer detection in arrow chains to avoid double detection in the same arrow

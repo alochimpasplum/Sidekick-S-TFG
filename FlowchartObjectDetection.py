@@ -12,6 +12,4 @@ def get_detected_image(img: Image) -> Image:
 
 def get_blocks(img: Image) -> [Block]:
     blocks: [Block] = detect_blocks(img)
-    for block in blocks:
-        print(block.to_string())
     return blocks

@@ -30,7 +30,11 @@ def mermaid_blocks_to_mermaid_code(blocks: [MermaidBlock]) -> str:
             for next_block in block.next_blocks:
                 mermaid += "\t{}-->{}\n".format(block.block_name, next_block)
 
-    base64_string = Base64.encode(mermaid)
+    return mermaid
+
+
+def get_mermaid_img(blocks: [MermaidBlock]) -> str:
+    base64_string = Base64.encode(mermaid_blocks_to_mermaid_code(blocks))
     image_with_detections: str
     try:
         img = Image.open(io.BytesIO(requests.get('https://mermaid.ink/img/' + base64_string).content))

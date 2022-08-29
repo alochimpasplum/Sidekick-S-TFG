@@ -56,14 +56,24 @@ def block_list_to_mermaid_json(blocks: [Block], image_with_detections: str) -> s
             mermaid_blocks_json.append(block_response.to_json())
 
     response['mermaid_blocks'] = mermaid_blocks_json
-    response['image_mermaid'] = MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)
+    response['image_mermaid'] = MermaidOperations.get_mermaid_img(mermaid_blocks)
     response['image_with_detections'] = image_with_detections
     return json.dumps(response)
 
 
 def json_to_mermaid_image(data: str) -> str:
+    mermaid_blocks: [MermaidBlock] = json_to_mermaid_blocks(data)
+    return MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)
+
+
+def json_to_mermaid_blocks(data: str) -> [MermaidBlock]:
     raw_blocks = json.loads(data)
     mermaid_blocks: [MermaidBlock] = []
     for item in raw_blocks:
         mermaid_blocks.append(MermaidBlock(json_dictionary=item))
-    return MermaidOperations.mermaid_blocks_to_mermaid_code(mermaid_blocks)
+    return mermaid_blocks
+
+
+def json_to_string_list(data: str) -> [str]:
+    str_blocks: [str] = json.loads(data)
+    return str_blocks

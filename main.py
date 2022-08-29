@@ -1,4 +1,7 @@
 import json
+
+import Enums
+import FontCodes
 from Enums import supported_languages
 from flask import Flask, jsonify, request, send_file, abort
 from PIL import Image
@@ -95,9 +98,10 @@ def get_supported_languages():
 def get_code():
     languages: [str] = request.args.get("Languages", "")
     mermaid_blocks: [str] = request.args.get("MermaidBlocks", "")
-    print(languages)
-    print(mermaid_blocks)
-    return {'message': "hello world"}
+
+    response: {} = FontCodes.get_font_codes(mermaid_blocks, languages)
+
+    return response
 
 
 if __name__ == '__main__':
