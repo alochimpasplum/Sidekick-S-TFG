@@ -43,7 +43,6 @@ block_close: {} = {
 }
 
 supported_languages: [] = [
-    'mermaid',
-    'python'
+    'mermaid'
 ]
 

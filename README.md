@@ -42,11 +42,14 @@ classDiagram
 ```
 
 ## Operations in Process box
+- Variables should be written with '_var' after name
+  - Example: 
+    - index_variable - Not valid
+    - index_var - Valid
 - Print:
   - Write some text inside
   - Write any variable without anything
   - Write any concatenation of text + variable + text
-  - Write "print" and the text to print (or concatenation)
   - [ ] TODO: add images to show how to print
 
 ## Limitations

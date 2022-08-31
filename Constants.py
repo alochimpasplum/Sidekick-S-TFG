@@ -19,6 +19,11 @@ IMGBB_API_KEY = "bc8ef0e80f038925f3dadfbb769b87f7"
 # Expiration time for uploaded images (in seconds)
 IMGBB_EXPIRATION_TIME = 1800
 
-# Symbols used to mark tabs and new lines
+# Suffix to indicate variables
+VAR_SUFFIX = "_var"
+
+# Symbols used to mark pseudocode
 TAB = "<TAB>"
 NEWLINE = "<NL>"
+VARIABLE_START = "<VARIABLE>"
+VARIABLE_END = "</VARIABLE>"
