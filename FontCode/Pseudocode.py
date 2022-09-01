@@ -7,7 +7,9 @@ from Constants import TAB, VAR_SUFFIX, VARIABLE, PRINT, SCAN, FUNC_SUFFIX, FUNCT
 def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> str:
     blocks: [MermaidBlock] = copy.deepcopy(mermaid_blocks)
     block: MermaidBlock = __get_first_block(blocks)
-    blocks.remove(block)
+
+    for b in mermaid_blocks:
+        print(b.to_string())
 
     variables: {} = {}
     functions: [] = []
@@ -25,12 +27,14 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> str:
             break
         elif len(next_blocks) == 1:
             block = next_blocks[0]
-            if "decision" not in block.object_type:
+            # todo: continuar aqui, revisar el fallo de que coja el último bloque y lo analice (Start_end)
+            if "decision" not in block.object_type or "start_end" not in block.object_type:
                 line: str = __block_operation(block, variables, functions)
                 line = __add_tabs(line, tab_index)
+                line += block.object_type
                 pseudocode.append(line)
-            else:
-                __conditional_block_operation(block, next_blocks, variables)
+            elif "decision" in block.object_type:
+                __conditional_block_operation(block, next_blocks, variables, functions)
         else:
             # todo: hacer la operativa del condicional
             block = next_blocks[0]
@@ -49,13 +53,18 @@ def __get_first_block(mermaid_blocks: [MermaidBlock]) -> MermaidBlock:
         if len(block.previous_blocks) == 0:
             first_block = block
             break
+    mermaid_blocks.remove(first_block)
     return first_block
 
 
 def __get_next_block(mermaid_blocks: [MermaidBlock], actual_block: MermaidBlock) -> [MermaidBlock]:
-    next_blocks: [MermaidBlock] = [x for x in mermaid_blocks if x.block_name in actual_block.next_blocks]
-    for block in next_blocks:
-        mermaid_blocks.remove(block)
+    next_blocks: [MermaidBlock] = []
+    if len(actual_block.next_blocks) > 0:
+        next_blocks = [x for x in mermaid_blocks if x.block_name in actual_block.next_blocks]
+        for block in next_blocks:
+            mermaid_blocks.remove(block)
+        return next_blocks
+
     return next_blocks
 
 
@@ -71,7 +80,8 @@ def __block_operation(mermaid_block: MermaidBlock, variables: {}, functions: [])
     return line
 
 
-def __conditional_block_operation(conditional_block: MermaidBlock, next_blocks: [MermaidBlock], variables: {}) -> None:
+def __conditional_block_operation(conditional_block: MermaidBlock, next_blocks: [MermaidBlock],
+                                  variables: {}, functions: []) -> []:
     print("todo")
 
 
@@ -133,8 +143,9 @@ def __process_operation(mermaid_block: MermaidBlock, variables: {}, functions: [
     return code_line
 
 
-def __add_tabs(line: str, tabs: int) -> str:
+def __add_tabs(line: str, tab_number: int) -> str:
     tabs: str = ""
-    for x in range(tabs):
+    for x in range(tab_number):
         tabs += TAB
     return tabs + line
+

@@ -62,6 +62,20 @@ classDiagram
   - (Only in POO languages) Write a function to be called with '_func' after name
   - Write any math operation (+, -, *, /) between numbers and/or variables and store it under variable.
   - [ ] TODO: add images to show how to
+- Decision:
+  - Supports 2 options (if clause) or more (switch-case clause)
+  - Supports while loop
+  - Inside must be the clause
+    - Examples:
+      - test_variable_var > 5
+        - option 1: True
+        - option 2: False
+      - test_variable_var
+        - option 1: > 5
+        - option 2: < 5
+        - option 3: == 5
+    - [ ] TODO: add images to show how to
+    
 
 ## Limitations
 - Maintain a good separation between arrows in arrow chains
@@ -77,3 +91,5 @@ classDiagram
   - FlowchartObjectDetection._sort_arrows()
 - Improve OCR detection
 - String concatenation
+- Do-While loop support
+- For loop support
