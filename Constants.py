@@ -22,8 +22,13 @@ IMGBB_EXPIRATION_TIME = 1800
 # Suffix to indicate variables
 VAR_SUFFIX = "_var"
 
+# Suffix to indicate functions
+FUNC_SUFFIX = '_func'
+
 # Symbols used to mark pseudocode
 TAB = "<TAB>"
-NEWLINE = "<NL>"
-VARIABLE_START = "<VARIABLE>"
-VARIABLE_END = "</VARIABLE>"
+VARIABLE = "VAR:"
+PRINT = "PRINT:"
+SCAN = "SCAN:"
+FUNCTION = "FUNC:"
+MATH_OPERATION = "MATH:"

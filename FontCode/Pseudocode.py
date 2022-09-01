@@ -1,7 +1,7 @@
 import copy
 
 from Classes import MermaidBlock
-from Constants import TAB, NEWLINE, VAR_SUFFIX, VARIABLE_START, VARIABLE_END
+from Constants import TAB, VAR_SUFFIX, VARIABLE, PRINT, SCAN, FUNC_SUFFIX, FUNCTION, MATH_OPERATION
 
 
 def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> str:
@@ -10,10 +10,15 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> str:
     blocks.remove(block)
 
     variables: {} = {}
+    functions: [] = []
     pseudocode: [str] = []
     next_blocks: [MermaidBlock]
+    tab_index: int = 0
 
-    pseudocode.append("function {}".format(block.text.rstrip()))
+    if not ("inicio" or "start") in block.text:
+        tab_index = 1
+        pseudocode.append("function {}".format(block.text.rstrip()))
+
     while len(blocks) > 0:
         next_blocks = __get_next_block(blocks, block)
         if len(next_blocks) == 0:
@@ -21,7 +26,8 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> str:
         elif len(next_blocks) == 1:
             block = next_blocks[0]
             if "decision" not in block.object_type:
-                line: str = __block_operation(block, variables)
+                line: str = __block_operation(block, variables, functions)
+                line = __add_tabs(line, tab_index)
                 pseudocode.append(line)
             else:
                 __conditional_block_operation(block, next_blocks, variables)
@@ -32,6 +38,8 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> str:
                 if "start_end" in next_block.object_type:
                     blocks.append(next_block)
     print(pseudocode)
+    print(functions)
+    print(variables)
     return "abc"
 
 
@@ -51,14 +59,14 @@ def __get_next_block(mermaid_blocks: [MermaidBlock], actual_block: MermaidBlock)
     return next_blocks
 
 
-def __block_operation(mermaid_block: MermaidBlock, variables: {}) -> str:
+def __block_operation(mermaid_block: MermaidBlock, variables: {}, functions: []) -> str:
     line: str = ""
     if "scan" in mermaid_block.object_type:
-        __scan_operation(mermaid_block, variables)
+        line = __scan_operation(mermaid_block, variables)
     elif "print" in mermaid_block.object_type:
         line = __print_operation(mermaid_block, variables)
     elif "process" in mermaid_block.object_type:
-        __process_operation(mermaid_block, variables)
+        line = __process_operation(mermaid_block, variables, functions)
 
     return line
 
@@ -67,26 +75,66 @@ def __conditional_block_operation(conditional_block: MermaidBlock, next_blocks: 
     print("todo")
 
 
-def __scan_operation(mermaid_block: MermaidBlock, variables: {}) -> None:
-    print("todo")
+def __scan_operation(mermaid_block: MermaidBlock, variables: {}) -> str:
+    code_line: str = SCAN
+    if VAR_SUFFIX in mermaid_block.text:
+        var: str = mermaid_block.text.replace(VAR_SUFFIX, "")
+        if var not in variables:
+            variables[var] = "string"
+            code_line += var
+    else:
+        variables[mermaid_block.text] = "string"
+        code_line += mermaid_block.text
+    code_line = code_line.rstrip()
+
+    return code_line
 
 
 def __print_operation(mermaid_block: MermaidBlock, variables: {}) -> str:
-    code_line: str = "print("
+    code_line: str = PRINT
     text: [str] = mermaid_block.text.split()
     for word in text:
         if VAR_SUFFIX in word:
             var: str = word.replace(VAR_SUFFIX, "")
-            code_line += "{}{}{} ".format(VARIABLE_START, var, VARIABLE_END)
+            code_line += "{}{} ".format(VARIABLE, var)
             if var not in variables:
                 variables[var] = "string"
         elif word != '+':
             code_line += "{} ".format(word)
-
     code_line = code_line.rstrip()
-    code_line += ")"
+
     return code_line
 
 
-def __process_operation(mermaid_block: MermaidBlock, variables: {}) -> None:
-    print("todo")
+def __process_operation(mermaid_block: MermaidBlock, variables: {}, functions: []) -> str:
+    code_line: str = ""
+    text: [str] = mermaid_block.text.split()
+
+    # Process with function
+    if FUNC_SUFFIX in mermaid_block.text:
+        func: str = mermaid_block.text.replace(FUNC_SUFFIX, "")
+        if func in functions:
+            code_line += "{}{}".format(FUNCTION, func)
+        else:
+            functions.append(func)
+            code_line += "{}{}".format(FUNCTION, func)
+    # Process with math operation
+    elif ('+' or '-' or '*' or '/') in mermaid_block.text:
+        code_line += MATH_OPERATION
+        for word in text:
+            if VAR_SUFFIX in word:
+                var: str = word.replace(VAR_SUFFIX, "")
+                code_line += "{}{} ".format(VARIABLE, var)
+                variables[var] = "int"
+            else:
+                code_line += "{} ".format(word)
+
+    code_line = code_line.rstrip()
+    return code_line
+
+
+def __add_tabs(line: str, tabs: int) -> str:
+    tabs: str = ""
+    for x in range(tabs):
+        tabs += TAB
+    return tabs + line

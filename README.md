@@ -46,11 +46,22 @@ classDiagram
   - Example: 
     - index_variable - Not valid
     - index_var - Valid
+- Functions should be written with '_func' after name
+  - Example:
+    - function_name_func - Valid
+    - function_name - Not valid
 - Print:
   - Write some text inside
   - Write any variable without anything
   - Write any concatenation of text + variable + text
   - [ ] TODO: add images to show how to print
+- Scan:
+  - Write the variable where to save the data
+  - [ ] TODO: add images to show how to print
+- Process:
+  - (Only in POO languages) Write a function to be called with '_func' after name
+  - Write any math operation (+, -, *, /) between numbers and/or variables and store it under variable.
+  - [ ] TODO: add images to show how to
 
 ## Limitations
 - Maintain a good separation between arrows in arrow chains
@@ -65,3 +76,4 @@ classDiagram
 - Improve double pointer detection in arrow chains to avoid double detection in the same arrow
   - FlowchartObjectDetection._sort_arrows()
 - Improve OCR detection
+- String concatenation

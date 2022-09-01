@@ -98,7 +98,7 @@ def get_supported_languages():
 def get_code():
     languages: [str] = request.args.get("Languages", "")
     mermaid_blocks: [str] = request.args.get("MermaidBlocks", "")
-
+    # print(mermaid_blocks)
     response: {} = FontCodes.get_font_codes(mermaid_blocks, languages)
 
     return response
