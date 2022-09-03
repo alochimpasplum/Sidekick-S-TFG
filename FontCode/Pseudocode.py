@@ -2,7 +2,7 @@ import copy
 
 from Classes import MermaidBlock
 from Classes import Pseudocode as PseudocodeClass
-from Constants import TAB, VAR_SUFFIX, VARIABLE, PRINT, SCAN, FUNC_SUFFIX, FUNCTION, MATH_OPERATION
+from Constants import TAB, VAR_SUFFIX, VARIABLE, PRINT, SCAN, FUNC_SUFFIX, FUNCTION, MATH_OPERATION, MAIN_FUNCTION
 
 
 def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode:
@@ -12,26 +12,26 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode
     variables: {} = {}
     functions: [] = []
     pseudocode: [str] = []
-    next_blocks: [MermaidBlock]
+    next_blocks: [MermaidBlock] = []
     tab_index: int = 0
 
     if not ("inicio" or "start") in block.text:
         tab_index = 1
-        pseudocode.append("function {}".format(block.text.rstrip()))
+        pseudocode.append("{} {}".format(MAIN_FUNCTION, block.text.rstrip()))
 
+    next_blocks = __get_next_block(blocks, block)
+    block = next_blocks[0]
     while len(blocks) > 0:
         next_blocks = __get_next_block(blocks, block)
 
         if len(next_blocks) == 0:
             break
         elif len(next_blocks) == 1:
-            if "decision" not in block.object_type or "start_end" not in block.object_type:
+            if ("decision" not in block.object_type) or ("start_end" not in block.object_type):
                 line: str = __block_operation(block, variables, functions)
                 line = __add_tabs(line, tab_index)
                 pseudocode.append(line)
-            elif "decision" in block.object_type:
-                # todo: hacer la operativa del condicional
-                __conditional_block_operation(block, next_blocks, variables, functions)
+
             block = next_blocks[0]
         else:
             # todo: hacer la operativa del condicional
@@ -39,8 +39,6 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode
             for next_block in next_blocks:
                 if "start_end" in next_block.object_type:
                     blocks.append(next_block)
-
-    pseudocode.append(__add_variables(variables))
 
     pseudocode_class = PseudocodeClass.Pseudocode(pseudocode, functions, variables)
 
@@ -109,7 +107,7 @@ def __print_operation(mermaid_block: MermaidBlock, variables: {}) -> str:
             code_line += "{}{} ".format(VARIABLE, var)
             if var not in variables:
                 variables[var] = "string"
-        elif word != '+':
+        elif word != "+":
             code_line += "{} ".format(word)
     code_line = code_line.rstrip()
 
@@ -129,7 +127,8 @@ def __process_operation(mermaid_block: MermaidBlock, variables: {}, functions: [
             functions.append(func)
             code_line += "{}{}".format(FUNCTION, func)
     # Process with math operation
-    elif ('+' or '-' or '*' or '/') in mermaid_block.text:
+    # elif ("+" or "-" or "*" or "/" or "=") in text:
+    elif ("-" in text) or ("+" in text) or ("*" in text) or ("/" in text):
         code_line += MATH_OPERATION
         for word in text:
             if VAR_SUFFIX in word:

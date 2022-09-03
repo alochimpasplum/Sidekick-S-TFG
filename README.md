@@ -64,6 +64,7 @@ classDiagram
   - [ ] TODO: add images to show how to
 - Decision:
   - Supports 2 options (if clause) or more (switch-case clause)
+    - It's mandatory draw almost 2 options
   - Supports while loop
   - Inside must be the clause
     - Examples:
