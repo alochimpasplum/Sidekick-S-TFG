@@ -1,15 +1,13 @@
 import copy
 
 from Classes import MermaidBlock
+from Classes import Pseudocode as PseudocodeClass
 from Constants import TAB, VAR_SUFFIX, VARIABLE, PRINT, SCAN, FUNC_SUFFIX, FUNCTION, MATH_OPERATION
 
 
-def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> str:
+def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode:
     blocks: [MermaidBlock] = copy.deepcopy(mermaid_blocks)
-    block: MermaidBlock = __get_first_block(blocks)
-
-    for b in mermaid_blocks:
-        print(b.to_string())
+    block: MermaidBlock = __get_first_block(mermaid_blocks)
 
     variables: {} = {}
     functions: [] = []
@@ -23,28 +21,30 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> str:
 
     while len(blocks) > 0:
         next_blocks = __get_next_block(blocks, block)
+
         if len(next_blocks) == 0:
             break
         elif len(next_blocks) == 1:
-            block = next_blocks[0]
-            # todo: continuar aqui, revisar el fallo de que coja el último bloque y lo analice (Start_end)
             if "decision" not in block.object_type or "start_end" not in block.object_type:
                 line: str = __block_operation(block, variables, functions)
                 line = __add_tabs(line, tab_index)
-                line += block.object_type
                 pseudocode.append(line)
             elif "decision" in block.object_type:
+                # todo: hacer la operativa del condicional
                 __conditional_block_operation(block, next_blocks, variables, functions)
+            block = next_blocks[0]
         else:
             # todo: hacer la operativa del condicional
             block = next_blocks[0]
             for next_block in next_blocks:
                 if "start_end" in next_block.object_type:
                     blocks.append(next_block)
-    print(pseudocode)
-    print(functions)
-    print(variables)
-    return "abc"
+
+    pseudocode.append(__add_variables(variables))
+
+    pseudocode_class = PseudocodeClass.Pseudocode(pseudocode, functions, variables)
+
+    return pseudocode_class
 
 
 def __get_first_block(mermaid_blocks: [MermaidBlock]) -> MermaidBlock:
@@ -149,3 +149,9 @@ def __add_tabs(line: str, tab_number: int) -> str:
         tabs += TAB
     return tabs + line
 
+
+def __add_variables(variables: {}) -> [str]:
+    var_lines: [str] = []
+    for x in variables.keys():
+        var_lines.append("{}{}".format(VARIABLE, x))
+    return var_lines

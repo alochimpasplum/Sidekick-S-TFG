@@ -96,6 +96,7 @@ def get_supported_languages():
 
 @app.route('/getCode', methods=['GET'])
 def get_code():
+    args = request.args
     languages: [str] = request.args.get("Languages", "")
     mermaid_blocks: [str] = request.args.get("MermaidBlocks", "")
     # print(mermaid_blocks)
