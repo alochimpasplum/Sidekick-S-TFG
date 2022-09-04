@@ -1,8 +1,8 @@
 import copy
+import Constants
 
 from Classes import MermaidBlock
 from Classes import Pseudocode as PseudocodeClass
-from Constants import TAB, VAR_SUFFIX, VARIABLE, PRINT, SCAN, FUNC_SUFFIX, FUNCTION, MATH_OPERATION, MAIN_FUNCTION
 
 
 def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode:
@@ -17,7 +17,7 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode
 
     if not ("inicio" or "start") in block.text:
         tab_index = 1
-        pseudocode.append("{} {}".format(MAIN_FUNCTION, block.text.rstrip()))
+        pseudocode.append("{} {}".format(Constants.MAIN_FUNCTION, block.text.rstrip()))
 
     next_blocks = __get_next_block(blocks, block)
     block = next_blocks[0]
@@ -33,12 +33,14 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode
                 pseudocode.append(line)
 
             block = next_blocks[0]
-        else:
-            # todo: hacer la operativa del condicional
-            block = next_blocks[0]
-            for next_block in next_blocks:
-                if "start_end" in next_block.object_type:
-                    blocks.append(next_block)
+        elif len(next_blocks) > 1:
+            conditional_operation = __conditional_block_operation(block, next_blocks, mermaid_blocks,
+                                                              variables, functions)
+            next_lines: [str] = conditional_operation[0]
+            block = conditional_operation[1]
+            for line in next_lines:
+                line = __add_tabs(line, tab_index)
+                pseudocode.append(line)
 
     pseudocode_class = PseudocodeClass.Pseudocode(pseudocode, functions, variables)
 
@@ -79,14 +81,26 @@ def __block_operation(mermaid_block: MermaidBlock, variables: {}, functions: [])
 
 
 def __conditional_block_operation(conditional_block: MermaidBlock, next_blocks: [MermaidBlock],
-                                  variables: {}, functions: []) -> []:
-    print("todo")
+                                  mermaid_blocks: [MermaidBlock], variables: {}, functions: [])\
+                                    -> [[str], MermaidBlock]:
+    """Return [0] -> Code lines\n
+    Return [1] -> Final conditional's block"""
+    lines: [str] = []
+    line: str = ""
+    final_conditional_block: MermaidBlock = __check_final_conditional_block(next_blocks, mermaid_blocks)
+
+    if len(next_blocks) == 2:
+        print("if")
+    elif len(next_blocks) > 2:
+        print("switch")
+
+    return [lines, final_conditional_block]
 
 
 def __scan_operation(mermaid_block: MermaidBlock, variables: {}) -> str:
-    code_line: str = SCAN
-    if VAR_SUFFIX in mermaid_block.text:
-        var: str = mermaid_block.text.replace(VAR_SUFFIX, "")
+    code_line: str = Constants.SCAN
+    if Constants.VAR_SUFFIX in mermaid_block.text:
+        var: str = mermaid_block.text.replace(Constants.VAR_SUFFIX, "")
         if var not in variables:
             variables[var] = "string"
             code_line += var
@@ -99,12 +113,12 @@ def __scan_operation(mermaid_block: MermaidBlock, variables: {}) -> str:
 
 
 def __print_operation(mermaid_block: MermaidBlock, variables: {}) -> str:
-    code_line: str = PRINT
+    code_line: str = Constants.PRINT
     text: [str] = mermaid_block.text.split()
     for word in text:
-        if VAR_SUFFIX in word:
-            var: str = word.replace(VAR_SUFFIX, "")
-            code_line += "{}{} ".format(VARIABLE, var)
+        if Constants.VAR_SUFFIX in word:
+            var: str = word.replace(Constants.VAR_SUFFIX, "")
+            code_line += "{}{} ".format(Constants.VARIABLE, var)
             if var not in variables:
                 variables[var] = "string"
         elif word != "+":
@@ -119,21 +133,21 @@ def __process_operation(mermaid_block: MermaidBlock, variables: {}, functions: [
     text: [str] = mermaid_block.text.split()
 
     # Process with function
-    if FUNC_SUFFIX in mermaid_block.text:
-        func: str = mermaid_block.text.replace(FUNC_SUFFIX, "")
+    if Constants.FUNC_SUFFIX in mermaid_block.text:
+        func: str = mermaid_block.text.replace(Constants.FUNC_SUFFIX, "")
         if func in functions:
-            code_line += "{}{}".format(FUNCTION, func)
+            code_line += "{}{}".format(Constants.FUNCTION, func)
         else:
             functions.append(func)
-            code_line += "{}{}".format(FUNCTION, func)
+            code_line += "{}{}".format(Constants.FUNCTION, func)
     # Process with math operation
     # elif ("+" or "-" or "*" or "/" or "=") in text:
     elif ("-" in text) or ("+" in text) or ("*" in text) or ("/" in text):
-        code_line += MATH_OPERATION
+        code_line += Constants.MATH_OPERATION
         for word in text:
-            if VAR_SUFFIX in word:
-                var: str = word.replace(VAR_SUFFIX, "")
-                code_line += "{}{} ".format(VARIABLE, var)
+            if Constants.VAR_SUFFIX in word:
+                var: str = word.replace(Constants.VAR_SUFFIX, "")
+                code_line += "{}{} ".format(Constants.VARIABLE, var)
                 variables[var] = "int"
             else:
                 code_line += "{} ".format(word)
@@ -145,12 +159,32 @@ def __process_operation(mermaid_block: MermaidBlock, variables: {}, functions: [
 def __add_tabs(line: str, tab_number: int) -> str:
     tabs: str = ""
     for x in range(tab_number):
-        tabs += TAB
+        tabs += Constants.TAB
     return tabs + line
 
 
 def __add_variables(variables: {}) -> [str]:
     var_lines: [str] = []
     for x in variables.keys():
-        var_lines.append("{}{}".format(VARIABLE, x))
+        var_lines.append("{}{}".format(Constants.VARIABLE, x))
     return var_lines
+
+
+def __check_final_conditional_block(next_blocks: [MermaidBlock],
+                                    mermaid_blocks: [MermaidBlock]) -> MermaidBlock:
+    next_blocks_side: [MermaidBlock] = []
+    initial_next_blocks: [MermaidBlock] = next_blocks
+    final_blocks: [MermaidBlock] = []
+    next_block: MermaidBlock
+    next_block_side: MermaidBlock
+
+    for next_block in initial_next_blocks:
+        next_block_side = next_block
+
+        while len(next_block_side.previous_blocks) < 2:
+            next_blocks_side = __get_next_block(mermaid_blocks, next_block_side)
+            next_block_side = next_blocks_side[0]
+
+        final_blocks.append(next_block_side)
+
+    return final_blocks[0]

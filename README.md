@@ -65,7 +65,6 @@ classDiagram
 - Decision:
   - Supports 2 options (if clause) or more (switch-case clause)
     - It's mandatory draw almost 2 options
-  - Supports while loop
   - Inside must be the clause
     - Examples:
       - test_variable_var > 5
@@ -86,11 +85,15 @@ classDiagram
 - Conditionals must stay in the nearest arrow to Decision block
 - [ ] TODO: add images to show how to draw this conditionals
 - Not allowed staked conditionals
+- Conditionals statements must finalize on the same block
 
 ## TODO-List
 - Improve double pointer detection in arrow chains to avoid double detection in the same arrow
   - FlowchartObjectDetection._sort_arrows()
 - Improve OCR detection
 - String concatenation
+- While loop support
 - Do-While loop support
 - For loop support
+- Support multiple conditional end statement
+  - Pseudocode.__check_final_conditional_block()
