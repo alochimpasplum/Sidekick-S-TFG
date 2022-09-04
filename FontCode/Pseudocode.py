@@ -15,9 +15,12 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode
     next_blocks: [MermaidBlock] = []
     tab_index: int = 0
 
-    if not ("inicio" or "start") in block.text:
-        tab_index = 1
-        pseudocode.append("{} {}".format(Constants.MAIN_FUNCTION, block.text.rstrip()))
+    # todo: fix this with "or" statement
+    if not ("start" in block.text):
+        if not ("inicio" in block.text):
+            tab_index = 1
+            pseudocode.append("{} {}".format(Constants.MAIN_FUNCTION, block.text.rstrip()))
+    pseudocode.append(Constants.VARIABLE_DECLARATIONS)
 
     next_blocks = __get_next_block(blocks, block)
     block = next_blocks[0]
@@ -39,8 +42,12 @@ def get_pseudocode(mermaid_blocks: [MermaidBlock]) -> PseudocodeClass.Pseudocode
             next_lines: [str] = conditional_operation[0]
             block = conditional_operation[1]
             for line in next_lines:
-                line = __add_tabs(line, tab_index)
-                pseudocode.append(line)
+                line = line.rstrip()
+                if len(line) > 0:
+                    line = __add_tabs(line, tab_index)
+                    pseudocode.append(line)
+
+    pseudocode.append(Constants.END_CODE)
 
     pseudocode_class = PseudocodeClass.Pseudocode(pseudocode, functions, variables)
 
@@ -61,8 +68,11 @@ def __get_next_block(mermaid_blocks: [MermaidBlock], actual_block: MermaidBlock)
     next_blocks: [MermaidBlock] = []
     if len(actual_block.next_blocks) > 0:
         next_blocks = [x for x in mermaid_blocks if x.block_name in actual_block.next_blocks]
+        """
         for block in next_blocks:
-            mermaid_blocks.remove(block)
+            if block in mermaid_blocks:
+                mermaid_blocks.remove(block)
+        """
         return next_blocks
 
     return next_blocks
@@ -86,13 +96,49 @@ def __conditional_block_operation(conditional_block: MermaidBlock, next_blocks: 
     """Return [0] -> Code lines\n
     Return [1] -> Final conditional's block"""
     lines: [str] = []
-    line: str = ""
+    next_block: MermaidBlock
+    next_blocks_side: [MermaidBlock] = []
     final_conditional_block: MermaidBlock = __check_final_conditional_block(next_blocks, mermaid_blocks)
 
+    # If statement
     if len(next_blocks) == 2:
-        print("if")
-    elif len(next_blocks) > 2:
-        print("switch")
+
+        if_statement: str = "{}{}{}".format(Constants.IF, conditional_block.text, Constants.IF_TRUE_START)
+        if Constants.VAR_SUFFIX in if_statement:
+            if_statement = if_statement.replace(Constants.VAR_SUFFIX, "")
+            if_statement = "{}{}".format(Constants.VARIABLE, if_statement)
+        lines.append(if_statement)
+
+        next_block_name: str = "Block"
+        for key, value in conditional_block.next_blocks_conditionals.items():
+            if value == "yes":
+                next_block_name = "Block{}".format(key)
+        next_block = [x for x in mermaid_blocks if x.block_name == next_block_name][0]
+
+        while next_block != final_conditional_block:
+            if not ("decision" in next_block.object_type):
+                if not ("start-end" in next_block.text):
+                    line: str = __block_operation(next_block, variables, functions)
+                    line = __add_tabs(line, 1)
+                    lines.append(line)
+                    next_blocks_side = __get_next_block(mermaid_blocks, next_block)
+                    next_block = next_blocks_side[0]
+
+        lines.append("{}{}".format(Constants.IF_TRUE_END, Constants.IF_FALSE_START))
+        for key, value in conditional_block.next_blocks_conditionals.items():
+            if value == "no":
+                next_block_name = "Block{}".format(key)
+        next_block = [x for x in mermaid_blocks if x.block_name == next_block_name][0]
+        while next_block != final_conditional_block:
+            if not ("decision" in next_block.object_type):
+                if not ("start-end" in next_block.text):
+                    line: str = __block_operation(next_block, variables, functions)
+                    line = __add_tabs(line, 1)
+                    lines.append(line)
+                    next_blocks_side = __get_next_block(mermaid_blocks, next_block)
+                    next_block = next_blocks_side[0]
+
+        lines.append("{}".format(Constants.IF_FALSE_END))
 
     return [lines, final_conditional_block]
 
@@ -142,7 +188,7 @@ def __process_operation(mermaid_block: MermaidBlock, variables: {}, functions: [
             code_line += "{}{}".format(Constants.FUNCTION, func)
     # Process with math operation
     # elif ("+" or "-" or "*" or "/" or "=") in text:
-    elif ("-" in text) or ("+" in text) or ("*" in text) or ("/" in text):
+    elif ("-" in text) or ("+" in text) or ("*" in text) or ("/" in text) or ("=" in text):
         code_line += Constants.MATH_OPERATION
         for word in text:
             if Constants.VAR_SUFFIX in word:

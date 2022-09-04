@@ -63,7 +63,7 @@ classDiagram
   - Write any math operation (+, -, *, /) between numbers and/or variables and store it under variable.
   - [ ] TODO: add images to show how to
 - Decision:
-  - Supports 2 options (if clause) or more (switch-case clause)
+  - Supports 2 options (if clause)
     - It's mandatory draw almost 2 options
   - Inside must be the clause
     - Examples:
@@ -74,7 +74,9 @@ classDiagram
         - option 1: > 5
         - option 2: < 5
         - option 3: == 5
-    - [ ] TODO: add images to show how to
+  - If clause:
+    - Options must be "true", "false", "yes" or "no"
+  - [ ] TODO: add images to show how to
     
 
 ## Limitations
@@ -95,5 +97,6 @@ classDiagram
 - While loop support
 - Do-While loop support
 - For loop support
+- Switch-case support
 - Support multiple conditional end statement
   - Pseudocode.__check_final_conditional_block()

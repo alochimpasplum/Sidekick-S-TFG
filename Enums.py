@@ -44,6 +44,7 @@ block_close: {} = {
 
 supported_languages: [] = [
     'pseudo_language',
-    'mermaid'
+    'mermaid',
+    'python'
 ]
 
