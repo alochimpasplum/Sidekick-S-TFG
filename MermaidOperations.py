@@ -37,6 +37,7 @@ def get_mermaid_img(blocks: [MermaidBlock]) -> str:
     base64_string = Base64.encode(mermaid_blocks_to_mermaid_code(blocks))
     image_with_detections: str
     try:
+        print('https://mermaid.ink/img/' + base64_string)
         img = Image.open(io.BytesIO(requests.get('https://mermaid.ink/img/' + base64_string).content))
         image_with_detections = ImgbbUploadFile.upload_image(img)
     except BaseException as error:
