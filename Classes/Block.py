@@ -67,6 +67,7 @@ class Block:
 
         string += "Inner texts: {}\n".format(len(self.Texts))
         for text in self.Texts:
+            string += "{}\n".format(text.confidence)
             string += "{}\n".format(text.text)
 
         return string

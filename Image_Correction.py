@@ -3,12 +3,16 @@ from PIL import Image
 import cv2
 
 
-def correct_image(img: Image) -> Image:
+def correct_image(img: Image, equalization: bool = False,
+                  gaussian_blur: bool = False, median_blur: bool = False) -> Image:
     image = np.array(img)
     image = __set_grayscale(image)
-    # image = __equalization(image)
-    # image = __gaussian_blur(image)
-    # image = __median_blur(image)
+    if equalization:
+        image = __equalization(image)
+    if gaussian_blur:
+        image = __gaussian_blur(image)
+    if median_blur:
+        image = __median_blur(image)
 
     return Image.fromarray(cv2.cvtColor(image, cv2.COLOR_GRAY2RGB))
 

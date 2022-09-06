@@ -50,10 +50,10 @@ def get_ocr(texts: [Text], image: Image) -> Image:
     for text in texts:
         color: [int, int, int] = (0, 0, 255)
         cv2.rectangle(img, (int(text.x_max), int(text.y_max)), (int(text.x_min), int(text.y_min)), color, 4)
-        cv2.putText(img, str(text.confidence),
-                    (int(text.x_max), int((text.y_max + text.y_min) / 2)), font, 2, color, 1)
+        # cv2.putText(img, str(text.confidence),
+        #            (int(text.x_max), int((text.y_max + text.y_min) / 2)), font, 2, color, 1)
         cv2.putText(img, str(text.text),
-                    (int(text.x_max), int(text.y_max)), font, 2, color, 1)
+                    (int(text.x_max), int(text.y_max)), font, 2, color, 2)
 
     img: Image = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     return img

@@ -14,7 +14,7 @@ import Math_Calcs
 
 
 def detect_blocks(img: Image) -> [Block]:
-    img: Image = correct_image(img)
+    # img: Image = correct_image(img) # todo: retirar este comentario
     blocks: [Block] = __get_blocks(img)
     blocks = _sort_arrows(blocks)
     blocks = __find_neighbours(blocks)

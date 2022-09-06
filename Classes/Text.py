@@ -17,6 +17,7 @@ class Text:
         self.y_max = y_max
         self.confidence = confidence
         self.text = text
+        print("{} {}".format(self.text, self.confidence))
 
     def to_string(self) -> str:
         string: str = "id: {}, x_min: {}, x_max: {}, y_min: {}, y_max: {}, confidence: {}, text: {}\n".format(
