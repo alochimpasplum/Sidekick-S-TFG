@@ -1,0 +1,23 @@
+<div class="accordion-item">
+    <h2 class="accordion-header" id="head-paso3">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#paso3" aria-expanded="true" aria-controls="paso3">
+            Paso 3 - Obtener código fuente
+        </button>
+    </h2>
+    <div id="paso3" class="accordion-collapse collapse show" aria-labelledby="paso3" data-bs-parent="#accordion-recognizer">
+        <div class="accordion-body">
+            <div class="card">
+                <ul class="list-group list-group-flush" *ngFor="let language of serverLanguajes">
+                    <li class="list-group-item">
+                        <label>
+                            <input type="checkbox" [value]="language" (change)="onCheckboxChange($event)"> - {{language}}
+                        </label>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="list-group-item"><button type="button" (click)="getCode()" [disabled]="mermaidBlocks.length == 0 || languajes.length == 0 || isServiceWorking">Subir imagen</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

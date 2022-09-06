@@ -1,0 +1,9 @@
+<p>Siguiente bloque: {{siguienteBloque}}, Condicion: <input
+    type="text"
+    class="form-control"
+    placeholder="Cambiar condicion"
+    (keyup)="cambiarCondicion()"
+    value={{condicion}}
+    [disabled]="isServiceWorking"
+    #condicionBloque
+></p>

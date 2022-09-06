@@ -1,0 +1,26 @@
+<div class="accordion-item">
+    <h2 class="accordion-header" id="upload-image">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Paso 1 - Subir imagen
+        </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="upload-image" data-bs-parent="#accordion-recognizer">
+        <div class="accordion-body">
+            <div class="card">
+                <div class="row" *ngIf="image" >
+                    <div class="col col-sm-6">
+                        <img [src]="image.url64"class="img-fluid card-img-top">
+                    </div>
+                    <div class="col col-sm-6" *ngIf="urlImagenDetecciones">
+                        <img [src]="urlImagenDetecciones"class="img-fluid card-img-top">
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><input type="file" (change)="selectImage($event)" [disabled]="isServiceWorking"></li>
+                    <li class="list-group-item" *ngIf="image"><button type="button" (click)="uploadImage()" [disabled]="isServiceWorking">Subir imagen</button></li>
+                    <li class="list-group-item" *ngIf="msg"><div class="alert alert-warning">{{msg}}</div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div>
