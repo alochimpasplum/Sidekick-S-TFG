@@ -15,7 +15,7 @@ def main():
         dropped_file = sys.argv[1]
         img = Image.open(dropped_file)
     except IndexError:
-        img = Image.open('./TestStuff/Helloworld5.1.jpg')
+        img = Image.open('./TestStuff/Helloworld5.jpg')
     corrected_image: Image = correct_image(img)
     blocks: [Block] = BlockDetection.detect_blocks(img)
 

@@ -19,7 +19,6 @@ array_positions: {} = {
 
 def get_text(img: Image, blocks: [Block]) -> [Block]:
     texts: [Text] = []
-    print(pytesseract.image_to_string(img))
     lines: [str] = pytesseract.image_to_data(img).splitlines()
     line: str
     for i, line in enumerate(lines):

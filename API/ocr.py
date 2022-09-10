@@ -5,5 +5,5 @@ from Classes.Block import Block
 
 
 def get_text(img: Image, blocks: [Block]) -> [Block]:
-    # return Tesseract.get_text(img, blocks)
-    return EasyOCR.get_text(img, blocks)
+    return Tesseract.get_text(img, blocks)
+    # return EasyOCR.get_text(img, blocks)
