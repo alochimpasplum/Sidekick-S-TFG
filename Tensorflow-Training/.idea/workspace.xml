@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7455d7fc-247a-4984-8b72-9aa30430eafd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/DatasetSplitter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="7455d7fc-247a-4984-8b72-9aa30430eafd" name="Changes" comment="ADD: primer modelo para la detección de simbolos matematicos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Math_Train.py" beforeDir="false" afterPath="$PROJECT_DIR$/Math_Train.py" afterDir="false" />
     </list>
@@ -129,9 +126,9 @@
     </configuration>
     <list>
       <item itemvalue="Python.Math_Train" />
+      <item itemvalue="Python.train" />
       <item itemvalue="Python.dataset_splitter" />
       <item itemvalue="Python.test" />
-      <item itemvalue="Python.train" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -143,6 +140,14 @@
       <option name="presentableId" value="Default" />
       <updated>1662797131295</updated>
     </task>
+    <task id="LOCAL-00001" summary="ADD: primer modelo para la detección de simbolos matematicos">
+      <created>1663013916006</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1663013916006</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,5 +160,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ADD: primer modelo para la detección de simbolos matematicos" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADD: primer modelo para la detección de simbolos matematicos" />
   </component>
 </project>

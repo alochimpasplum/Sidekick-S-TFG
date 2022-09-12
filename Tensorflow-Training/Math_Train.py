@@ -1,47 +1,61 @@
-import tensorflow as tf
-import numpy as np
-import pandas as pd
-import keras
 import os
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import tensorflow as tf
+from tensorflow import keras
+from keras.layers import Dense, Activation,Dropout,Conv2D, MaxPooling2D,BatchNormalization
+from keras.optimizers import Adam, Adamax
+from keras.metrics import categorical_crossentropy
+from keras import regularizers
 from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import RMSprop
-
-datagen = ImageDataGenerator()
-
-datasets_folder: str = "./Datasets/handwritten_math_symbols_ready"
+from keras.models import Model, load_model, Sequential
 
 
-train_it = datagen.flow_from_directory(datasets_folder + '/train', class_mode='binary', target_size=(45, 45),
-                                       batch_size=64, color_mode="grayscale")
-val_it = datagen.flow_from_directory(datasets_folder + '/validation', class_mode='binary', target_size=(45, 45),
-                                     batch_size=64, color_mode="grayscale")
-
-model = tf.keras.models.Sequential([
-    # Note the input shape is the desired size of the image 150x150 with 3 bytes color
-    tf.keras.layers.Conv2D(filters=32, kernel_size=3, activation='relu', input_shape=(45, 45, 1)),
-    tf.keras.layers.MaxPooling2D(2,2),
-    tf.keras.layers.Conv2D(filters=32, kernel_size=3, activation='relu'),
-    tf.keras.layers.MaxPooling2D(2,2),
-    # Flatten the results to feed into a DNN
-    tf.keras.layers.Flatten(),
-    # 512 neuron hidden layer
-    tf.keras.layers.Dense(512, activation='relu')
-])
-
-model.compile(optimizer=RMSprop(learning_rate=1e-4),
-              loss='sparse_categorical_crossentropy',
-              metrics = ['accuracy'])
-
-model.fit_generator(train_it, steps_per_epoch=16, validation_data=val_it, validation_steps=8)
-
-model.summary()
-
-history = model.fit(
-      train_it,
-      steps_per_epoch=500,
-      epochs=100,
-      validation_data=val_it,
-      validation_steps=50,
-      verbose=2)
-
+sdir: str = "./Datasets/handwritten_math_symbols"
+classlist=os.listdir(sdir)
+filepaths=[]
+labels=[]
+classes=[]
+for klass in classlist:
+    classpath=os.path.join(sdir, klass)
+    if os.path.isdir(classpath):
+        classes.append(klass)
+        flist=os.listdir(classpath)
+        for f in flist:
+            fpath=os.path.join(classpath,f)
+            if os.path.isfile(fpath):
+                filepaths.append(fpath)
+                labels.append(klass)
+fseries=pd.Series(filepaths, name='filepaths')
+Lseries=pd.Series (labels, name='labels')
+df=pd.concat([fseries, Lseries], axis=1)
+balance=df['labels'].value_counts()
+print (balance) # dataset is reasonably balanced
+train_split=.9
+test_split=.05
+dummy_split=test_split/(1-train_split)
+train_df, dummy_df=train_test_split(df, train_size=train_split, shuffle=True, random_state = 123)
+test_df, valid_df=train_test_split(dummy_df, train_size=dummy_split, shuffle=True, random_state=123)
+def scalar(img):
+    return img/127.5-1 # scale pixels between -1 and + 1
+gen=ImageDataGenerator(preprocessing_function=scalar)
+train_gen=gen.flow_from_dataframe(train_df, x_col= 'filepaths', y_col='labels', target_size=(128,128), class_mode='categorical',
+                                  color_mode='rgb', shuffle=False)
+test_gen=gen.flow_from_dataframe(test_df, x_col= 'filepaths', y_col='labels', target_size=(128,128), class_mode='categorical',
+                                  color_mode='rgb', shuffle=False)
+valid_gen=gen.flow_from_dataframe(valid_df, x_col= 'filepaths', y_col='labels', target_size=(128,128), class_mode='categorical',
+                                  color_mode='rgb', shuffle=False)
+base_model=tf.keras.applications.MobileNetV2( include_top=False, input_shape=(128,128,3), pooling='max', weights='imagenet')
+x=base_model.output
+x=keras.layers.BatchNormalization(axis=-1, momentum=0.99, epsilon=0.001 )(x)
+x = Dense(1024, kernel_regularizer = regularizers.l2(l = 0.016),activity_regularizer=regularizers.l1(0.006),
+                bias_regularizer=regularizers.l1(0.006) ,activation='relu', kernel_initializer= tf.keras.initializers.GlorotUniform(seed=123))(x)
+x=Dropout(rate=.3, seed=123)(x)
+output=Dense(len(classes), activation='softmax',kernel_initializer=tf.keras.initializers.GlorotUniform(seed=123))(x)
+model=Model(inputs=base_model.input, outputs=output)
+model.compile(Adamax(lr=.001), loss='categorical_crossentropy', metrics=['accuracy'])
+estop=tf.keras.callbacks.EarlyStopping( monitor="val_loss",  patience=4, verbose=1,restore_best_weights=True)
+rlronp=tf.keras.callbacks.ReduceLROnPlateau(  monitor="val_loss",factor=0.5, patience=1, verbose=1)
+history=model.fit(x=train_gen,  epochs=10, verbose=1, callbacks=[estop, rlronp],  validation_data=valid_gen,
+               validation_steps=None,  shuffle=False,  initial_epoch=0)
 model.save('model_math_symbols')
