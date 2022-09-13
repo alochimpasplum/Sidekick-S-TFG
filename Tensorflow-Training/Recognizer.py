@@ -21,7 +21,7 @@ else:
     print("No GPU found")
 
 # loads the model with the keras load_model function
-model_path = 'model_v2'
+model_path = 'model_full.h5'
 print("Loading NN model...")
 model = load_model(model_path)
 print("Done")
@@ -78,20 +78,26 @@ chars = np.array([c[0] for c in chars], dtype="float32")
 # OCR the characters using our handwriting recognition model
 preds = model.predict(chars)
 # define the list of label names
-labelNames = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+labelNames = {
+    0: "A",1: "B",2: "C",3: "D",4: "E",5: "F",6: "G",7: "H",8: "I",9: "J",
+    10: "K",11: "L",12: "M",13: "N",14: "O",15: "P",16: "Q",17: "R",18: "S",19: "T",
+    20: "U",21: "V",22: "W",23: "X",24: "Y",25: "Z",26: "0",27: "1",28: "2",29: "3",
+    30: "4",31: "5",32: "6",33: "7",34: "8",35: "9",36: "-",37: "(",38: ")",39: "+",
+    40: "=",41: "div",42: "geq",43: "gt",44: "lt",45: "leq",46: "neq"}
 
 image = cv2.imread(image_path)
 
 for (pred, (x, y, w, h)) in zip(preds, boxes):
     # find the index of the label with the largest corresponding
     # probability, then extract the probability and label
-  i = np.argmax(pred)
-  prob = pred[i]
-  label = labelNames[i]
-  # draw the prediction on the image and it's probability
-  label_text = f"{label},{prob * 100:.1f}%"
-  cv2.rectangle(image, (x, y), (x + w, y + h), (0,255 , 0), 2)
-  cv2.putText(image, label_text, (x - 10, y - 10),cv2.FONT_HERSHEY_SIMPLEX,0.5, (0,255, 0), 1)
+    i = np.argmax(pred)
+    prob = pred[i]
+    label = labelNames[i]
+    print(label)
+    # draw the prediction on the image and it's probability
+    label_text = f"{label},{prob * 100:.1f}%"
+    cv2.rectangle(image, (x, y), (x + w, y + h), (0,255 , 0), 2)
+    cv2.putText(image, label_text, (x - 10, y - 10),cv2.FONT_HERSHEY_SIMPLEX,0.5, (0,255, 0), 1)
 
 cv2.imwrite('edged.png', edged)
 cv2.imwrite('predictions.png', image)
