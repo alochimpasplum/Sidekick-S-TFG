@@ -21,7 +21,8 @@ test_images_mnist = np.reshape(test_images_mnist,(test_images_mnist.shape[0],28,
 
 # download from https://www.kaggle.com/datasets/sachinpatel21/az-handwritten-alphabets-in-csv-format
 # download from https://www.kaggle.com/datasets/sagyamthapa/handwritten-math-symbols
-az_data_path = './Datasets/handwritingdataset'
+az_data_path = r'C:\Users\Lagos\OneDrive\TFG\Datasets'
+
 AZ_data = pd.read_csv(az_data_path +'/A_Z Handwritten Data.csv',header = None)
 # the first column contains label values, while the remaining are the flattened array of 28 x 28 image pixels
 AZ_labels = AZ_data.values[:,0]
@@ -29,7 +30,7 @@ AZ_images = AZ_data.values[:,1:]
 # images are reshaped to be used by the flow method of a keras ImageGenerator
 AZ_images = np.reshape(AZ_images,(AZ_images.shape[0], 28, 28, 1))
 
-math_symbols_path = './Datasets/math_symbols.csv'
+math_symbols_path = az_data_path + '/math_symbols.csv'
 math_symbols_data = pd.read_csv(math_symbols_path, header=None)
 math_symbols_labels = math_symbols_data.values[:, 0]
 math_symbols_images = math_symbols_data.values[:, 1:]
@@ -100,7 +101,7 @@ validation_generator = test_datagen.flow(test_images, test_labels, batch_size=50
 history = model.fit(
       train_generator,
       steps_per_epoch=500,
-      epochs=10,
+      epochs=250,
       validation_data=validation_generator,
       validation_steps=50,
       verbose=2)
