@@ -21,13 +21,13 @@ else:
     print("No GPU found")
 
 # loads the model with the keras load_model function
-model_path = 'model_full.h5'
+model_path = 'HandwrittenOCR/model_full.h5'
 print("Loading NN model...")
 model = load_model(model_path)
 print("Done")
 
 # loads the input image
-image_path = './tests/HelloWorld2.jpg'
+image_path = 'HandwrittenOCR/tests/HelloWorld2.jpg'
 image = cv2.imread(image_path)
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

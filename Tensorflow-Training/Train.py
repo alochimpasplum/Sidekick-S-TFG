@@ -151,4 +151,4 @@ model.fit(
     validation_data=ds_test,
 )
 
-img_path: str = './tests/HelloWorld.jpg'
+img_path: str = 'HandwrittenOCR/tests/HelloWorld.jpg'
