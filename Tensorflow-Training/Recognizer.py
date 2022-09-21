@@ -27,7 +27,7 @@ model = load_model(model_path)
 print("Done")
 
 # loads the input image
-image_path = 'HandwrittenOCR/tests/HelloWorld2.jpg'
+image_path = 'HandwrittenOCR/tests/A.jpg'
 image = cv2.imread(image_path)
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -85,19 +85,36 @@ labelNames = {
     30: "4",31: "5",32: "6",33: "7",34: "8",35: "9",36: "-",37: "(",38: ")",39: "+",
     40: "=",41: "div",42: "geq",43: "gt",44: "lt",45: "leq",46: "neq"}
 
+label_preds = {
+    0: 0,1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,
+    10: 0,11: 0,12: 0,13: 0,14: 0,15: 0,16: 0,17: 0,18: 0,19: 0,
+    20: 0,21: 0,22: 0,23: 0,24: 0,25: 0,26: 0,27: 0,28: 0,29: 0,
+    30: 0,31: 0,32: 0,33: 0,34: 0,35: 0,36: 0,37: 0,38: 0,39: 0,
+    40: 0,41: 0,42: 0,43: 0,44: 0,45: 0,46: 0}
+
 image = cv2.imread(image_path)
 
 for (pred, (x, y, w, h)) in zip(preds, boxes):
     # find the index of the label with the largest corresponding
     # probability, then extract the probability and label
+    for index, p in enumerate(pred):
+        label_preds[index] = label_preds[index] + p
+
     i = np.argmax(pred)
     prob = pred[i]
     label = labelNames[i]
-    print(label)
     # draw the prediction on the image and it's probability
     label_text = f"{label},{prob * 100:.1f}%"
     cv2.rectangle(image, (x, y), (x + w, y + h), (0,255 , 0), 2)
     cv2.putText(image, label_text, (x - 10, y - 10),cv2.FONT_HERSHEY_SIMPLEX,0.5, (0,255, 0), 1)
+
+
+for key, value in label_preds.items():
+    value = value / len(preds)
+    if value < 0.001:
+        value = 0
+    print(labelNames[key], value)
+    # todo: generar fichero txt con los datos para que solo sea copiar/pegar en el excel
 
 cv2.imwrite('edged.png', edged)
 cv2.imwrite('predictions.png', image)
