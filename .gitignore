@@ -1,3 +1,6 @@
 
 Tensorflow-Training/.idea/workspace.xml
 .idea/workspace.xml
+*.pyc
+*.iml
+Tensorflow-Training/.idea/Tensorflow-Training.iml
