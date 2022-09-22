@@ -27,7 +27,7 @@ model = load_model(model_path)
 print("Done")
 
 # loads the input image
-image_path = 'HandwrittenOCR/tests/A.jpg'
+image_path = 'HandwrittenOCR/tests/neq.jpg'
 image = cv2.imread(image_path)
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -108,13 +108,17 @@ for (pred, (x, y, w, h)) in zip(preds, boxes):
     cv2.rectangle(image, (x, y), (x + w, y + h), (0,255 , 0), 2)
     cv2.putText(image, label_text, (x - 10, y - 10),cv2.FONT_HERSHEY_SIMPLEX,0.5, (0,255, 0), 1)
 
-
+line: [str] = ""
 for key, value in label_preds.items():
     value = value / len(preds)
     if value < 0.001:
         value = 0
-    print(labelNames[key], value)
-    # todo: generar fichero txt con los datos para que solo sea copiar/pegar en el excel
+    line += "{}\t".format(value)
+
+line = line.replace(".", ",")
+f = open("preds.txt", "w")
+f.write(line)
+f.close()
 
 cv2.imwrite('edged.png', edged)
 cv2.imwrite('predictions.png', image)

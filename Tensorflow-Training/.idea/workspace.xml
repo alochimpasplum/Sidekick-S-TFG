@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7455d7fc-247a-4984-8b72-9aa30430eafd" name="Changes" comment="ADD: segundo modelo para la detección de simbolos matematicos&#10;&#10;https://stackoverflow.com/questions/67266161/how-to-train-amd-test-dataset-of-images-downloaded-from-kaggle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/%.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/%.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/G.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/G.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/L.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/L.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/T.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/T.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Recognizer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edged.png" beforeDir="false" afterPath="$PROJECT_DIR$/edged.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/predictions.png" afterDir="false" />
