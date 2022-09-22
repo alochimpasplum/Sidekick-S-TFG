@@ -16,6 +16,7 @@ from HandwrittenOCR.Letter import Letter
 
 def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False, get_all_statistics: bool = False):
     threshold: float = threshold
+    # todo: ver que hacía el threshold
 
     base = os.path.basename(img_path)
     filename = os.path.splitext(base)[0]
@@ -111,11 +112,13 @@ def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False, 
 
         letters.append(Letter(x, x + w, y, y + h, prob, label, i))
 
+    """
     letters = __remove_duplicates__(letters)
     __remove_inner_letters__(letters)
     __fix_e__(letters)
     __fix_h__(letters)
     __fix_i__(letters)
+    """
 
     for letter in letters:
         label_preds[letter.index] = label_preds[letter.index] + letter.confidence
