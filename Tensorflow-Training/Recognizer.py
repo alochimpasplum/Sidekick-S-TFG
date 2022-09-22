@@ -1,5 +1,4 @@
 import os
-
 import HandwrittenOCR.HandwrittenOCR as OCR
 
 base_path: str = 'HandwrittenOCR/tests/'
