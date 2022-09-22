@@ -9,9 +9,10 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from imutils.contours import sort_contours
+from HandwrittenOCR.Letter import Letter
 
 
-def HandWrittenOCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False):
+def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False):
     threshold: float = threshold
 
     base = os.path.basename(img_path)
@@ -89,6 +90,7 @@ def HandWrittenOCR(img_path: str, threshold: float = 0.001, get_predictions: boo
         40: 0, 41: 0, 42: 0, 43: 0, 44: 0, 45: 0, 46: 0}
 
     image = cv2.imread(img_path)
+    letters: [Letter] = []
 
     for (pred, (x, y, w, h)) in zip(preds, boxes):
         # find the index of the label with the largest corresponding
@@ -99,10 +101,16 @@ def HandWrittenOCR(img_path: str, threshold: float = 0.001, get_predictions: boo
         i = np.argmax(pred)
         prob = pred[i]
         label = labelNames[i]
+
+        letters.append(Letter(x, x + w, y, y + h, prob, label))
+
+        """
         # draw the prediction on the image and it's probability
         label_text = f"{label},{prob * 100:.1f}%"
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
         cv2.putText(image, label_text, (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+        """
+
 
     if get_predictions:
         line: [str] = ""

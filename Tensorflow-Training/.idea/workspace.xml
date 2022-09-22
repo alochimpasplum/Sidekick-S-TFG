@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7455d7fc-247a-4984-8b72-9aa30430eafd" name="Changes" comment="ADD: segundo modelo para la detección de simbolos matematicos&#10;&#10;https://stackoverflow.com/questions/67266161/how-to-train-amd-test-dataset-of-images-downloaded-from-kaggle">
+      <change afterPath="$PROJECT_DIR$/HandwrittenOCR/Letter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Tensorflow-Training.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tensorflow-Training.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/HandwrittenOCR.py" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/OCR.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/A_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/A_predictions.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/neq.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/neq.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/neq_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/neq_predictions.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Recognizer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,10 +38,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Recognizer.py" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Lagos\Documents\GitHub\Sidekick-S-api\Tensorflow-Training\HandwrittenOCR" />
@@ -195,5 +203,16 @@
     <MESSAGE value="ADD: primer modelo para la detección de simbolos matematicos" />
     <MESSAGE value="ADD: segundo modelo para la detección de simbolos matematicos&#10;&#10;https://stackoverflow.com/questions/67266161/how-to-train-amd-test-dataset-of-images-downloaded-from-kaggle" />
     <option name="LAST_COMMIT_MESSAGE" value="ADD: segundo modelo para la detección de simbolos matematicos&#10;&#10;https://stackoverflow.com/questions/67266161/how-to-train-amd-test-dataset-of-images-downloaded-from-kaggle" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
