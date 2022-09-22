@@ -5,11 +5,13 @@ class Letter:
     y_max: float
     confidence: float
     value: str
+    index: int
 
-    def __init__(self, x_min, x_max, y_min, y_max, confidence, value):
+    def __init__(self, x_min, x_max, y_min, y_max, confidence, value, index):
         self.x_min = x_min
         self.x_max = x_max
         self.y_min = y_min
         self.y_max = y_max
         self.confidence = confidence
         self.value = value
+        self.index = index

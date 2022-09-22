@@ -5,10 +5,11 @@ import fontTools.ttLib
 import HandwrittenOCR.OCR as OCR
 
 base_path: str = 'HandwrittenOCR/tests/'
-path: str = 'HandwrittenOCR/tests/A.jpg'
+path: str = 'HandwrittenOCR/tests/I.jpg'
 
-get_all_detections: bool = False
+get_all_detections: bool = True
 get_predictions: bool = True
+get_statistics: bool = True
 
 labelPositions = {
         "A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7, "I": 8, "J": 9,
@@ -21,44 +22,15 @@ if get_all_detections:
     files = [x for x in os.listdir(base_path) if 'results' not in x]
     for file in files:
         if 'HelloWorld' not in file:
-            OCR.OCR(base_path+file, get_predictions=get_predictions)
+            OCR.OCR(base_path+file, get_predictions=get_predictions, get_all_statistics=get_statistics)
 else:
-    OCR.OCR(path, get_predictions=get_predictions)
-
-predictions: [str] = [x for x in os.listdir(base_path + "results/") if x.endswith(".txt")]
-
-lines: [str] = [None] * (len(labelPositions) + 2)
-
-for pred in predictions:
-    do_write: bool = True
-    f = open(base_path + "results/" + pred)
-    line = f.readline()
-    f.close()
-    symbol = os.path.splitext(pred)[0]
-    if "%" in symbol:
-        lines[len(labelPositions)] = line
-        do_write = False
-    if "div" in symbol:
-        lines[len(labelPositions) + 1] = line
-        do_write = False
-    if "greater" in symbol:
-        symbol = "gt"
-    if "less" in symbol:
-        symbol = "lt"
-    if "multiply" in symbol:
-        do_write = False
-
-    if do_write:
-        lines[labelPositions[symbol]] = line
+    OCR.OCR(path, get_predictions=get_predictions, get_all_statistics=get_statistics)
 
 
-f = open(base_path + "results.txt", "w")
-line: str = ""
-for line in lines:
-    if line is not None:
-        f.write(line + "\n")
-    else:
-        f.write("\n")
-f.close()
+
+
+
+
+
 
 
