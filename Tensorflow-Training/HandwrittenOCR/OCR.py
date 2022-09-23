@@ -121,6 +121,7 @@ def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False, 
     __fix_n__(letters)
     __fix_r__(letters)
     __fix_y__(letters)
+    __fix_7__(letters)
 
     for letter in letters:
         label_preds[letter.index] = label_preds[letter.index] + letter.confidence
@@ -402,6 +403,7 @@ def __fix_r__(letters: [Letter]) -> None:
                 if letter.x_min < middle[0] < letter.x_max and letter.y_min < middle[1] < letter.y_max:
                     if l not in letters_to_remove:
                         letters_to_remove.append(l)
+
     for letter in letters_to_remove:
         if letter in letters:
             letters.remove(letter)
@@ -420,6 +422,26 @@ def __fix_y__(letters: [Letter]) -> None:
                     if letter.x_min < middle[0] < letter.x_max and letter.y_min < middle[1] < letter.y_max:
                         if l not in letters_to_remove:
                             letters_to_remove.append(l)
+
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_7__(letters: [Letter]) -> None:
+    letter_plus: [Letter] = [x for x in letters if x.value == "+"]
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_plus:
+        l: Letter
+        for l in letters:
+            if l.value != "+":
+                middle: [float, float] = [(l.x_min + l.x_max) / 2, (l.y_min + l.y_max) / 2]
+                if letter.x_min < middle[0] < letter.x_max and letter.y_min < middle[1] < letter.y_max:
+                    letter.value = "7"
+                    letter.index = 33
+                    if l not in letters_to_remove:
+                        letters_to_remove.append(l)
 
     for letter in letters_to_remove:
         if letter in letters:

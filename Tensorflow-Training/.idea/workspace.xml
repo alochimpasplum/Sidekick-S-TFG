@@ -2,77 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7455d7fc-247a-4984-8b72-9aa30430eafd" name="Changes" comment="ADD: segundo modelo para la detección de simbolos matematicos&#10;&#10;https://stackoverflow.com/questions/67266161/how-to-train-amd-test-dataset-of-images-downloaded-from-kaggle">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HandwrittenOCR/OCR.py" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/OCR.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/%.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/%.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/%_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/%_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/+.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/+.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/-.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/-.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/0.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/4.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/4.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/5.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/6.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/6_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/6_predictions.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/7.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/7_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/7_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/8.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/9.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/9.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/9_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/9_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/=.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/=.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/A.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/A.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/A_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/A_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/B.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/B.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/B_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/B_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/C.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/C.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/D.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/D.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/E.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/E.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/E_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/E_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/F.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/F.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/G.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/G.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/H.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/H.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/H_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/H_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/I.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/I.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/I_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/I_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/J.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/J.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/K.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/K.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/K_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/K_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/L.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/L.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/M.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/M.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/M_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/M_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/N.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/N.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/N_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/N_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/O.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/O.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/P.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/P.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Q.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Q.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/R.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/R.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/R_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/R_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/S.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/S.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/T.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/T.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/U.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/U.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/V.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/V.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/V_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/V_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/W.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/W.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/X.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/X.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/X_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/X_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Y.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Y.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Y_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Y_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Z.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Z.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Z_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/Z_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/div.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/div.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/geq.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/geq.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/greater.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/greater.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/less.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/less.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/multiply.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/multiply.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/multiply_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/multiply_predictions.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/neq.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/neq.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/neq_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/neq_predictions.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Recognizer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -267,7 +201,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/HandwrittenOCR/OCR.py</url>
-          <line>124</line>
+          <line>125</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
