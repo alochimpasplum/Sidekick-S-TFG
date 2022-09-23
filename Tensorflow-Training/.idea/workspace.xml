@@ -4,9 +4,17 @@
     <list default="true" id="7455d7fc-247a-4984-8b72-9aa30430eafd" name="Changes" comment="ADD: segundo modelo para la detección de simbolos matematicos&#10;&#10;https://stackoverflow.com/questions/67266161/how-to-train-amd-test-dataset-of-images-downloaded-from-kaggle">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HandwrittenOCR/OCR.py" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/OCR.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/leq.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/leq.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/7.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/7_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/7_predictions.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/+.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/+.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/+_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/+_predictions.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/=.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/=.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/=_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/=_predictions.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/geq.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/geq.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/geq_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/geq_predictions.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq_edged.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq_edged.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq_predictions.png" beforeDir="false" afterPath="$PROJECT_DIR$/HandwrittenOCR/tests/results/leq_predictions.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Recognizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Recognizer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -198,13 +206,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/HandwrittenOCR/OCR.py</url>
-          <line>125</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -213,5 +214,10 @@
         </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="letters_to_remove" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

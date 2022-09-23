@@ -122,6 +122,10 @@ def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False, 
     __fix_r__(letters)
     __fix_y__(letters)
     __fix_7__(letters)
+    __fix_plus__(letters)
+    __fix_equal__(letters)
+    __fix_geq__(letters)
+    __fix_leq__(letters)
 
     for letter in letters:
         label_preds[letter.index] = label_preds[letter.index] + letter.confidence
@@ -442,6 +446,110 @@ def __fix_7__(letters: [Letter]) -> None:
                     letter.index = 33
                     if l not in letters_to_remove:
                         letters_to_remove.append(l)
+
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_plus__(letters: [Letter]) -> None:
+    letter_j: [Letter] = [x for x in letters if x.value == "J"]
+    letters_seen: [Letter] = []
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_j:
+        l: Letter
+        for l in letters:
+            if l.value != "J" and l not in letters_seen:
+                middle: [float, float] = [(l.x_min + l.x_max) / 2, (l.y_min + l.y_max) / 2]
+                if letter.x_min <= middle[0] <= letter.x_max and letter.y_min - 10 <= middle[1] <= letter.y_max + 10:
+                    letter.value = "+"
+                    letter.index = 39
+                    letter.y_max = l.y_max
+                    letters_seen.append(letter)
+                    if l not in letters_to_remove:
+                        letters_to_remove.append(l)
+
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_equal__(letters: [Letter]) -> None:
+    letter_minus: [Letter] = [x for x in letters if (x.value == "-" or x.value == "T")]
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_minus:
+        distance_a = letter.x_max - letter.x_min
+        l: Letter
+        for l in letters:
+            if (l.value == "-" or l.value == "T") and l != letter:
+                if letter.x_min - 10 <= l.x_min <= letter.x_max + 10 and\
+                        (letter.x_min - 10 <= l.x_max <= letter.x_max + 10):
+
+                    distance = letter.y_min - l.y_max
+
+                    if distance_a * 2 >= distance > 0:
+                        letter.y_max = l.y_min
+                        letter.value = "="
+                        letter.index = 40
+
+                        if l not in letters_to_remove:
+                            letters_to_remove.append(l)
+
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_geq__(letters: [Letter]) -> None:
+    letter_minus: [Letter] = [x for x in letters if (x.value == "-" or x.value == "T" or x.value == "M")]
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_minus:
+        distance_a = letter.x_max - letter.x_min
+        l: Letter
+        for l in letters:
+            if (l.value == "D" or l.value == "S" or l.value == "Z"or l.value == "7") and l != letter:
+                if letter.x_min - 10 <= l.x_min <= letter.x_max + 10 and\
+                        (letter.x_min - 10 <= l.x_max <= letter.x_max + 10):
+
+                    distance = letter.y_min - l.y_max
+
+                    if distance_a * 2 >= distance > 0:
+                        letter.y_max = l.y_min
+                        letter.value = "gec"
+                        letter.index = 42
+
+                        if l not in letters_to_remove:
+                            letters_to_remove.append(l)
+
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_leq__(letters: [Letter]) -> None:
+    letter_minus: [Letter] = [x for x in letters if (x.value == "-" or x.value == "T" or x.value == "M")]
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_minus:
+        distance_a = letter.x_max - letter.x_min
+        l: Letter
+        for l in letters:
+            if (l.value == "C" or l.value == "L") and l != letter:
+                if letter.x_min - 10 <= l.x_min <= letter.x_max + 10 and\
+                        (letter.x_min - 10 <= l.x_max <= letter.x_max + 10):
+
+                    distance = letter.y_min - l.y_max
+
+                    if distance_a * 1 >= distance >= distance_a * -0.5:
+                        letter.y_max = l.y_min
+                        letter.value = "lec"
+                        letter.index = 45
+
+                        if l not in letters_to_remove:
+                            letters_to_remove.append(l)
 
     for letter in letters_to_remove:
         if letter in letters:

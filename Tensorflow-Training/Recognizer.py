@@ -5,9 +5,9 @@ import fontTools.ttLib
 import HandwrittenOCR.OCR as OCR
 
 base_path: str = 'HandwrittenOCR/tests/'
-path: str = 'HandwrittenOCR/tests/7.jpg'
+path: str = 'HandwrittenOCR/tests/leq.jpg'
 
-get_all_detections: bool = False
+get_all_detections: bool = True
 get_predictions: bool = True
 get_statistics: bool = True
 
