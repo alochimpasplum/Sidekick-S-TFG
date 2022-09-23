@@ -112,13 +112,15 @@ def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False, 
 
         letters.append(Letter(x, x + w, y, y + h, prob, label, i))
 
-    """
     letters = __remove_duplicates__(letters)
     __remove_inner_letters__(letters)
     __fix_e__(letters)
     __fix_h__(letters)
     __fix_i__(letters)
-    """
+    __fix_m__(letters)
+    __fix_n__(letters)
+    __fix_r__(letters)
+    __fix_y__(letters)
 
     for letter in letters:
         label_preds[letter.index] = label_preds[letter.index] + letter.confidence
@@ -319,6 +321,105 @@ def __fix_i__(letters: [Letter]) -> None:
                 letter.index = 8
                 if l not in letters_to_remove:
                     letters_to_remove.append(l)
+
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_m__(letters: [Letter]) -> None:
+    letter_y: [Letter] = [x for x in letters if x.value == "Y"]
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_y:
+        l: Letter
+        for l in letters:
+            if l.value != "Y":
+                middle: [float, float] = [(l.x_min + l.x_max) / 2, (l.y_min + l.y_max) / 2]
+                if letter.x_min < middle[0] < letter.x_max and letter.y_min < middle[1] < letter.y_max:
+                    if l not in letters_to_remove:
+                        letters_to_remove.append(l)
+
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_n__(letters: [Letter]) -> None:
+    letter_n: [Letter] = [x for x in letters if x.value == "N"]
+    letter_m: [Letter] = [x for x in letters if x.value == "M"]
+    letter_v: [Letter] = [x for x in letters if x.value == "V"]
+    letter_w: [Letter] = [x for x in letters if x.value == "W"]
+
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_n:
+        l: Letter
+        for l in letters:
+            if l.value != "N":
+                middle: [float, float] = [(l.x_min + l.x_max) / 2, (l.y_min + l.y_max) / 2]
+                if letter.x_min < middle[0] < letter.x_max and letter.y_min < middle[1] < letter.y_max:
+                    if l not in letters_to_remove:
+                        letters_to_remove.append(l)
+
+    for letter in letter_m:
+        l: Letter
+        for l in letter_v:
+            middle: [float, float] = [(l.x_min + l.x_max) / 2, (l.y_min + l.y_max) / 2]
+            if letter.x_min < middle[0] < letter.x_max and letter.y_min < middle[1] < letter.y_max:
+                letter.value = "N"
+                letter.index = 13
+                if l not in letters_to_remove:
+                    letters_to_remove.append(l)
+
+    for letter in letter_w:
+        l: Letter
+        for l in letters:
+            if l.value == "1" or l.value == "(" or l.value == ")":
+                middle_left: [float, float] = [l.x_min, (l.y_min + l.y_max) / 2]
+                middle_right: [float, float] = [l.x_max, (l.y_min + l.y_max) / 2]
+                if letter.y_min < middle_left[1] < letter.y_max:
+                    if letter.x_min < middle_left[0] or letter.x_max > middle_right[0]:
+                        letter.value = "N"
+                        letter.index = 13
+                        if l not in letters_to_remove:
+                            letters_to_remove.append(l)
+
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_r__(letters: [Letter]) -> None:
+    letter_r: [Letter] = [x for x in letters if x.value == "R"]
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_r:
+        l: Letter
+        for l in letters:
+            if l.value == "K":
+                middle: [float, float] = [(l.x_min + l.x_max) / 2, (l.y_min + l.y_max) / 2]
+                if letter.x_min < middle[0] < letter.x_max and letter.y_min < middle[1] < letter.y_max:
+                    if l not in letters_to_remove:
+                        letters_to_remove.append(l)
+    for letter in letters_to_remove:
+        if letter in letters:
+            letters.remove(letter)
+
+
+def __fix_y__(letters: [Letter]) -> None:
+    letter_y: [Letter] = [x for x in letters if x.value == "Y"]
+    letters_to_remove: [Letter] = []
+
+    for letter in letter_y:
+        l: Letter
+        if letter not in letters_to_remove:
+            for l in letters:
+                if l.value == "Y" and l != letter:
+                    middle: [float, float] = [(l.x_min + l.x_max) / 2, (l.y_min + l.y_max) / 2]
+                    if letter.x_min < middle[0] < letter.x_max and letter.y_min < middle[1] < letter.y_max:
+                        if l not in letters_to_remove:
+                            letters_to_remove.append(l)
 
     for letter in letters_to_remove:
         if letter in letters:
