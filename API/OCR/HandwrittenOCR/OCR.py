@@ -1,6 +1,5 @@
 # https://deepnote.com/@davidespalla/Recognizing-handwriting-with-Tensorflow-and-OpenCV-cfc4acf5-188e-4d3b-bdb5-a13aa463d2b0
 import copy
-
 from keras.models import load_model
 import numpy as np
 import pandas as pd
@@ -11,10 +10,11 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from imutils.contours import sort_contours
-from HandwrittenOCR.Letter import Letter
+from Classes import Block
+from OCR.HandwrittenOCR.Letter import Letter
 
 
-def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False, get_all_statistics: bool = False):
+def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_predictions: bool = False, get_all_statistics: bool = False):
 
     base = os.path.basename(img_path)
     filename = os.path.splitext(base)[0]
@@ -23,7 +23,7 @@ def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False, 
     os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
     # loads the model
-    model_path = 'HandwrittenOCR/model_full.h5'
+    model_path = "./OCR/HandwrittenOCR/model_full.h5"
     model = load_model(model_path)
 
     # loads the input image
@@ -111,6 +111,7 @@ def OCR(img_path: str, threshold: float = 0.001, get_predictions: bool = False, 
         letters.append(Letter(x, x + w, y, y + h, prob, label, i))
 
     letters = __remove_duplicates__(letters)
+    __remove_block_detections(blocks, letters)
     __remove_inner_letters__(letters)
     __fix_e__(letters)
     __fix_h__(letters)
@@ -551,4 +552,19 @@ def __fix_leq__(letters: [Letter]) -> None:
 
     for letter in letters_to_remove:
         if letter in letters:
+            letters.remove(letter)
+
+
+def __remove_block_detections(blocks: [Block], letters: [Letter], threshold: int = 10) -> None:
+    letters_to_remove: [Letter] = []
+
+    block: Block
+    letter: Letter
+    for block in blocks:
+        letters_to_remove.clear()
+        for letter in letters:
+            if block.y_min == letter.y_min and block.y_max == letter.y_max and block.x_min == letter.x_min and block.x_max == letter.x_max:
+                letters_to_remove.append(letter)
+
+        for letter in letters_to_remove:
             letters.remove(letter)
