@@ -5,11 +5,11 @@ import fontTools.ttLib
 import HandwrittenOCR.OCR as OCR
 
 base_path: str = 'HandwrittenOCR/tests/'
-path: str = 'HandwrittenOCR/tests/leq.jpg'
+path: str = 'HandwrittenOCR/tests/HelloWorld3.jpg'
 
-get_all_detections: bool = True
+get_all_detections: bool = False
 get_predictions: bool = True
-get_statistics: bool = True
+get_statistics: bool = False
 
 if get_all_detections:
     files = [x for x in os.listdir(base_path) if 'results' not in x]
