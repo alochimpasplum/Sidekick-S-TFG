@@ -1,6 +1,7 @@
 # https://deepnote.com/@davidespalla/Recognizing-handwriting-with-Tensorflow-and-OpenCV-cfc4acf5-188e-4d3b-bdb5-a13aa463d2b0
 import copy
 from keras.models import load_model
+from PIL import Image
 import numpy as np
 import pandas as pd
 import os
@@ -14,9 +15,9 @@ from Classes import Block
 from OCR.HandwrittenOCR.Letter import Letter
 
 
-def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_predictions: bool = False, get_all_statistics: bool = False):
+def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: bool = False, get_all_statistics: bool = False):
 
-    base = os.path.basename(img_path)
+    base = os.path.basename(img.filename)
     filename = os.path.splitext(base)[0]
 
     # Do not use GPU if CUDA is not configured
@@ -27,7 +28,8 @@ def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_prediction
     model = load_model(model_path)
 
     # loads the input image
-    image = cv2.imread(img_path)
+    np_img = np.array(img)
+    image = cv2.cvtColor(np_img, cv2.COLOR_RGB2BGR)
 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # cropped = gray[120:,:]
@@ -99,7 +101,6 @@ def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_prediction
         30: 0, 31: 0, 32: 0, 33: 0, 34: 0, 35: 0, 36: 0, 37: 0, 38: 0, 39: 0,
         40: 0, 41: 0, 42: 0, 43: 0, 44: 0, 45: 0, 46: 0}
 
-    image = cv2.imread(img_path)
     letters: [Letter] = []
 
     for (pred, (x, y, w, h)) in zip(preds, boxes):
@@ -111,7 +112,7 @@ def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_prediction
         letters.append(Letter(x, x + w, y, y + h, prob, label, i))
 
     letters = __remove_duplicates__(letters)
-    __remove_block_detections(blocks, letters)
+    __remove_block_detections(blocks, letters, image)
     __remove_inner_letters__(letters)
     __fix_e__(letters)
     __fix_h__(letters)
@@ -125,6 +126,7 @@ def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_prediction
     __fix_equal__(letters)
     __fix_geq__(letters)
     __fix_leq__(letters)
+
 
     for letter in letters:
         label_preds[letter.index] = label_preds[letter.index] + letter.confidence
@@ -142,21 +144,21 @@ def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_prediction
             line += "{}\t".format(value)
         line = line.replace(".", ",")
 
-        f = open("HandwrittenOCR/tests/results/{}.txt".format(filename), "w")
+        f = open("OCR/HandwrittenOCR/tests/results/{}.txt".format(filename), "w")
         f.write(line)
         f.close()
 
-        cv2.imwrite('HandwrittenOCR/tests/results/{}_edged.png'.format(filename), edged)
-        cv2.imwrite('HandwrittenOCR/tests/results/{}_predictions.png'.format(filename), image)
+        cv2.imwrite('OCR/HandwrittenOCR/tests/results/{}_edged.png'.format(filename), edged)
+        cv2.imwrite('OCR/HandwrittenOCR/tests/results/{}_predictions.png'.format(filename), image)
 
     if get_all_statistics:
-        predictions: [str] = [x for x in os.listdir("HandwrittenOCR/tests/results/") if x.endswith(".txt")]
+        predictions: [str] = [x for x in os.listdir("OCR/HandwrittenOCR/tests/results/") if x.endswith(".txt")]
 
         lines: [str] = [None] * (len(labelPositions) + 2)
 
         for pred in predictions:
             do_write: bool = True
-            f = open("HandwrittenOCR/tests/results/" + pred)
+            f = open("OCR/HandwrittenOCR/tests/results/" + pred)
             line = f.readline()
             f.close()
             symbol = os.path.splitext(pred)[0]
@@ -176,7 +178,7 @@ def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_prediction
             if do_write:
                 lines[labelPositions[symbol]] = line
 
-        f = open("HandwrittenOCR/tests/results.txt", "w")
+        f = open("OCR/HandwrittenOCR/tests/results.txt", "w")
         line: str = ""
         for line in lines:
             if line is not None:
@@ -185,7 +187,7 @@ def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_prediction
                 f.write("\n")
         f.close()
 
-        f = open("HandwrittenOCR/tests/results.txt", "r")
+        f = open("OCR/HandwrittenOCR/tests/results.txt", "r")
         lines: [str] = f.readlines()
 
         lines[len(labelPositions)] = lines[len(labelPositions)].replace(",", ".")
@@ -203,7 +205,7 @@ def OCR(img_path: str, blocks: [Block], threshold: float = 0.001, get_prediction
         lines[labelPositions["div"]] = div
         f.close()
 
-        f = open("HandwrittenOCR/tests/results.txt", "w")
+        f = open("OCR/HandwrittenOCR/tests/results.txt", "w")
         lines[len(labelPositions)] = lines[len(labelPositions)].replace(".", ",")
         lines[len(labelPositions) + 1] = lines[len(labelPositions) + 1].replace(".", ",")
         f.writelines(lines)
@@ -555,15 +557,19 @@ def __fix_leq__(letters: [Letter]) -> None:
             letters.remove(letter)
 
 
-def __remove_block_detections(blocks: [Block], letters: [Letter], threshold: int = 10) -> None:
+def __remove_block_detections(blocks: [Block], letters: [Letter], img, threshold: int = 10) -> None:
     letters_to_remove: [Letter] = []
+    image = copy.deepcopy(img)
 
     block: Block
     letter: Letter
     for block in blocks:
         letters_to_remove.clear()
         for letter in letters:
-            if block.y_min == letter.y_min and block.y_max == letter.y_max and block.x_min == letter.x_min and block.x_max == letter.x_max:
+            if ((block.y_min - threshold <= letter.y_min <= block.y_min + threshold) and
+                    (block.y_max - threshold <= letter.y_max <= block.y_max + threshold) and
+                    (block.x_min - threshold <= letter.x_min <= block.x_min - threshold) and
+                    (block.x_max - threshold <= letter.x_max <= block.x_max + threshold)):
                 letters_to_remove.append(letter)
 
         for letter in letters_to_remove:

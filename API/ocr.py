@@ -6,8 +6,7 @@ from Classes.Block import Block
 
 
 def get_text(img: Image, blocks: [Block]) -> [Block]:
-    path: str = img.filename
-    OCR.OCR(path, blocks)
+    OCR.OCR(img, blocks, get_predictions=True)
     # return Tesseract.get_text(img, blocks)
     # return EasyOCR.get_text(img, blocks)
     return []
