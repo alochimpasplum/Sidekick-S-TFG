@@ -112,6 +112,7 @@ def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: 
         letters.append(Letter(x, x + w, y, y + h, prob, label, i))
 
     letters = __remove_duplicates__(letters)
+
     __remove_block_detections(blocks, letters, image)
     __remove_inner_letters__(letters)
     __fix_e__(letters)
