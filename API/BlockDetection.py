@@ -11,8 +11,6 @@ import torch
 import json
 import Constants
 import Math_Calcs
-import cv2
-import numpy
 
 
 def detect_blocks(img: Image) -> [Block]:

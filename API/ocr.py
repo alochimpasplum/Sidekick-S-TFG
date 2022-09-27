@@ -1,11 +1,11 @@
-from OCR import EasyOCR, Tesseract
+from OCR import EasyOCR, Tesseract, AzureOCR
 from OCR.HandwrittenOCR import OCR
 from PIL import Image
 from Classes.Text import Text
 from Classes.Block import Block
 
 
-def get_text(img: Image, blocks: [Block], OCR_SYSTEM: str = "CUSTOM") -> [Block]:
+def get_text(img: Image, blocks: [Block], OCR_SYSTEM: str = "AZURE") -> [Block]:
 
     if OCR_SYSTEM == "CUSTOM":
         blocks = EasyOCR.get_text(img, blocks)
@@ -14,5 +14,7 @@ def get_text(img: Image, blocks: [Block], OCR_SYSTEM: str = "CUSTOM") -> [Block]
         blocks = Tesseract.get_text(img, blocks)
     elif OCR_SYSTEM == "EASY_OCR":
         blocks = EasyOCR.get_text(img, blocks)
+    elif OCR_SYSTEM == "AZURE":
+        blocks = AzureOCR.OCR(img, blocks)
 
     return blocks
