@@ -128,7 +128,6 @@ def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: 
     __fix_geq__(letters)
     __fix_leq__(letters)
 
-
     for letter in letters:
         label_preds[letter.index] = label_preds[letter.index] + letter.confidence
 
