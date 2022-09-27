@@ -12,13 +12,42 @@ import tensorflow as tf
 from tensorflow import keras
 from imutils.contours import sort_contours
 from Classes import Block
+from Classes.Text import Text
 from OCR.HandwrittenOCR.Letter import Letter
 
 
-def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: bool = False, get_all_statistics: bool = False):
+def OCR(img: Image, blocks: [Block]):
+    for block in blocks:
+        if len(block.Texts) > 0:
+            letters: [Letter] = []
+            text: Text
+            cropped_image: Image = img.crop((block.Texts[0].x_min, block.Texts[0].y_min,
+                                             block.Texts[0].x_max, block.Texts[0].y_max))
 
-    base = os.path.basename(img.filename)
-    filename = os.path.splitext(base)[0]
+            letters = __get_letters__(cropped_image, blocks)
+            __get_text__(letters, block.Texts[0])
+
+
+def __get_text__(letters: [Letter], block_text: Text) -> None:
+    med_letter_size: float = 0
+    raw_text: str = ""
+    for letter in letters:
+        med_letter_size = med_letter_size + ((letter.x_min + letter.x_max) / 2)
+        raw_text += letter.value
+    med_letter_size = med_letter_size / len(letters)
+
+    block_text.text = raw_text
+
+
+def __get_letters__(img: Image, threshold: float = 0.001, get_predictions: bool = False,
+                    get_all_statistics: bool = False) -> [Letter]:
+
+    try:
+        base = os.path.basename(img.filename)
+        filename = os.path.splitext(base)[0]
+    except AttributeError:
+        print("A")
+        filename = "tests"
 
     # Do not use GPU if CUDA is not configured
     os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
@@ -79,14 +108,14 @@ def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: 
     # OCR the characters using our handwriting recognition model
     preds = model.predict(chars)
     # define the list of label names
-    
+
     labelPositions = {
         "A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7, "I": 8, "J": 9,
         "K": 10, "L": 11, "M": 12, "N": 13, "O": 14, "P": 15, "Q": 16, "R": 17, "S": 18, "T": 19,
         "U": 20, "V": 21, "W": 22, "X": 23, "Y": 24, "Z": 25, "0": 26, "1": 27, "2": 28, "3": 29,
         "4": 30, "5": 31, "6": 32, "7": 33, "8": 34, "9": 35, "-": 36, "(": 37, ")": 38, "+": 39,
         "=": 40, "div": 41, "geq": 42, "gt": 43, "lt": 44, "leq": 45, "neq": 46}
-    
+
     labelNames = {
         0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H", 8: "I", 9: "J",
         10: "K", 11: "L", 12: "M", 13: "N", 14: "O", 15: "P", 16: "Q", 17: "R", 18: "S", 19: "T",
@@ -113,7 +142,6 @@ def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: 
 
     letters = __remove_duplicates__(letters)
 
-    __remove_block_detections(blocks, letters, image)
     __remove_inner_letters__(letters)
     __fix_e__(letters)
     __fix_h__(letters)
@@ -128,13 +156,6 @@ def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: 
     __fix_geq__(letters)
     __fix_leq__(letters)
 
-    for letter in letters:
-        label_preds[letter.index] = label_preds[letter.index] + letter.confidence
-
-        label_text = f"{letter.value},{letter.confidence * 100:.1f}%"
-        cv2.rectangle(image, (letter.x_min, letter.y_min), (letter.x_max, letter.y_max), (0, 255, 0), 1)
-        cv2.putText(image, label_text, (letter.x_min - 10, letter.y_min - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
-
     if get_predictions:
         line: [str] = ""
         for key, value in label_preds.items():
@@ -147,6 +168,14 @@ def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: 
         f = open("OCR/HandwrittenOCR/tests/results/{}.txt".format(filename), "w")
         f.write(line)
         f.close()
+
+        for letter in letters:
+            label_preds[letter.index] = label_preds[letter.index] + letter.confidence
+
+            label_text = f"{letter.value},{letter.confidence * 100:.1f}%"
+            cv2.rectangle(image, (letter.x_min, letter.y_min), (letter.x_max, letter.y_max), (0, 255, 0), 1)
+            cv2.putText(image, label_text, (letter.x_min - 10, letter.y_min - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (0, 255, 0), 1)
 
         cv2.imwrite('OCR/HandwrittenOCR/tests/results/{}_edged.png'.format(filename), edged)
         cv2.imwrite('OCR/HandwrittenOCR/tests/results/{}_predictions.png'.format(filename), image)
@@ -210,6 +239,8 @@ def OCR(img: Image, blocks: [Block], threshold: float = 0.001, get_predictions: 
         lines[len(labelPositions) + 1] = lines[len(labelPositions) + 1].replace(".", ",")
         f.writelines(lines)
         f.close()
+
+    return letters
 
 
 def __remove_duplicates__(letters: [Letter]) -> [Letter]:
@@ -554,23 +585,4 @@ def __fix_leq__(letters: [Letter]) -> None:
 
     for letter in letters_to_remove:
         if letter in letters:
-            letters.remove(letter)
-
-
-def __remove_block_detections(blocks: [Block], letters: [Letter], img, threshold: int = 10) -> None:
-    letters_to_remove: [Letter] = []
-    image = copy.deepcopy(img)
-
-    block: Block
-    letter: Letter
-    for block in blocks:
-        letters_to_remove.clear()
-        for letter in letters:
-            if ((block.y_min - threshold <= letter.y_min <= block.y_min + threshold) and
-                    (block.y_max - threshold <= letter.y_max <= block.y_max + threshold) and
-                    (block.x_min - threshold <= letter.x_min <= block.x_min - threshold) and
-                    (block.x_max - threshold <= letter.x_max <= block.x_max + threshold)):
-                letters_to_remove.append(letter)
-
-        for letter in letters_to_remove:
             letters.remove(letter)

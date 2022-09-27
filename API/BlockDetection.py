@@ -17,17 +17,18 @@ import numpy
 
 def detect_blocks(img: Image) -> [Block]:
     blocks: [Block] = __get_blocks(img)
-    __transform_image(blocks, img)
     blocks = get_text(img, blocks)
     blocks = _sort_arrows(blocks)
     blocks = __find_neighbours(blocks)
     blocks = __sort_blocks(blocks)
 
+    Debug.get_detections(blocks, img).show()
+
     return blocks
 
 
-def __get_blocks(image: Image) -> [Block]:
-    image: Image = correct_image(image)
+def __get_blocks(img: Image) -> [Block]:
+    image: Image = correct_image(copy.deepcopy(img))
 
     # Model
     model = torch.hub.load('./yolov5', 'custom', source='local', path='./TestStuff/best(L).pt', force_reload=True)
@@ -105,22 +106,6 @@ def __block_best_confidence(block_a: Block, block_b: Block) -> Block:
         return block_a
     if block_a.confidence < block_b.confidence:
         return block_b
-
-
-def __transform_image(blocks: [Block], image: Image) -> None:
-    opencv_img = cv2.cvtColor(numpy.array(image), cv2.COLOR_RGB2BGR)
-
-    # kernel = numpy.ones((5, 5), numpy.uint8)
-    kernel = numpy.array([[1, 1, 1, 1, 1],
-                          [1, 0, 0, 0, 1],
-                          [1, 0, 0, 0, 1],
-                          [1, 0, 0, 0, 1],
-                          [1, 1, 1, 1, 1]], numpy.uint8)
-
-    opencv_img = cv2.erode(opencv_img, kernel)
-
-    image = Image.fromarray(opencv_img)
-    image.show()
 
 
 def _sort_arrows(blocks: [Block]) -> [Block]:

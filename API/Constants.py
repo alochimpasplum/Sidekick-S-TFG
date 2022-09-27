@@ -19,6 +19,10 @@ IMGBB_API_KEY = "bc8ef0e80f038925f3dadfbb769b87f7"
 # Expiration time for uploaded images (in seconds)
 IMGBB_EXPIRATION_TIME = 1800
 
+# Azure OCR stuff
+AZURE_OCR_SUBSCRIPTION_KEY = "fcb75213fafe4affa21a2ea34bf172a0"
+AZURE_OCR_ENDPOINT = "https://tfgocr.cognitiveservices.azure.com/"
+
 # Suffix to indicate variables
 VAR_SUFFIX = "_var"
 

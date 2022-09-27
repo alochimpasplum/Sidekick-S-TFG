@@ -5,8 +5,14 @@ from Classes.Text import Text
 from Classes.Block import Block
 
 
-def get_text(img: Image, blocks: [Block]) -> [Block]:
-    OCR.OCR(img, blocks, get_predictions=True)
-    # return Tesseract.get_text(img, blocks)
-    # return EasyOCR.get_text(img, blocks)
-    return []
+def get_text(img: Image, blocks: [Block], OCR_SYSTEM: str = "CUSTOM") -> [Block]:
+
+    if OCR_SYSTEM == "CUSTOM":
+        blocks = EasyOCR.get_text(img, blocks)
+        OCR.OCR(img, blocks)
+    elif OCR_SYSTEM == "TESSERACT":
+        blocks = Tesseract.get_text(img, blocks)
+    elif OCR_SYSTEM == "EASY_OCR":
+        blocks = EasyOCR.get_text(img, blocks)
+
+    return blocks

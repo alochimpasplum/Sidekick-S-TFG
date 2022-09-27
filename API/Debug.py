@@ -29,7 +29,7 @@ def get_detections(blocks: [Block], image: Image) -> Image:
                               (int(block.Texts[0].x_min), int(block.Texts[0].y_min)), color, 1)
                 cv2.putText(img, str(block.Texts[0].text),
                             (int(block.Texts[0].x_min),
-                             int(block.Texts[0].y_max)), font, 2, (0, 0, 0), 1)
+                             int(block.Texts[0].y_max)), font, 1, (0, 0, 0), 1)
         else:
             if len(block.Texts) > 0:
                 cv2.rectangle(img, (int(block.x_min), int(block.y_min)),
@@ -37,7 +37,7 @@ def get_detections(blocks: [Block], image: Image) -> Image:
                                int(block.y_min + (block.Texts[0].y_max - block.Texts[0].y_min))), (255, 255, 255), -1)
                 cv2.putText(img, str(block.Texts[0].text),
                             (int(block.x_min), int(block.y_min + (block.Texts[0].y_max - block.Texts[0].y_min))),
-                            font, 2, (0, 0, 0), 1)
+                            font, 1, (0, 0, 0), 1)
 
     img: Image = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     return img

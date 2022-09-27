@@ -19,8 +19,6 @@ def get_text(img: Image, blocks: [Block]) -> [Block]:
         text: Text = Text(i, res[0][0][0], res[0][0][1], res[0][2][0], res[0][2][1], res[2], res[1])
         texts.append(text)
 
-    Debug.get_ocr(texts, img).save('C:\\Users\\Lagos\\Downloads\\img.jpg')
-
     temp: [[Block], [Text]] = __get_inner_texts(texts, blocks)
     blocks = __get_outer_text(temp[0], temp[1])
 
