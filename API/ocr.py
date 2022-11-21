@@ -5,7 +5,7 @@ from Classes.Text import Text
 from Classes.Block import Block
 
 
-def get_text(img: Image, blocks: [Block], OCR_SYSTEM: str = "AZURE") -> [Block]:
+def get_text(img: Image, blocks: [Block], OCR_SYSTEM: str = "CUSTOM") -> [Block]:
 
     if OCR_SYSTEM == "CUSTOM":
         blocks = EasyOCR.get_text(img, blocks)

@@ -16,7 +16,15 @@ from Classes.Text import Text
 from OCR.HandwrittenOCR.Letter import Letter
 
 
-def OCR(img: Image, blocks: [Block]):
+def OCR(img: Image, blocks: [Block], threshold_BW: int = 128):
+    opencv_image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    gray_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2GRAY)
+    img_binary = cv2.threshold(gray_image, threshold_BW, 255, cv2.THRESH_BINARY)[1]
+    Image.fromarray(img_binary).show()
+
+
+def __get_blocks_text__(img: Image, blocks: [Block]):
+    """Old system, DEPRECATED"""
     for block in blocks:
         if len(block.Texts) > 0:
             letters: [Letter] = []
@@ -46,7 +54,6 @@ def __get_letters__(img: Image, threshold: float = 0.001, get_predictions: bool 
         base = os.path.basename(img.filename)
         filename = os.path.splitext(base)[0]
     except AttributeError:
-        print("A")
         filename = "tests"
 
     # Do not use GPU if CUDA is not configured
