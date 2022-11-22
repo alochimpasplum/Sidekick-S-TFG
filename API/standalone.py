@@ -15,7 +15,7 @@ def main():
         dropped_file = sys.argv[1]
         img = Image.open(dropped_file)
     except IndexError:
-        img = Image.open('./TestStuff/HelloWorld5.jpg')
+        img = Image.open('./TestStuff/HelloWorld9.jpg')
     blocks: [Block] = FlowchartObjectDetection.get_blocks(img)
 
 

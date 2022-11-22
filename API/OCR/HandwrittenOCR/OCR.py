@@ -1,7 +1,7 @@
 # https://deepnote.com/@davidespalla/Recognizing-handwriting-with-Tensorflow-and-OpenCV-cfc4acf5-188e-4d3b-bdb5-a13aa463d2b0
 import copy
 from keras.models import load_model
-from PIL import Image
+from PIL import Image, ImageDraw
 import numpy as np
 import pandas as pd
 import os
@@ -14,17 +14,20 @@ from imutils.contours import sort_contours
 from Classes import Block
 from Classes.Text import Text
 from OCR.HandwrittenOCR.Letter import Letter
+from Enums import LABEL
 
 
 def OCR(img: Image, blocks: [Block], threshold_BW: int = 128):
+    # To greyscale
     opencv_image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     gray_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2GRAY)
     img_binary = cv2.threshold(gray_image, threshold_BW, 255, cv2.THRESH_BINARY)[1]
-    Image.fromarray(img_binary).show()
+    img: Image = Image.fromarray(img_binary)
+
+    __get_blocks_text__(img, blocks)
 
 
 def __get_blocks_text__(img: Image, blocks: [Block]):
-    """Old system, DEPRECATED"""
     for block in blocks:
         if len(block.Texts) > 0:
             letters: [Letter] = []
@@ -36,20 +39,35 @@ def __get_blocks_text__(img: Image, blocks: [Block]):
             __get_text__(letters, block.Texts[0])
 
 
-def __get_text__(letters: [Letter], block_text: Text) -> None:
+def __get_text__(letters: [Letter], block_text: Text, space_factor: float = 2) -> None:
     med_letter_size: float = 0
     raw_text: str = ""
     for letter in letters:
-        med_letter_size = med_letter_size + ((letter.x_min + letter.x_max) / 2)
+        med_letter_size = med_letter_size + letter.x_max - letter.x_min
         raw_text += letter.value
-    med_letter_size = med_letter_size / len(letters)
+    med_letter_size = med_letter_size / len(letters)  # At this point I've medium letter x size
+
+    raw_text = ""
+    last_x: float = -1
+    for letter in letters:
+        if last_x == -1:
+            raw_text = letter.value
+            last_x = (letter.x_min + letter.x_max) / 2
+        elif (((letter.x_min + letter.x_max) / 2) - last_x) <= med_letter_size * space_factor:
+            raw_text += letter.value
+            last_x = (letter.x_min + letter.x_max) / 2
+        else:
+            raw_text += " "
+            raw_text += letter.value
+            last_x = (letter.x_min + letter.x_max) / 2
+
+    print(raw_text)
 
     block_text.text = raw_text
 
 
 def __get_letters__(img: Image, threshold: float = 0.001, get_predictions: bool = False,
                     get_all_statistics: bool = False) -> [Letter]:
-
     try:
         base = os.path.basename(img.filename)
         filename = os.path.splitext(base)[0]
