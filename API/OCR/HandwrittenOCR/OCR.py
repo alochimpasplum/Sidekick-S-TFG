@@ -61,8 +61,6 @@ def __get_text__(letters: [Letter], block_text: Text, space_factor: float = 2) -
             raw_text += letter.value
             last_x = (letter.x_min + letter.x_max) / 2
 
-    print(raw_text)
-
     block_text.text = raw_text
 
 
