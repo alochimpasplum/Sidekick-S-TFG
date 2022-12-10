@@ -14,6 +14,13 @@ class LABEL(Enum):
     pointer = 9
 
 
+class OCR(Enum):
+    CUSTOM = 0
+    TESSERACT = 1
+    EASY_OCR = 2
+    AZURE = 3
+
+
 mermaid_delete_characters: () = (
     '(',
     ')',

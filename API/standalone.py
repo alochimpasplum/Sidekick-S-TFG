@@ -6,6 +6,7 @@ import JsonOperations
 import BlockDetection
 from PIL import Image
 from Classes.Block import Block
+from Enums import OCR
 from Image_Correction import correct_image
 
 
@@ -16,7 +17,7 @@ def main():
         img = Image.open(dropped_file)
     except IndexError:
         img = Image.open('./TestStuff/HelloWorld9.jpg')
-    blocks: [Block] = FlowchartObjectDetection.get_blocks(img)
+    blocks: [Block] = FlowchartObjectDetection.get_blocks(img, ocr_system=OCR.CUSTOM)
 
 
 if __name__ == "__main__":

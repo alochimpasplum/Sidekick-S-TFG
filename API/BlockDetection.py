@@ -1,6 +1,8 @@
 import copy
 
 from PIL import Image
+
+import Enums
 from Classes.Block import Block
 from Classes.Text import Text
 from Enums import LABEL
@@ -13,9 +15,9 @@ import Constants
 import Math_Calcs
 
 
-def detect_blocks(img: Image) -> [Block]:
+def detect_blocks(img: Image, ocr_system: Enums.OCR) -> [Block]:
     blocks: [Block] = __get_blocks(img)
-    blocks = get_text(img, blocks)
+    blocks = get_text(img, blocks, ocr_system=ocr_system)
     blocks = _sort_arrows(blocks)
     blocks = __find_neighbours(blocks)
     blocks = __sort_blocks(blocks)
