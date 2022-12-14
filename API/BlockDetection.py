@@ -8,6 +8,7 @@ from Classes.Text import Text
 from Enums import LABEL
 from ocr import get_text
 from Image_Correction import correct_image
+from FontCode import FontCode
 import Debug
 import torch
 import json
@@ -22,7 +23,9 @@ def detect_blocks(img: Image, ocr_system: Enums.OCR) -> [Block]:
     blocks = __find_neighbours(blocks)
     blocks = __sort_blocks(blocks)
 
-    Debug.get_detections(blocks, img).show()
+    # Debug.get_detections(blocks, img).show()
+
+    code: FontCode.FontCode = FontCode.FontCode(blocks)
 
     return blocks
 

@@ -17,7 +17,7 @@ def main():
         img = Image.open(dropped_file)
     except IndexError:
         img = Image.open('./TestStuff/HelloWorld9.jpg')
-    blocks: [Block] = FlowchartObjectDetection.get_blocks(img, ocr_system=OCR.CUSTOM)
+    blocks: [Block] = FlowchartObjectDetection.get_blocks(img, ocr_system=OCR.AZURE)
 
 
 if __name__ == "__main__":

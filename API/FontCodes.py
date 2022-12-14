@@ -5,7 +5,7 @@ from FontCode import Pseudocode as PseudocodeGenerator
 from FontCode.Python import Python
 from JsonOperations import json_to_mermaid_blocks, json_to_string_list
 
-
+# TODO: modificar la API
 def get_font_codes(raw_mermaid_blocks: [str], raw_languages: [str]) -> {}:
     response: {} = {}
     mermaid_blocks: [MermaidBlock] = json_to_mermaid_blocks(raw_mermaid_blocks)
