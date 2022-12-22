@@ -1,4 +1,3 @@
-# https://deepnote.com/@davidespalla/Recognizing-handwriting-with-Tensorflow-and-OpenCV-cfc4acf5-188e-4d3b-bdb5-a13aa463d2b0
 import copy
 from keras.models import load_model
 from PIL import Image, ImageDraw

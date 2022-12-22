@@ -24,7 +24,14 @@ AND : '&&';
 OR : '||';
 NOT : '!';
 
-GT :
+GT : '>';
+LET : '<';
+GEQ : '>=';
+LEQ : '<=';
+EQ : '==';
+NEQ : '!=';
+
+ASSIGN : '=';
 
 ID : [a-zA-Z_][a-zA-Z0-9_]*;
 NUMBER : [0-9]+;
