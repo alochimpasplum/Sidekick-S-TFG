@@ -43,7 +43,7 @@ def __get_inner_texts(texts: [Text], blocks: [Block]) -> [[Block], [Text]]:
     block: Block
 
     for block in blocks:
-        if "arrow" not in block.objet_type.name:
+        if "arrow" not in block.object_type.name:
             txt: [Text] = [x for x in texts if __is_text_inner(x, block)]
             block.Texts = txt
             for t in txt:
@@ -79,7 +79,7 @@ def __get_conditional_arrow(text: Text, blocks: [Block]) -> Block:
     distances: {} = {}
     block: Block
     for block in blocks:
-        if "arrow" in block.objet_type.name:
+        if "arrow" in block.object_type.name:
             block_points.clear()
             block_points.append((block.x_max, block.y_max))
             block_points.append((block.x_max, block.y_min))

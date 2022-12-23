@@ -41,9 +41,6 @@ class Pseudocode:
                 line = line.replace(Constants.PRINT, "PRINT(")
                 line += ")"
 
-            if Constants.VARIABLE in line:
-                line = line.replace(Constants.VARIABLE, "")
-
             if Constants.SCAN in line:
                 line = line.replace(Constants.SCAN, "SCAN(")
                 line += ")"
@@ -79,6 +76,20 @@ class Pseudocode:
                 font_code += line
 
         return font_code
+
+    def to_antlr4_pseudocode(self) -> str:
+        code: str = ""
+        for line in self.lines:
+            code += line
+            if (Constants.MAIN_FUNCTION in line) and (len(self.variables) > 0):
+                code += "main\n"
+                for key, value in self.variables.items():
+                    code += Constants.VARIABLE_DECLARATIONS
+                    code += key
+                    code += value
+                    code += "\n"
+            code += "\n"
+        return code
 
     def to_string(self) -> str:
         response: str = ""

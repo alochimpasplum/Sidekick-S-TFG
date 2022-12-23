@@ -1,24 +1,33 @@
 grammar Python;
 
+main_function: MAIN_FUNCTION ID
+    sentence*;
+
+sentence: var_decl | var_assign | var_print | str_print;
+
+var_decl: VARIABLE_DECLARATIONS ID VARIABLE_TYPE;
+var_assign: ID ASSIGN NUMBER;
+var_print: PRINT ID;
+str_print: PRINT VARIABLE_TYPE ID;
+
 TAB : '<TAB>';
 VARIABLE_DECLARATIONS : '<VAR_DECLARATION>';
-VARIABLE : '<VAR>';
+VARIABLE_TYPE : '<INT>' | '<STRING>';
 PRINT : '<PRINT>';
 SCAN : '<SCAN>';
 FUNCTION : '<FUNC>';
 MAIN_FUNCTION : '<BASE_FUNC>';
-MATH_OPERATION : '<MATH>';
 IF : '<IF>';
 IF_TRUE_START : '<IF_TRUE>';
 IF_TRUE_END : '</IF_TRUE>';
 IF_FALSE_START : '<IF_FALSE>';
 IF_FALSE_END : '</IF_FALSE>';
-END_CODE : '<END>';
+END_CODE : '<END>' -> skip;
 
 PLUS : '+';
 MINUS : '-';
 MULT : '*';
-DIV : '/' | 'div';
+DIV : '/';
 
 AND : '&&';
 OR : '||';
@@ -36,4 +45,4 @@ ASSIGN : '=';
 ID : [a-zA-Z_][a-zA-Z0-9_]*;
 NUMBER : [0-9]+;
 
-WS : [ ]+ -> skip;
+WS : [ \t\n]+ -> skip;

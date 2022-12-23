@@ -18,4 +18,28 @@ def get_text(img: Image, blocks: [Block], ocr_system: Enums.OCR) -> [Block]:
     elif ocr_system == Enums.OCR.AZURE:
         blocks = AzureOCR.OCR(img, blocks)
 
+    __fix_whitespaces(blocks)
+
     return blocks
+
+
+def __fix_whitespaces(blocks: [Block]):
+    block: Block
+    special_characters: [str] = ['+', '-', '*', '/', '&', '|', '!', '<', '>', '=']
+
+    for block in blocks:
+        if len(block.Texts) > 0:
+            block.Texts[0].text = block.Texts[0].text.replace(" ", "")
+            text: str = ""
+            is_last_char_special_char: bool = False
+
+            for c in block.Texts[0].text:
+                if (c in special_characters) and (not is_last_char_special_char):
+                    is_last_char_special_char = True
+                    text += " "
+                elif is_last_char_special_char:
+                    is_last_char_special_char = False
+                    text += " "
+                text += c
+
+            block.Texts[0].text = text

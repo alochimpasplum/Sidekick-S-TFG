@@ -28,7 +28,7 @@ class MermaidBlock:
             # todo: comprobar que funciona en cualquier situación (más condicionales)
             # todo: incluir en la documentación la información de deepcopy
             self.next_blocks_conditionals = copy.deepcopy(block.Next_Blocks_Conditionals)
-            self.object_type = block.objet_type.name
+            self.object_type = block.object_type.name
         else:
             self.block_name = json_dictionary['block_name']
             self.text = json_dictionary['text']

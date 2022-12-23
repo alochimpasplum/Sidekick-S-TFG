@@ -10,10 +10,10 @@ def block_list_to_block_json(blocks: [Block]) -> str:
     response: [] = []
 
     for block in blocks:
-        if "arrow" not in block.objet_type.name:
+        if "arrow" not in block.object_type.name:
             block_response: {} = {}
             block_response['id'] = str(block.id)
-            block_response['object_type'] = block.objet_type.name
+            block_response['object_type'] = block.object_type.name
             block_response['x_min'] = str(block.x_min)
             block_response['x_max'] = str(block.x_max)
             block_response['y_min'] = str(block.y_min)
@@ -50,7 +50,7 @@ def block_list_to_mermaid_json(blocks: [Block], image_with_detections: str) -> s
 
     block: Block
     for block in blocks:
-        if "arrow" not in block.objet_type.name:
+        if "arrow" not in block.object_type.name:
             block_response: MermaidBlock = MermaidBlock(block=block)
             mermaid_blocks.append(block_response)
             mermaid_blocks_json.append(block_response.to_json())

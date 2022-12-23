@@ -19,5 +19,4 @@ tensorflow>=2.10.0
 imutils>=0.5.4
 keras>=2.10.0
 azure-cognitiveservices-vision-computervision>=0.9.0
-antlr4-tools>=0.1
 antlr4-python3-runtime>=4.11.1

@@ -16,12 +16,12 @@ def get_detections(blocks: [Block], image: Image) -> Image:
         color: [int, int, int] = __get_color(block)
         # Block stuff
         cv2.rectangle(img, (int(block.x_max), int(block.y_max)), (int(block.x_min), int(block.y_min)), color, 4)
-        cv2.putText(img, str(block.objet_type.name),
+        cv2.putText(img, str(block.object_type.name),
                     (int(block.x_max), int((block.y_max+block.y_min)/2)), font, 2, color, 1)
         cv2.putText(img, "ID:" + str(block.id),
                     (int(block.x_max), int(block.y_max)), font, 1, (0, 0, 0), 1)
         # Text stuff
-        if "arrow" not in block.objet_type.name:
+        if "arrow" not in block.object_type.name:
             if len(block.Texts) > 0:
                 cv2.rectangle(img, (int(block.Texts[0].x_max), int(block.Texts[0].y_max)),
                               (int(block.Texts[0].x_min), int(block.Texts[0].y_min)), (255, 255, 255), -1)
@@ -60,25 +60,25 @@ def get_ocr(texts: [Text], image: Image) -> Image:
 
 
 def __get_color(block: Block) -> [int, int, int]:
-    if block.objet_type == LABEL.start_end:
+    if block.object_type == LABEL.start_end:
         return 255, 192, 192
-    if block.objet_type == LABEL.scan:
+    if block.object_type == LABEL.scan:
         return 255, 0, 0
-    if block.objet_type == LABEL.decision:
+    if block.object_type == LABEL.decision:
         return 255, 255, 0
-    if block.objet_type == LABEL.print:
+    if block.object_type == LABEL.print:
         return 128, 128, 0
-    if block.objet_type == LABEL.process:
+    if block.object_type == LABEL.process:
         return 0, 255, 0
-    if block.objet_type == LABEL.arrow_line_up:
+    if block.object_type == LABEL.arrow_line_up:
         return 0, 255, 255
-    if block.objet_type == LABEL.arrow_line_down:
+    if block.object_type == LABEL.arrow_line_down:
         return 0, 0, 255
-    if block.objet_type == LABEL.arrow_line_right:
+    if block.object_type == LABEL.arrow_line_right:
         return 255, 0, 255
-    if block.objet_type == LABEL.arrow_line_left:
+    if block.object_type == LABEL.arrow_line_left:
         return 128, 0, 128
-    if block.objet_type == LABEL.pointer:
+    if block.object_type == LABEL.pointer:
         return 192, 192, 192
 
 

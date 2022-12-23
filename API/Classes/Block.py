@@ -7,7 +7,7 @@ from Classes.Text import Text
 class Block:
     """This class handles the blocks on pictures"""
     id:  int
-    objet_type: LABEL
+    object_type: LABEL
     x_min: float
     x_max: float
     y_min: float
@@ -28,7 +28,7 @@ class Block:
 
         for entry in LABEL:
             if entry.name == name:
-                self.objet_type = entry
+                self.object_type = entry
 
     def sort_text(self) -> None:
         if len(self.Texts) > 0:
@@ -48,7 +48,7 @@ class Block:
 
     def to_string(self) -> str:
         string: str = "id: {}, object_type: {}, x_min: {}, x_max: {}, y_min: {}, y_max: {}, confidence: {}\n".format(
-            self.id, self.objet_type, self.x_min, self.x_max, self.y_max, self.y_min, self.confidence)
+            self.id, self.object_type, self.x_min, self.x_max, self.y_max, self.y_min, self.confidence)
 
         string += "next blocks count: {}\n".format(len(self.Next_Blocks))
         neighbour: int
@@ -60,7 +60,7 @@ class Block:
         for i, neighbour in enumerate(self.Previous_Blocks):
             string += "-Neighbour {}: {}\n".format(i, neighbour)
 
-        if "decision" in self.objet_type.name:
+        if "decision" in self.object_type.name:
             string += "Conditional next neigbours: {}\n".format(len(self.Next_Blocks_Conditionals))
             string += json.dumps(self.Next_Blocks_Conditionals)
             string += "\n"

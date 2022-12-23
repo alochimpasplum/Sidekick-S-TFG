@@ -32,7 +32,6 @@ FUNC_SUFFIX = '_func'
 # Symbols used to mark pseudocode
 TAB = "<TAB>"
 VARIABLE_DECLARATIONS = "<VAR_DECLARATION>"
-VARIABLE = "<VAR>"
 PRINT = "<PRINT>"
 SCAN = "<SCAN>"
 FUNCTION = "<FUNC>"
@@ -44,3 +43,5 @@ IF_TRUE_END = "</IF_TRUE>"
 IF_FALSE_START = "<IF_FALSE>"
 IF_FALSE_END = "</IF_FALSE>"
 END_CODE = "<END>"
+INTEGER = "<INT>"
+STRING = "<STRING>"

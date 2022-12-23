@@ -8,7 +8,7 @@ from Classes.Text import Text
 from Enums import LABEL
 from ocr import get_text
 from Image_Correction import correct_image
-from FontCode import FontCode
+
 import Debug
 import torch
 import json
@@ -19,13 +19,12 @@ import Math_Calcs
 def detect_blocks(img: Image, ocr_system: Enums.OCR) -> [Block]:
     blocks: [Block] = __get_blocks(img)
     blocks = get_text(img, blocks, ocr_system=ocr_system)
-    blocks = _sort_arrows(blocks)
+    blocks = __sort_arrows(blocks)
     blocks = __find_neighbours(blocks)
     blocks = __sort_blocks(blocks)
+    blocks = __remove_arrows(blocks)
 
     # Debug.get_detections(blocks, img).show()
-
-    code: FontCode.FontCode = FontCode.FontCode(blocks)
 
     return blocks
 
@@ -111,15 +110,16 @@ def __block_best_confidence(block_a: Block, block_b: Block) -> Block:
         return block_b
 
 
-def _sort_arrows(blocks: [Block]) -> [Block]:
+def __sort_arrows(blocks: [Block]) -> [Block]:
+    """Get sides of all arrows with pointer aid"""
     arrows: [Block] = []
     pointers: [Block] = []
     result: [Block] = []
 
     for block in blocks:
-        if block.objet_type == LABEL.pointer:
+        if block.object_type == LABEL.pointer:
             pointers.append(block)
-        elif "arrow" in block.objet_type.name:
+        elif "arrow" in block.object_type.name:
             arrows.append(block)
         else:
             result.append(block)
@@ -128,7 +128,7 @@ def _sort_arrows(blocks: [Block]) -> [Block]:
         for pointer in pointers:
             is_inside: bool = __is_block_inside(arrow, pointer)
             if is_inside:
-                arrow.objet_type = __get_arrow_side(arrow, pointer)
+                arrow.object_type = __get_arrow_side(arrow, pointer)
                 result.append(arrow)
 
     # TODO: Remove duplicates
@@ -163,7 +163,7 @@ def __get_arrow_side(arrow: Block, pointer: Block) -> LABEL:
 def __find_neighbours(blocks: [Block]) -> [Block]:
     block: Block
     for block in blocks:
-        if "arrow" in block.objet_type.name:
+        if "arrow" in block.object_type.name:
             neighbours: [[int], [int]] = __find_block_neighbours(block, blocks)
             block.Next_Blocks = neighbours[0]
             block.Previous_Blocks = neighbours[1]
@@ -179,7 +179,7 @@ def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
             a: [int, int]
             b: [int, int]
             p: [int, int]
-            if block.objet_type == LABEL.arrow_line_down:
+            if block.object_type == LABEL.arrow_line_down:
                 # C, D => bottom limit => Previous block
                 a = (neighbour.x_min, neighbour.y_max)
                 b = (neighbour.x_max, neighbour.y_max)
@@ -192,7 +192,7 @@ def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
                 p = ((block.x_max + block.x_min) / 2, block.y_max)
                 next_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
 
-            if block.objet_type == LABEL.arrow_line_up:
+            if block.object_type == LABEL.arrow_line_up:
                 # A, B => upper limit => Previous block
                 a = (neighbour.x_min, neighbour.y_min)
                 b = (neighbour.x_max, neighbour.y_min)
@@ -205,7 +205,7 @@ def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
                 p = ((block.x_max + block.x_min) / 2, block.y_min)
                 next_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
 
-            if block.objet_type == LABEL.arrow_line_left:
+            if block.object_type == LABEL.arrow_line_left:
                 # C, D => bottom limit => Next block
                 a = (neighbour.x_max, neighbour.y_min)
                 b = (neighbour.x_max, neighbour.y_max)
@@ -218,7 +218,7 @@ def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
                 p = (block.x_max, (block.y_min + block.y_max) / 2)
                 previous_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
 
-            if block.objet_type == LABEL.arrow_line_right:
+            if block.object_type == LABEL.arrow_line_right:
                 # C, D => bottom limit => Next block
                 a = (neighbour.x_min, neighbour.y_min)
                 b = (neighbour.x_min, neighbour.y_max)
@@ -240,16 +240,16 @@ def __sort_blocks(blocks: [Block]) -> [Block]:
 
     # Get next blocks
     for block in blocks:
-        if "arrow" in block.objet_type.name and len(block.Previous_Blocks) > 0:
+        if "arrow" in block.object_type.name and len(block.Previous_Blocks) > 0:
             prev_temp: [Block] = [x for x in blocks if x.id == block.Previous_Blocks[0]]
-            if "arrow" not in prev_temp[0].objet_type.name:
+            if "arrow" not in prev_temp[0].object_type.name:
                 is_found: bool = False
                 loops: int = Constants.DO_WHILE_LOOPS
                 index: int = block.Next_Blocks[0]
                 next_temp: [Block] = []
                 while loops > 0:
                     next_temp = [x for x in blocks if x.id == index]
-                    if "arrow" not in next_temp[0].objet_type.name:
+                    if "arrow" not in next_temp[0].object_type.name:
                         loops = 0
                         is_found = True
                     else:
@@ -268,7 +268,7 @@ def __sort_blocks(blocks: [Block]) -> [Block]:
 
     # Get previous blocks
     for block in blocks:
-        if "arrow" not in block.objet_type.name:
+        if "arrow" not in block.object_type.name:
             for next_block_id in block.Next_Blocks:
                 next_blocks: [Block] = [x for x in blocks if x.id == next_block_id]
                 if len(next_blocks) > 0:
@@ -277,3 +277,7 @@ def __sort_blocks(blocks: [Block]) -> [Block]:
                     next_blocks[0].Previous_Blocks = temp
 
     return blocks
+
+
+def __remove_arrows(blocks: [Block]) -> [Block]:
+    return [x for x in blocks if "arrow" not in x.object_type.name]
