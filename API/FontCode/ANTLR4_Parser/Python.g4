@@ -5,10 +5,10 @@ main_function: MAIN_FUNCTION ID
 
 sentence: var_decl | var_assign | var_print | str_print;
 
-var_decl: VARIABLE_DECLARATIONS ID VARIABLE_TYPE;
-var_assign: ID ASSIGN NUMBER;
-var_print: PRINT ID;
-str_print: PRINT VARIABLE_TYPE ID;
+var_decl: TAB* VARIABLE_DECLARATIONS ID VARIABLE_TYPE;
+var_assign: TAB* ID ASSIGN NUMBER;
+var_print: TAB* PRINT ID;
+str_print: TAB* PRINT VARIABLE_TYPE ID;
 
 TAB : '<TAB>';
 VARIABLE_DECLARATIONS : '<VAR_DECLARATION>';
@@ -22,7 +22,7 @@ IF_TRUE_START : '<IF_TRUE>';
 IF_TRUE_END : '</IF_TRUE>';
 IF_FALSE_START : '<IF_FALSE>';
 IF_FALSE_END : '</IF_FALSE>';
-END_CODE : '<END>' -> skip;
+END_CODE : '<END>';
 
 PLUS : '+';
 MINUS : '-';

@@ -21,6 +21,10 @@ class OCR(Enum):
     AZURE = 3
 
 
+class supported_languages(Enum):
+    python = 0
+
+
 mermaid_delete_characters: () = (
     '(',
     ')',
@@ -48,9 +52,3 @@ block_close: {} = {
     'print': '/]',
     'process': ']'
 }
-
-supported_languages: [] = [
-    'pseudo_language',
-    'python'
-]
-

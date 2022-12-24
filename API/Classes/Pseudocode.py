@@ -84,6 +84,7 @@ class Pseudocode:
             if (Constants.MAIN_FUNCTION in line) and (len(self.variables) > 0):
                 code += "main\n"
                 for key, value in self.variables.items():
+                    code += Constants.TAB
                     code += Constants.VARIABLE_DECLARATIONS
                     code += key
                     code += value

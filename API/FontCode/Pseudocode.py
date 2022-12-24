@@ -218,8 +218,8 @@ def __add_tabs(line: str, tab_number: int) -> str:
     tabs: str = ""
     for x in range(tab_number):
         tabs += Constants.TAB
-    # return tabs + line
-    return line
+    return tabs + line
+    # return line
 
 
 def __check_final_conditional_block(next_blocks: [Block],
