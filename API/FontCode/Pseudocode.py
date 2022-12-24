@@ -18,7 +18,6 @@ def get_pseudocode(blocks: [Block]) -> PseudocodeClass.Pseudocode:
 
     if ("START" in block.Texts[0].text) or ("INICIO" in block.Texts[0].text):
         tab_index = 1
-        # pseudocode.append("{} {}".format(Constants.MAIN_FUNCTION, block.Texts[0].text.rstrip()))
         pseudocode.append(Constants.MAIN_FUNCTION)
 
     next_blocks = __get_next_block(blocks, block)
@@ -218,8 +217,8 @@ def __add_tabs(line: str, tab_number: int) -> str:
     tabs: str = ""
     for x in range(tab_number):
         tabs += Constants.TAB
-    return tabs + line
-    # return line
+    # return tabs + line
+    return line
 
 
 def __check_final_conditional_block(next_blocks: [Block],

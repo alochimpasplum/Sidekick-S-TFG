@@ -1,16 +1,25 @@
 grammar Python;
 
-main_function: MAIN_FUNCTION ID
-    sentence*;
+prog: (function | variable)+ EOF;
 
-sentence: var_decl | var_assign | var_print | str_print;
+expr: ID | NUMBER;
 
-var_decl: TAB* VARIABLE_DECLARATIONS ID VARIABLE_TYPE;
-var_assign: TAB* ID ASSIGN NUMBER;
-var_print: TAB* PRINT ID;
-str_print: TAB* PRINT VARIABLE_TYPE ID;
+function: main_function | built_function | custom_function;
 
-TAB : '<TAB>';
+main_function: MAIN_FUNCTION;
+custom_function: FUNCTION expr;
+built_function: print;
+
+variable: var_decl | var_assign;
+
+var_decl: VARIABLE_DECLARATIONS expr VARIABLE_TYPE;
+var_assign: expr ASSIGN expr;
+
+print: PRINT expr
+    | PRINT VARIABLE_TYPE expr
+    ;
+
+TAB : '<TAB>' -> skip;
 VARIABLE_DECLARATIONS : '<VAR_DECLARATION>';
 VARIABLE_TYPE : '<INT>' | '<STRING>';
 PRINT : '<PRINT>';
@@ -22,7 +31,7 @@ IF_TRUE_START : '<IF_TRUE>';
 IF_TRUE_END : '</IF_TRUE>';
 IF_FALSE_START : '<IF_FALSE>';
 IF_FALSE_END : '</IF_FALSE>';
-END_CODE : '<END>';
+END_CODE : '<END>' -> skip;
 
 PLUS : '+';
 MINUS : '-';
@@ -43,6 +52,7 @@ NEQ : '!=';
 ASSIGN : '=';
 
 ID : [a-zA-Z_][a-zA-Z0-9_]*;
+// todo: agregar strings
 NUMBER : [0-9]+;
 
 WS : [ \t\n]+ -> skip;
