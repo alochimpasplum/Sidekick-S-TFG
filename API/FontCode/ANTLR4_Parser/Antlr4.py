@@ -9,12 +9,12 @@ from FontCode.ANTLR4_Parser.Languages import Python
 
 def antlr4_operation(input_str: str, language: supported_languages = supported_languages.python):
     # Lexer
-    lexer = PythonLexer(InputStream(input_str))
+    lexer: PythonLexer = PythonLexer(InputStream(input_str))
     stream = CommonTokenStream(lexer)
 
     # Parser
-    parser = PythonParser(stream)
-    tree = parser.main_function()
+    parser: PythonParser = PythonParser(stream)
+    tree: PythonParser.Main_functionContext = parser.main_function()
 
     lang = None
 
