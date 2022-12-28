@@ -1,8 +1,8 @@
 import antlr4.tree.Tree
 from antlr4 import *
-from FontCode.ANTLR4_Parser.Build.PythonLexer import PythonLexer
-from FontCode.ANTLR4_Parser.Build.PythonParser import PythonParser
-from FontCode.ANTLR4_Parser.Build.PythonListener import PythonListener
+from FontCode.ANTLR4_Parser.Antlr4_Files.PythonLexer import PythonLexer
+from FontCode.ANTLR4_Parser.Antlr4_Files.PythonParser import PythonParser
+from FontCode.ANTLR4_Parser.Antlr4_Files.PythonListener import PythonListener
 from Enums import supported_languages
 from FontCode.ANTLR4_Parser.Languages import Python
 

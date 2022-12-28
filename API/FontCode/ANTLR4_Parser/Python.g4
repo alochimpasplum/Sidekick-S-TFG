@@ -1,23 +1,29 @@
 grammar Python;
 
-prog: (function | variable)+ EOF;
+prog: (function | var)+ EOF
+    ;
 
-expr: ID | NUMBER;
+function: main_function
+        | built_function
+        | custom_function
+        ;
 
-function: main_function | built_function | custom_function;
+expr: ID        # Variable
+    | NUMBER    # Number
+    ;
 
 main_function: MAIN_FUNCTION;
 custom_function: FUNCTION expr;
 built_function: print;
 
-variable: var_decl | var_assign;
+var : var_decl
+    | var_assign
+    ;
 
 var_decl: VARIABLE_DECLARATIONS expr VARIABLE_TYPE;
 var_assign: expr ASSIGN expr;
 
-print: PRINT expr
-    | PRINT VARIABLE_TYPE expr
-    ;
+print: PRINT expr;
 
 TAB : '<TAB>' -> skip;
 VARIABLE_DECLARATIONS : '<VAR_DECLARATION>';

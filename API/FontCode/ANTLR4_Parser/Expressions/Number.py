@@ -2,7 +2,6 @@ from FontCode.ANTLR4_Parser.Expressions import Expression
 
 
 class Number(Expression):
-
     num: int
 
     def __init__(self, num: int):

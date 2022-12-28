@@ -14,13 +14,18 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PythonParser#expr.
-    def visitExpr(self, ctx:PythonParser.ExprContext):
+    # Visit a parse tree produced by PythonParser#function.
+    def visitFunction(self, ctx:PythonParser.FunctionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PythonParser#function.
-    def visitFunction(self, ctx:PythonParser.FunctionContext):
+    # Visit a parse tree produced by PythonParser#Variable.
+    def visitVariable(self, ctx:PythonParser.VariableContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#Number.
+    def visitNumber(self, ctx:PythonParser.NumberContext):
         return self.visitChildren(ctx)
 
 
@@ -39,8 +44,8 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PythonParser#variable.
-    def visitVariable(self, ctx:PythonParser.VariableContext):
+    # Visit a parse tree produced by PythonParser#var.
+    def visitVar(self, ctx:PythonParser.VarContext):
         return self.visitChildren(ctx)
 
 

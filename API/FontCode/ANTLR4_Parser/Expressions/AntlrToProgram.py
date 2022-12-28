@@ -1,5 +1,5 @@
-from FontCode.ANTLR4_Parser.Build.PythonParser import PythonParser
-from FontCode.ANTLR4_Parser.Build.PythonVisitor import PythonVisitor
+from FontCode.ANTLR4_Parser.Antlr4_Files.PythonParser import PythonParser
+from FontCode.ANTLR4_Parser.Antlr4_Files.PythonVisitor import PythonVisitor
 from FontCode.ANTLR4_Parser.Expressions import Program
 
 

@@ -17,21 +17,30 @@ class PythonListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by PythonParser#expr.
-    def enterExpr(self, ctx:PythonParser.ExprContext):
-        pass
-
-    # Exit a parse tree produced by PythonParser#expr.
-    def exitExpr(self, ctx:PythonParser.ExprContext):
-        pass
-
-
     # Enter a parse tree produced by PythonParser#function.
     def enterFunction(self, ctx:PythonParser.FunctionContext):
         pass
 
     # Exit a parse tree produced by PythonParser#function.
     def exitFunction(self, ctx:PythonParser.FunctionContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#Variable.
+    def enterVariable(self, ctx:PythonParser.VariableContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Variable.
+    def exitVariable(self, ctx:PythonParser.VariableContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#Number.
+    def enterNumber(self, ctx:PythonParser.NumberContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Number.
+    def exitNumber(self, ctx:PythonParser.NumberContext):
         pass
 
 
@@ -62,12 +71,12 @@ class PythonListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by PythonParser#variable.
-    def enterVariable(self, ctx:PythonParser.VariableContext):
+    # Enter a parse tree produced by PythonParser#var.
+    def enterVar(self, ctx:PythonParser.VarContext):
         pass
 
-    # Exit a parse tree produced by PythonParser#variable.
-    def exitVariable(self, ctx:PythonParser.VariableContext):
+    # Exit a parse tree produced by PythonParser#var.
+    def exitVar(self, ctx:PythonParser.VarContext):
         pass
 
 
