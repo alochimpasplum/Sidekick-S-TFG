@@ -1,7 +1,7 @@
 from FontCode.ANTLR4_Parser.Expressions import Expression
 
 
-class VariableDeclaration(Expression):
+class VariableDeclaration(Expression.Expression):
     child: Expression
     var_type: str
 

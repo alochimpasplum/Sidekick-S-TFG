@@ -1,7 +1,7 @@
 from FontCode.ANTLR4_Parser.Expressions import Expression
 
 
-class MainFunction(Expression):
+class MainFunction(Expression.Expression):
     name: str
 
     def __init__(self, name: str):

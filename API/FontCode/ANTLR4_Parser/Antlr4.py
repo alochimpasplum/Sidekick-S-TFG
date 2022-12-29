@@ -5,6 +5,8 @@ from FontCode.ANTLR4_Parser.Antlr4_Files.PythonParser import PythonParser
 from FontCode.ANTLR4_Parser.Antlr4_Files.PythonListener import PythonListener
 from Enums import supported_languages
 from FontCode.ANTLR4_Parser.Languages import Python
+from FontCode.ANTLR4_Parser.Expressions.AntlrToProgram import AntlrToProgram
+from FontCode.ANTLR4_Parser.Expressions.Program import Program
 
 
 def antlr4_operation(input_str: str, language: supported_languages = supported_languages.python):
@@ -14,10 +16,12 @@ def antlr4_operation(input_str: str, language: supported_languages = supported_l
 
     # Parser
     parser: PythonParser = PythonParser(stream)
-    tree: PythonParser.Main_functionContext = parser.prog()
+    tree = parser.prog()
+    # print(tree.toStringTree(recog=parser))
+    # Visitor
+    visitor: AntlrToProgram = AntlrToProgram()
+    program: Program = visitor.visit(tree)
 
     lang = None
 
-    if language == supported_languages.python:
-        lang = Python.Python(lexer, parser, tree, True)
 

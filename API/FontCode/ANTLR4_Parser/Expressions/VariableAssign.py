@@ -1,7 +1,7 @@
 from FontCode.ANTLR4_Parser.Expressions import Expression
 
 
-class VariableAssign(Expression):
+class VariableAssign(Expression.Expression):
     left: Expression
     right: Expression
 
