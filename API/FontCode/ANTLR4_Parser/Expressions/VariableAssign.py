@@ -9,6 +9,12 @@ class VariableAssign(Expression.Expression):
         self.left = left
         self.right = right
 
+    def get_variable_id(self) -> str:
+        return self.left.name
+
+    def get_assign_value(self) -> str:
+        return str(self.right.num)
+
     def to_string(self):
         print("Start Variable assign")
         print("Left: {0}".format(self.left.to_string()))

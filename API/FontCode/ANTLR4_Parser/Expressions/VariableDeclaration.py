@@ -9,5 +9,8 @@ class VariableDeclaration(Expression.Expression):
         self.child = child
         self.var_type = var_type
 
+    def get_variable_id(self) -> str:
+        return self.child.name
+
     def to_string(self):
         print("Variable declaration, var_type: {0}, var: {1}".format(self.var_type, self.child.to_string()))

@@ -8,4 +8,4 @@ class Number(Expression.Expression):
         self.num = num
 
     def to_string(self):
-        print(self.num)
+        print("Number: {0}".format(self.num))
