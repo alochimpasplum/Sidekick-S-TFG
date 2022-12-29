@@ -14,19 +14,10 @@ def antlr4_operation(input_str: str, language: supported_languages = supported_l
 
     # Parser
     parser: PythonParser = PythonParser(stream)
-    tree: PythonParser.Main_functionContext = parser.main_function()
+    tree: PythonParser.Main_functionContext = parser.prog()
 
     lang = None
 
     if language == supported_languages.python:
         lang = Python.Python(lexer, parser, tree, True)
 
-    # print(tree.toStringTree(recog=parser))
-    # __handle_children__(tree)
-
-
-def __handle_children__(parsed_tree):
-    child: PythonParser.SentenceContext
-    for child in parsed_tree.getChildren():
-        print(child.getText())
-        print(isinstance(child, antlr4.tree.Tree.TerminalNode))
