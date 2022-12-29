@@ -3,9 +3,9 @@ grammar Python;
 prog: (function | var)+ EOF
     ;
 
-function: main_function
-        | built_function
-        | custom_function
+function: main_function         # Function_A
+        | built_function        # Function_B
+        | custom_function       # Function_C
         ;
 
 expr: ID        # Variable
@@ -14,10 +14,11 @@ expr: ID        # Variable
 
 main_function: MAIN_FUNCTION;
 custom_function: FUNCTION expr;
-built_function: print;
+built_function: print           # Built_print
+              ;
 
-var : var_decl
-    | var_assign
+var : var_decl      # Var_A
+    | var_assign    # Var_B
     ;
 
 var_decl: VARIABLE_DECLARATIONS expr VARIABLE_TYPE;

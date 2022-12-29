@@ -5,6 +5,7 @@ from Classes.Text import Text
 from Classes.Block import Block
 from Enums import LABEL
 from PIL import Image
+from FontCode.ANTLR4_Parser.Antlr4_Files.PythonParser import PythonParser
 
 
 def get_detections(blocks: [Block], image: Image) -> Image:
@@ -85,3 +86,7 @@ def __get_color(block: Block) -> [int, int, int]:
 def print_blocks(blocks: [Block]) -> None:
     for block in blocks:
         print(block.to_string())
+
+
+def print_tree(tree: PythonParser.ProgContext, parser: PythonParser):
+    print(tree.toStringTree(recog=parser))

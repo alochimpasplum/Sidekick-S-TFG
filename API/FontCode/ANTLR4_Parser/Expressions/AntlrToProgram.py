@@ -11,7 +11,12 @@ class AntlrToProgram(PythonVisitor):
         expression_visitor: AntlrToExpression = AntlrToExpression()
 
         for i in range(0, ctx.getChildCount()):
-            if i < ctx.getChildCount():  # Así no visito el nodo EOF
-                prog.add_expression(expression_visitor.visit(ctx.getChild(i, Expression)))
-
+            if i < ctx.getChildCount() - 1:  # Así no visito el nodo EOF
+                temp = ctx.getChild(i)
+                print("child: {0}, type: {1}".format(i, type(temp)))
+                prog.add_expression(expression_visitor.visit(ctx.getChild(i)))
+                try:
+                    expression_visitor.visit(temp)
+                except:
+                    print("fallo")
         return prog

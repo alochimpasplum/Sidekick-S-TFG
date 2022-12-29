@@ -1,4 +1,3 @@
-import antlr4.tree.Tree
 from antlr4 import *
 from FontCode.ANTLR4_Parser.Antlr4_Files.PythonLexer import PythonLexer
 from FontCode.ANTLR4_Parser.Antlr4_Files.PythonParser import PythonParser
@@ -7,6 +6,7 @@ from Enums import supported_languages
 from FontCode.ANTLR4_Parser.Languages import Python
 from FontCode.ANTLR4_Parser.Expressions.AntlrToProgram import AntlrToProgram
 from FontCode.ANTLR4_Parser.Expressions.Program import Program
+import Debug
 
 
 def antlr4_operation(input_str: str, language: supported_languages = supported_languages.python):
@@ -16,8 +16,12 @@ def antlr4_operation(input_str: str, language: supported_languages = supported_l
 
     # Parser
     parser: PythonParser = PythonParser(stream)
-    tree = parser.prog()
-    # print(tree.toStringTree(recog=parser))
+
+    # Tree
+    tree: PythonParser.ProgContext = parser.prog()
+
+    Debug.print_tree(tree, parser)
+
     # Visitor
     visitor: AntlrToProgram = AntlrToProgram()
     program: Program = visitor.visit(tree)

@@ -201,35 +201,89 @@ class PythonParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def main_function(self):
-            return self.getTypedRuleContext(PythonParser.Main_functionContext,0)
 
+        def getRuleIndex(self):
+            return PythonParser.RULE_function
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class Function_BContext(FunctionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a PythonParser.FunctionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def built_function(self):
             return self.getTypedRuleContext(PythonParser.Built_functionContext,0)
 
 
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFunction_B" ):
+                listener.enterFunction_B(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFunction_B" ):
+                listener.exitFunction_B(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunction_B" ):
+                return visitor.visitFunction_B(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class Function_AContext(FunctionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a PythonParser.FunctionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def main_function(self):
+            return self.getTypedRuleContext(PythonParser.Main_functionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFunction_A" ):
+                listener.enterFunction_A(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFunction_A" ):
+                listener.exitFunction_A(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunction_A" ):
+                return visitor.visitFunction_A(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class Function_CContext(FunctionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a PythonParser.FunctionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def custom_function(self):
             return self.getTypedRuleContext(PythonParser.Custom_functionContext,0)
 
 
-        def getRuleIndex(self):
-            return PythonParser.RULE_function
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFunction" ):
-                listener.enterFunction(self)
+            if hasattr( listener, "enterFunction_C" ):
+                listener.enterFunction_C(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFunction" ):
-                listener.exitFunction(self)
+            if hasattr( listener, "exitFunction_C" ):
+                listener.exitFunction_C(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFunction" ):
-                return visitor.visitFunction(self)
+            if hasattr( visitor, "visitFunction_C" ):
+                return visitor.visitFunction_C(self)
             else:
                 return visitor.visitChildren(self)
-
 
 
 
@@ -242,16 +296,19 @@ class PythonParser ( Parser ):
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [7]:
+                localctx = PythonParser.Function_AContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 28
                 self.main_function()
                 pass
             elif token in [4]:
+                localctx = PythonParser.Function_BContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 29
                 self.built_function()
                 pass
             elif token in [6]:
+                localctx = PythonParser.Function_CContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 30
                 self.custom_function()
@@ -473,27 +530,39 @@ class PythonParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def print_(self):
-            return self.getTypedRuleContext(PythonParser.PrintContext,0)
-
 
         def getRuleIndex(self):
             return PythonParser.RULE_built_function
 
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class Built_printContext(Built_functionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a PythonParser.Built_functionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def print_(self):
+            return self.getTypedRuleContext(PythonParser.PrintContext,0)
+
+
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBuilt_function" ):
-                listener.enterBuilt_function(self)
+            if hasattr( listener, "enterBuilt_print" ):
+                listener.enterBuilt_print(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBuilt_function" ):
-                listener.exitBuilt_function(self)
+            if hasattr( listener, "exitBuilt_print" ):
+                listener.exitBuilt_print(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBuilt_function" ):
-                return visitor.visitBuilt_function(self)
+            if hasattr( visitor, "visitBuilt_print" ):
+                return visitor.visitBuilt_print(self)
             else:
                 return visitor.visitChildren(self)
-
 
 
 
@@ -502,6 +571,7 @@ class PythonParser ( Parser ):
         localctx = PythonParser.Built_functionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_built_function)
         try:
+            localctx = PythonParser.Built_printContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
             self.state = 42
             self.print_()
@@ -521,31 +591,64 @@ class PythonParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+
+        def getRuleIndex(self):
+            return PythonParser.RULE_var
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class Var_AContext(VarContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a PythonParser.VarContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def var_decl(self):
             return self.getTypedRuleContext(PythonParser.Var_declContext,0)
 
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterVar_A" ):
+                listener.enterVar_A(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitVar_A" ):
+                listener.exitVar_A(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVar_A" ):
+                return visitor.visitVar_A(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class Var_BContext(VarContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a PythonParser.VarContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def var_assign(self):
             return self.getTypedRuleContext(PythonParser.Var_assignContext,0)
 
 
-        def getRuleIndex(self):
-            return PythonParser.RULE_var
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterVar" ):
-                listener.enterVar(self)
+            if hasattr( listener, "enterVar_B" ):
+                listener.enterVar_B(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitVar" ):
-                listener.exitVar(self)
+            if hasattr( listener, "exitVar_B" ):
+                listener.exitVar_B(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitVar" ):
-                return visitor.visitVar(self)
+            if hasattr( visitor, "visitVar_B" ):
+                return visitor.visitVar_B(self)
             else:
                 return visitor.visitChildren(self)
-
 
 
 
@@ -558,11 +661,13 @@ class PythonParser ( Parser ):
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [2]:
+                localctx = PythonParser.Var_AContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 44
                 self.var_decl()
                 pass
             elif token in [28, 29]:
+                localctx = PythonParser.Var_BContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 45
                 self.var_assign()

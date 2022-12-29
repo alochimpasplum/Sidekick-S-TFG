@@ -14,8 +14,18 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PythonParser#function.
-    def visitFunction(self, ctx:PythonParser.FunctionContext):
+    # Visit a parse tree produced by PythonParser#Function_A.
+    def visitFunction_A(self, ctx:PythonParser.Function_AContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#Function_B.
+    def visitFunction_B(self, ctx:PythonParser.Function_BContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#Function_C.
+    def visitFunction_C(self, ctx:PythonParser.Function_CContext):
         return self.visitChildren(ctx)
 
 
@@ -39,13 +49,18 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PythonParser#built_function.
-    def visitBuilt_function(self, ctx:PythonParser.Built_functionContext):
+    # Visit a parse tree produced by PythonParser#Built_print.
+    def visitBuilt_print(self, ctx:PythonParser.Built_printContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by PythonParser#var.
-    def visitVar(self, ctx:PythonParser.VarContext):
+    # Visit a parse tree produced by PythonParser#Var_A.
+    def visitVar_A(self, ctx:PythonParser.Var_AContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#Var_B.
+    def visitVar_B(self, ctx:PythonParser.Var_BContext):
         return self.visitChildren(ctx)
 
 

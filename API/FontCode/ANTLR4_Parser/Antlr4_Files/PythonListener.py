@@ -17,12 +17,30 @@ class PythonListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by PythonParser#function.
-    def enterFunction(self, ctx:PythonParser.FunctionContext):
+    # Enter a parse tree produced by PythonParser#Function_A.
+    def enterFunction_A(self, ctx:PythonParser.Function_AContext):
         pass
 
-    # Exit a parse tree produced by PythonParser#function.
-    def exitFunction(self, ctx:PythonParser.FunctionContext):
+    # Exit a parse tree produced by PythonParser#Function_A.
+    def exitFunction_A(self, ctx:PythonParser.Function_AContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#Function_B.
+    def enterFunction_B(self, ctx:PythonParser.Function_BContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Function_B.
+    def exitFunction_B(self, ctx:PythonParser.Function_BContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#Function_C.
+    def enterFunction_C(self, ctx:PythonParser.Function_CContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Function_C.
+    def exitFunction_C(self, ctx:PythonParser.Function_CContext):
         pass
 
 
@@ -62,21 +80,30 @@ class PythonListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by PythonParser#built_function.
-    def enterBuilt_function(self, ctx:PythonParser.Built_functionContext):
+    # Enter a parse tree produced by PythonParser#Built_print.
+    def enterBuilt_print(self, ctx:PythonParser.Built_printContext):
         pass
 
-    # Exit a parse tree produced by PythonParser#built_function.
-    def exitBuilt_function(self, ctx:PythonParser.Built_functionContext):
+    # Exit a parse tree produced by PythonParser#Built_print.
+    def exitBuilt_print(self, ctx:PythonParser.Built_printContext):
         pass
 
 
-    # Enter a parse tree produced by PythonParser#var.
-    def enterVar(self, ctx:PythonParser.VarContext):
+    # Enter a parse tree produced by PythonParser#Var_A.
+    def enterVar_A(self, ctx:PythonParser.Var_AContext):
         pass
 
-    # Exit a parse tree produced by PythonParser#var.
-    def exitVar(self, ctx:PythonParser.VarContext):
+    # Exit a parse tree produced by PythonParser#Var_A.
+    def exitVar_A(self, ctx:PythonParser.Var_AContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#Var_B.
+    def enterVar_B(self, ctx:PythonParser.Var_BContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Var_B.
+    def exitVar_B(self, ctx:PythonParser.Var_BContext):
         pass
 
 
