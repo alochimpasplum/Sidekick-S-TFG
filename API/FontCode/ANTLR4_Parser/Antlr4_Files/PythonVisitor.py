@@ -74,6 +74,11 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by PythonParser#Math_Operation.
+    def visitMath_Operation(self, ctx:PythonParser.Math_OperationContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by PythonParser#print.
     def visitPrint(self, ctx:PythonParser.PrintContext):
         return self.visitChildren(ctx)

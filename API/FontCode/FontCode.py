@@ -12,4 +12,6 @@ class FontCode:
         self.blocks = blocks
         self.pseudocode = Pseudocode.get_pseudocode(self.blocks)
 
+        # print(self.pseudocode.to_string())
+
         Antlr4.antlr4_operation(self.pseudocode.to_antlr4_pseudocode())

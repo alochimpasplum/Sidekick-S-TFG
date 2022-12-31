@@ -12,6 +12,7 @@ from FontCode.ANTLR4_Parser.Expressions.Var import Var
 from FontCode.ANTLR4_Parser.Expressions.VariableDeclaration import VariableDeclaration
 from FontCode.ANTLR4_Parser.Expressions.VariableAssign import VariableAssign
 from FontCode.ANTLR4_Parser.Expressions.Print import Print
+from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
 
 
 class Python(Language):
@@ -36,6 +37,8 @@ class Python(Language):
                 self.__handle_variable_assign__(expression)
             if isinstance(expression, Print):
                 self.__handle_print__(expression)
+            if isinstance(expression, MathOperation):
+                self.__handle_math_operation__(expression)
 
     def __handle_main_function__(self, expression: MainFunction):
         self.code_lines.append("def main():")
@@ -54,3 +57,9 @@ class Python(Language):
 
     def __handle_print__(self, expression: Print):
         self.code_lines.append("{0}print({1})".format(self.tab, expression.get_print()))
+
+    def __handle_math_operation__(self, expression: MathOperation):
+        self.code_lines.append("{0} = {1} {2} {3}".format(expression.get_assign(),
+                                                          expression.get_left(),
+                                                          expression.operation,
+                                                          expression.get_right()))

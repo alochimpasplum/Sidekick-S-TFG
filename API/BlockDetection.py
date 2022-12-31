@@ -18,6 +18,9 @@ import Math_Calcs
 
 def detect_blocks(img: Image, ocr_system: Enums.OCR) -> [Block]:
     blocks: [Block] = __get_blocks(img)
+
+    # Debug.get_detections(blocks, img).show()
+
     blocks = get_text(img, blocks, ocr_system=ocr_system)
     blocks = __sort_arrows(blocks)
     blocks = __find_neighbours(blocks)

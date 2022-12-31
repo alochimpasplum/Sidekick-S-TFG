@@ -48,9 +48,6 @@ class Pseudocode:
                 line = line.replace(Constants.FUNCTION, "")
                 line += "()"
 
-            if Constants.MATH_OPERATION in line:
-                line = line.replace(Constants.MATH_OPERATION, "")
-
             if Constants.IF in line:
                 line = line.replace(Constants.IF, "if (")
                 line += ")"
@@ -98,8 +95,12 @@ class Pseudocode:
             response += "{}\n".format(line)
         response += "--- VARIABLES ---\n"
         for key, value in self.variables.items():
-            response += "nombre variable: {}, tipo variable: {}".format(key, value)
+            response += "nombre variable: {}, tipo variable: {}\n".format(key, value)
+        response += "\n"
         response += "--- FUNCIONES ---"
         for fun in self.functions:
             response += fun
+        response += "\n"
+        response += "--- FIN PSEUDOCODIGO ---"
+        response += "\n"
         return response

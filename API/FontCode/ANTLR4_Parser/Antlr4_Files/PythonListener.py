@@ -125,6 +125,15 @@ class PythonListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PythonParser#Math_Operation.
+    def enterMath_Operation(self, ctx:PythonParser.Math_OperationContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Math_Operation.
+    def exitMath_Operation(self, ctx:PythonParser.Math_OperationContext):
+        pass
+
+
     # Enter a parse tree produced by PythonParser#print.
     def enterPrint(self, ctx:PythonParser.PrintContext):
         pass

@@ -1,6 +1,6 @@
 grammar Python;
 
-prog: (function | var)+ EOF
+prog: (function | var | math_op)+ EOF
     ;
 
 function: main_function         # Function_A
@@ -23,6 +23,9 @@ var : var_decl      # Var_A
 
 var_decl: VARIABLE_DECLARATIONS expr VARIABLE_TYPE;
 var_assign: expr ASSIGN expr;
+
+math_op: expr ASSIGN expr (PLUS | MINUS | MULT | DIV) expr      # Math_Operation
+       ;
 
 print: PRINT expr;
 
