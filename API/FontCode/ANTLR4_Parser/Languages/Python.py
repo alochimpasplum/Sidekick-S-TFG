@@ -29,19 +29,26 @@ class Python(Language):
 
     def __generate_code__(self):
         for expression in self.program.expressions:
-            print(type(expression))
-            if isinstance(expression, MainFunction):
-                self.code_lines.append(self.__handle_main_function__(expression))
-            if isinstance(expression, VariableDeclaration):
-                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_variable_declaration__(expression)))
-            if isinstance(expression, VariableAssign):
-                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_variable_assign__(expression)))
-            if isinstance(expression, Print):
-                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_print__(expression)))
-            if isinstance(expression, MathOperation):
-                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_math_operation__(expression)))
-            if isinstance(expression, Scan):
-                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_scan__(expression)))
+            self.code_lines.extend(self.__handle_expression__(expression))
+
+    def __handle_expression__(self, expression: Expression) -> [str]:
+        lines: [str] = []
+        print(type(expression))
+
+        if isinstance(expression, MainFunction):
+            lines.append(self.__handle_main_function__(expression))
+        if isinstance(expression, VariableDeclaration):
+            lines.append("{0}{1}".format(self.tab, self.__handle_variable_declaration__(expression)))
+        if isinstance(expression, VariableAssign):
+            lines.append("{0}{1}".format(self.tab, self.__handle_variable_assign__(expression)))
+        if isinstance(expression, Print):
+            lines.append("{0}{1}".format(self.tab, self.__handle_print__(expression)))
+        if isinstance(expression, MathOperation):
+            lines.append("{0}{1}".format(self.tab, self.__handle_math_operation__(expression)))
+        if isinstance(expression, Scan):
+            lines.append("{0}{1}".format(self.tab, self.__handle_scan__(expression)))
+
+        return lines
 
     def __handle_main_function__(self, expression: MainFunction) -> str:
         return "def main():"
