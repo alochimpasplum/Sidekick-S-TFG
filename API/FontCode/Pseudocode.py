@@ -142,17 +142,16 @@ def __conditional_block_operation(conditional_block: Block, next_blocks: [Block]
     return [lines, final_conditional_block]
 
 
-# todo: implementar
 def __scan_operation(mermaid_block: Block, variables: {}) -> str:
     code_line: str = Constants.SCAN
-    if Constants.VAR_SUFFIX in mermaid_block.text:
+    if Constants.VAR_SUFFIX in mermaid_block.Texts[0].text:
         var: str = mermaid_block.text.replace(Constants.VAR_SUFFIX, "")
         if var not in variables:
             variables[var] = "string"
             code_line += var
     else:
-        variables[mermaid_block.text] = "string"
-        code_line += mermaid_block.text
+        variables[mermaid_block.Texts[0].text] = "string"
+        code_line += mermaid_block.Texts[0].text
     code_line = code_line.rstrip()
 
     return code_line

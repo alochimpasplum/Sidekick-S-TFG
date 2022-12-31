@@ -13,9 +13,11 @@ from FontCode.ANTLR4_Parser.Expressions.VariableDeclaration import VariableDecla
 from FontCode.ANTLR4_Parser.Expressions.VariableAssign import VariableAssign
 from FontCode.ANTLR4_Parser.Expressions.Print import Print
 from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
+from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
 
 
 class Python(Language):
+
     program: Program
     code_lines: [str] = []
     tab: str = "\t"
@@ -26,40 +28,43 @@ class Python(Language):
         self.__generate_code__()
 
     def __generate_code__(self):
-        expression: Expression
         for expression in self.program.expressions:
             print(type(expression))
             if isinstance(expression, MainFunction):
-                self.__handle_main_function__(expression)
+                self.code_lines.append(self.__handle_main_function__(expression))
             if isinstance(expression, VariableDeclaration):
-                self.__handle_variable_declaration__(expression)
+                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_variable_declaration__(expression)))
             if isinstance(expression, VariableAssign):
-                self.__handle_variable_assign__(expression)
+                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_variable_assign__(expression)))
             if isinstance(expression, Print):
-                self.__handle_print__(expression)
+                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_print__(expression)))
             if isinstance(expression, MathOperation):
-                self.__handle_math_operation__(expression)
+                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_math_operation__(expression)))
+            if isinstance(expression, Scan):
+                self.code_lines.append("{0}{1}".format(self.tab, self.__handle_scan__(expression)))
 
-    def __handle_main_function__(self, expression: MainFunction):
-        self.code_lines.append("def main():")
+    def __handle_main_function__(self, expression: MainFunction) -> str:
+        return "def main():"
 
-    def __handle_variable_declaration__(self, expression: VariableDeclaration):
+    def __handle_variable_declaration__(self, expression: VariableDeclaration) -> str:
         var_type: str = ""
         if expression.var_type == Constants.STRING:
             var_type = "str"
         elif expression.var_type == Constants.INTEGER:
             var_type = "int"
-        self.code_lines.append("{0}{1}: {2} = {3}".format(self.tab, expression.get_variable_id(), var_type, self.null))
+        return "{0}: {1} = {2}".format(expression.get_variable_id(), var_type, self.null)
 
-    def __handle_variable_assign__(self, expression: VariableAssign):
-        self.code_lines.append("{0}{1} = {2}".format(self.tab, expression.get_variable_id(),
-                                                     expression.get_assign_value()))
+    def __handle_variable_assign__(self, expression: VariableAssign) -> str:
+        return "{0} = {1}".format(expression.get_variable_id(), expression.get_assign_value())
 
-    def __handle_print__(self, expression: Print):
-        self.code_lines.append("{0}print({1})".format(self.tab, expression.get_print()))
+    def __handle_print__(self, expression: Print) -> str:
+        return "print({0})".format(expression.get_print())
 
-    def __handle_math_operation__(self, expression: MathOperation):
-        self.code_lines.append("{0} = {1} {2} {3}".format(expression.get_assign(),
-                                                          expression.get_left(),
-                                                          expression.operation,
-                                                          expression.get_right()))
+    def __handle_math_operation__(self, expression: MathOperation) -> str:
+        return "{0} = {1} {2} {3}".format(expression.get_assign(),
+                                          expression.get_left(),
+                                          expression.operation,
+                                          expression.get_right())
+
+    def __handle_scan__(self, expression: Scan) -> str:
+        return "{0} = input()".format(expression.get_var())

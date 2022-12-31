@@ -54,6 +54,11 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by PythonParser#Built_scan.
+    def visitBuilt_scan(self, ctx:PythonParser.Built_scanContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by PythonParser#Var_A.
     def visitVar_A(self, ctx:PythonParser.Var_AContext):
         return self.visitChildren(ctx)
@@ -81,6 +86,11 @@ class PythonVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by PythonParser#print.
     def visitPrint(self, ctx:PythonParser.PrintContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#scan.
+    def visitScan(self, ctx:PythonParser.ScanContext):
         return self.visitChildren(ctx)
 
 

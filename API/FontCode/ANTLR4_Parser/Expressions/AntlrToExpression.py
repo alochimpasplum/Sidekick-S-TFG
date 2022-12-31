@@ -13,9 +13,14 @@ from FontCode.ANTLR4_Parser.Expressions.VariableDeclaration import VariableDecla
 from FontCode.ANTLR4_Parser.Expressions.VariableAssign import VariableAssign
 from FontCode.ANTLR4_Parser.Expressions.Print import Print
 from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
+from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
 
 
 class AntlrToExpression(PythonVisitor):
+
+    def visitScan(self, ctx: PythonParser.ScanContext):
+        storing_var: Expression = self.visit((ctx.getChild(1)))
+        return Scan(storing_var)
 
     def visitFunction(self, ctx: PythonParser.FunctionContext):
         child: Expression = self.visit(ctx.getChild(0))

@@ -15,6 +15,7 @@ expr: ID        # Variable
 main_function: MAIN_FUNCTION;
 custom_function: FUNCTION expr;
 built_function: print           # Built_print
+              | scan            # Built_scan
               ;
 
 var : var_decl      # Var_A
@@ -28,6 +29,7 @@ math_op: expr ASSIGN expr (PLUS | MINUS | MULT | DIV) expr      # Math_Operation
        ;
 
 print: PRINT expr;
+scan: SCAN expr;
 
 TAB : '<TAB>' -> skip;
 VARIABLE_DECLARATIONS : '<VAR_DECLARATION>';

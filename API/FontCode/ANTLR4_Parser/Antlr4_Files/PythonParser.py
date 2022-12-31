@@ -10,26 +10,28 @@ else:
 
 def serializedATN():
     return [
-        4,1,30,69,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
-        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,1,0,1,0,1,0,4,0,26,8,0,11,0,
-        12,0,27,1,0,1,0,1,1,1,1,1,1,3,1,35,8,1,1,2,1,2,3,2,39,8,2,1,3,1,
-        3,1,4,1,4,1,4,1,5,1,5,1,6,1,6,3,6,50,8,6,1,7,1,7,1,7,1,7,1,8,1,8,
-        1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,1,10,1,10,1,10,1,10,0,0,11,0,2,4,
-        6,8,10,12,14,16,18,20,0,1,1,0,14,17,64,0,25,1,0,0,0,2,34,1,0,0,0,
-        4,38,1,0,0,0,6,40,1,0,0,0,8,42,1,0,0,0,10,45,1,0,0,0,12,49,1,0,0,
-        0,14,51,1,0,0,0,16,55,1,0,0,0,18,59,1,0,0,0,20,65,1,0,0,0,22,26,
-        3,2,1,0,23,26,3,12,6,0,24,26,3,18,9,0,25,22,1,0,0,0,25,23,1,0,0,
-        0,25,24,1,0,0,0,26,27,1,0,0,0,27,25,1,0,0,0,27,28,1,0,0,0,28,29,
-        1,0,0,0,29,30,5,0,0,1,30,1,1,0,0,0,31,35,3,6,3,0,32,35,3,10,5,0,
-        33,35,3,8,4,0,34,31,1,0,0,0,34,32,1,0,0,0,34,33,1,0,0,0,35,3,1,0,
-        0,0,36,39,5,28,0,0,37,39,5,29,0,0,38,36,1,0,0,0,38,37,1,0,0,0,39,
-        5,1,0,0,0,40,41,5,7,0,0,41,7,1,0,0,0,42,43,5,6,0,0,43,44,3,4,2,0,
-        44,9,1,0,0,0,45,46,3,20,10,0,46,11,1,0,0,0,47,50,3,14,7,0,48,50,
-        3,16,8,0,49,47,1,0,0,0,49,48,1,0,0,0,50,13,1,0,0,0,51,52,5,2,0,0,
-        52,53,3,4,2,0,53,54,5,3,0,0,54,15,1,0,0,0,55,56,3,4,2,0,56,57,5,
-        27,0,0,57,58,3,4,2,0,58,17,1,0,0,0,59,60,3,4,2,0,60,61,5,27,0,0,
-        61,62,3,4,2,0,62,63,7,0,0,0,63,64,3,4,2,0,64,19,1,0,0,0,65,66,5,
-        4,0,0,66,67,3,4,2,0,67,21,1,0,0,0,5,25,27,34,38,49
+        4,1,30,76,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,1,0,1,0,1,0,4,0,28,
+        8,0,11,0,12,0,29,1,0,1,0,1,1,1,1,1,1,3,1,37,8,1,1,2,1,2,3,2,41,8,
+        2,1,3,1,3,1,4,1,4,1,4,1,5,1,5,3,5,50,8,5,1,6,1,6,3,6,54,8,6,1,7,
+        1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,9,1,9,1,9,1,10,1,10,1,
+        10,1,11,1,11,1,11,1,11,0,0,12,0,2,4,6,8,10,12,14,16,18,20,22,0,1,
+        1,0,14,17,71,0,27,1,0,0,0,2,36,1,0,0,0,4,40,1,0,0,0,6,42,1,0,0,0,
+        8,44,1,0,0,0,10,49,1,0,0,0,12,53,1,0,0,0,14,55,1,0,0,0,16,59,1,0,
+        0,0,18,63,1,0,0,0,20,69,1,0,0,0,22,72,1,0,0,0,24,28,3,2,1,0,25,28,
+        3,12,6,0,26,28,3,18,9,0,27,24,1,0,0,0,27,25,1,0,0,0,27,26,1,0,0,
+        0,28,29,1,0,0,0,29,27,1,0,0,0,29,30,1,0,0,0,30,31,1,0,0,0,31,32,
+        5,0,0,1,32,1,1,0,0,0,33,37,3,6,3,0,34,37,3,10,5,0,35,37,3,8,4,0,
+        36,33,1,0,0,0,36,34,1,0,0,0,36,35,1,0,0,0,37,3,1,0,0,0,38,41,5,28,
+        0,0,39,41,5,29,0,0,40,38,1,0,0,0,40,39,1,0,0,0,41,5,1,0,0,0,42,43,
+        5,7,0,0,43,7,1,0,0,0,44,45,5,6,0,0,45,46,3,4,2,0,46,9,1,0,0,0,47,
+        50,3,20,10,0,48,50,3,22,11,0,49,47,1,0,0,0,49,48,1,0,0,0,50,11,1,
+        0,0,0,51,54,3,14,7,0,52,54,3,16,8,0,53,51,1,0,0,0,53,52,1,0,0,0,
+        54,13,1,0,0,0,55,56,5,2,0,0,56,57,3,4,2,0,57,58,5,3,0,0,58,15,1,
+        0,0,0,59,60,3,4,2,0,60,61,5,27,0,0,61,62,3,4,2,0,62,17,1,0,0,0,63,
+        64,3,4,2,0,64,65,5,27,0,0,65,66,3,4,2,0,66,67,7,0,0,0,67,68,3,4,
+        2,0,68,19,1,0,0,0,69,70,5,4,0,0,70,71,3,4,2,0,71,21,1,0,0,0,72,73,
+        5,5,0,0,73,74,3,4,2,0,74,23,1,0,0,0,6,27,29,36,40,49,53
     ]
 
 class PythonParser ( Parser ):
@@ -67,10 +69,11 @@ class PythonParser ( Parser ):
     RULE_var_assign = 8
     RULE_math_op = 9
     RULE_print = 10
+    RULE_scan = 11
 
     ruleNames =  [ "prog", "function", "expr", "main_function", "custom_function", 
                    "built_function", "var", "var_decl", "var_assign", "math_op", 
-                   "print" ]
+                   "print", "scan" ]
 
     EOF = Token.EOF
     TAB=1
@@ -171,36 +174,36 @@ class PythonParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 25 
+            self.state = 27 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 25
+                self.state = 27
                 self._errHandler.sync(self)
                 la_ = self._interp.adaptivePredict(self._input,0,self._ctx)
                 if la_ == 1:
-                    self.state = 22
+                    self.state = 24
                     self.function()
                     pass
 
                 elif la_ == 2:
-                    self.state = 23
+                    self.state = 25
                     self.var()
                     pass
 
                 elif la_ == 3:
-                    self.state = 24
+                    self.state = 26
                     self.math_op()
                     pass
 
 
-                self.state = 27 
+                self.state = 29 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (((_la) & ~0x3f) == 0 and ((1 << _la) & 805306580) != 0):
+                if not (((_la) & ~0x3f) == 0 and ((1 << _la) & 805306612) != 0):
                     break
 
-            self.state = 29
+            self.state = 31
             self.match(PythonParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -309,25 +312,25 @@ class PythonParser ( Parser ):
         localctx = PythonParser.FunctionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_function)
         try:
-            self.state = 34
+            self.state = 36
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [7]:
                 localctx = PythonParser.Function_AContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 31
+                self.state = 33
                 self.main_function()
                 pass
-            elif token in [4]:
+            elif token in [4, 5]:
                 localctx = PythonParser.Function_BContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 32
+                self.state = 34
                 self.built_function()
                 pass
             elif token in [6]:
                 localctx = PythonParser.Function_CContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 33
+                self.state = 35
                 self.custom_function()
                 pass
             else:
@@ -413,19 +416,19 @@ class PythonParser ( Parser ):
         localctx = PythonParser.ExprContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_expr)
         try:
-            self.state = 38
+            self.state = 40
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [28]:
                 localctx = PythonParser.VariableContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 36
+                self.state = 38
                 self.match(PythonParser.ID)
                 pass
             elif token in [29]:
                 localctx = PythonParser.NumberContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 37
+                self.state = 39
                 self.match(PythonParser.NUMBER)
                 pass
             else:
@@ -476,7 +479,7 @@ class PythonParser ( Parser ):
         self.enterRule(localctx, 6, self.RULE_main_function)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 40
+            self.state = 42
             self.match(PythonParser.MAIN_FUNCTION)
         except RecognitionException as re:
             localctx.exception = re
@@ -527,9 +530,9 @@ class PythonParser ( Parser ):
         self.enterRule(localctx, 8, self.RULE_custom_function)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 42
+            self.state = 44
             self.match(PythonParser.FUNCTION)
-            self.state = 43
+            self.state = 45
             self.expr()
         except RecognitionException as re:
             localctx.exception = re
@@ -582,16 +585,55 @@ class PythonParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class Built_scanContext(Built_functionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a PythonParser.Built_functionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def scan(self):
+            return self.getTypedRuleContext(PythonParser.ScanContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBuilt_scan" ):
+                listener.enterBuilt_scan(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBuilt_scan" ):
+                listener.exitBuilt_scan(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBuilt_scan" ):
+                return visitor.visitBuilt_scan(self)
+            else:
+                return visitor.visitChildren(self)
+
+
 
     def built_function(self):
 
         localctx = PythonParser.Built_functionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_built_function)
         try:
-            localctx = PythonParser.Built_printContext(self, localctx)
-            self.enterOuterAlt(localctx, 1)
-            self.state = 45
-            self.print_()
+            self.state = 49
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [4]:
+                localctx = PythonParser.Built_printContext(self, localctx)
+                self.enterOuterAlt(localctx, 1)
+                self.state = 47
+                self.print_()
+                pass
+            elif token in [5]:
+                localctx = PythonParser.Built_scanContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
+                self.state = 48
+                self.scan()
+                pass
+            else:
+                raise NoViableAltException(self)
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -674,19 +716,19 @@ class PythonParser ( Parser ):
         localctx = PythonParser.VarContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_var)
         try:
-            self.state = 49
+            self.state = 53
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [2]:
                 localctx = PythonParser.Var_AContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 47
+                self.state = 51
                 self.var_decl()
                 pass
             elif token in [28, 29]:
                 localctx = PythonParser.Var_BContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 48
+                self.state = 52
                 self.var_assign()
                 pass
             else:
@@ -744,11 +786,11 @@ class PythonParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_var_decl)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 51
+            self.state = 55
             self.match(PythonParser.VARIABLE_DECLARATIONS)
-            self.state = 52
+            self.state = 56
             self.expr()
-            self.state = 53
+            self.state = 57
             self.match(PythonParser.VARIABLE_TYPE)
         except RecognitionException as re:
             localctx.exception = re
@@ -802,11 +844,11 @@ class PythonParser ( Parser ):
         self.enterRule(localctx, 16, self.RULE_var_assign)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 55
+            self.state = 59
             self.expr()
-            self.state = 56
+            self.state = 60
             self.match(PythonParser.ASSIGN)
-            self.state = 57
+            self.state = 61
             self.expr()
         except RecognitionException as re:
             localctx.exception = re
@@ -881,20 +923,20 @@ class PythonParser ( Parser ):
         try:
             localctx = PythonParser.Math_OperationContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
-            self.state = 59
+            self.state = 63
             self.expr()
-            self.state = 60
+            self.state = 64
             self.match(PythonParser.ASSIGN)
-            self.state = 61
+            self.state = 65
             self.expr()
-            self.state = 62
+            self.state = 66
             _la = self._input.LA(1)
             if not(((_la) & ~0x3f) == 0 and ((1 << _la) & 245760) != 0):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
                 self.consume()
-            self.state = 63
+            self.state = 67
             self.expr()
         except RecognitionException as re:
             localctx.exception = re
@@ -945,9 +987,62 @@ class PythonParser ( Parser ):
         self.enterRule(localctx, 20, self.RULE_print)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 65
+            self.state = 69
             self.match(PythonParser.PRINT)
-            self.state = 66
+            self.state = 70
+            self.expr()
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ScanContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def SCAN(self):
+            return self.getToken(PythonParser.SCAN, 0)
+
+        def expr(self):
+            return self.getTypedRuleContext(PythonParser.ExprContext,0)
+
+
+        def getRuleIndex(self):
+            return PythonParser.RULE_scan
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterScan" ):
+                listener.enterScan(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitScan" ):
+                listener.exitScan(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitScan" ):
+                return visitor.visitScan(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def scan(self):
+
+        localctx = PythonParser.ScanContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 22, self.RULE_scan)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 72
+            self.match(PythonParser.SCAN)
+            self.state = 73
             self.expr()
         except RecognitionException as re:
             localctx.exception = re

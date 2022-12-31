@@ -89,6 +89,15 @@ class PythonListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PythonParser#Built_scan.
+    def enterBuilt_scan(self, ctx:PythonParser.Built_scanContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Built_scan.
+    def exitBuilt_scan(self, ctx:PythonParser.Built_scanContext):
+        pass
+
+
     # Enter a parse tree produced by PythonParser#Var_A.
     def enterVar_A(self, ctx:PythonParser.Var_AContext):
         pass
@@ -140,6 +149,15 @@ class PythonListener(ParseTreeListener):
 
     # Exit a parse tree produced by PythonParser#print.
     def exitPrint(self, ctx:PythonParser.PrintContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#scan.
+    def enterScan(self, ctx:PythonParser.ScanContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#scan.
+    def exitScan(self, ctx:PythonParser.ScanContext):
         pass
 
 
