@@ -11,7 +11,7 @@ from FontCode.ANTLR4_Parser.Languages.Language import Language
 import Debug
 
 
-def antlr4_operation(input_str: str, language: supported_languages = supported_languages.java):
+def antlr4_operation(input_str: str, language: supported_languages = supported_languages.java) -> [str]:
     # Lexer
     lexer: PythonLexer = PythonLexer(InputStream(input_str))
     stream = CommonTokenStream(lexer)
@@ -28,12 +28,10 @@ def antlr4_operation(input_str: str, language: supported_languages = supported_l
     visitor: AntlrToProgram = AntlrToProgram()
     program: Program = visitor.visit(tree)
 
-    lang: Language
-
     if language == supported_languages.python:
-        lang = Python(program)
+        lang: Python = Python(program)
+        return lang.get_lines()
 
     if language == supported_languages.java:
-        lang = Java(program)
-
-    print("end")
+        lang: Java = Java(program)
+        return lang.get_lines()

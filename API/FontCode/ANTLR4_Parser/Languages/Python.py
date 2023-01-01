@@ -121,3 +121,6 @@ class Python(Language):
         lines: [str] = []
         # TODO: implementar
         return lines
+
+    def get_lines(self) -> [str]:
+        return self.code_lines

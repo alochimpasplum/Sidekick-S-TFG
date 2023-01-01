@@ -23,6 +23,10 @@ IMGBB_EXPIRATION_TIME = 1800
 AZURE_OCR_SUBSCRIPTION_KEY = "fcb75213fafe4affa21a2ea34bf172a0"
 AZURE_OCR_ENDPOINT = "https://tfgocr.cognitiveservices.azure.com/"
 
+# Folders
+INPUT_FOLDER = r"\User Files\Input Images"
+OUTPUT_FOLDER = r"\User Files\Output Files"
+
 # Suffix to indicate variables
 VAR_SUFFIX = "_var"
 

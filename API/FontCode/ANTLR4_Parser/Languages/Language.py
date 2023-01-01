@@ -51,3 +51,6 @@ class Language(ABC):
     def __handle_if__(self, expression: Conditional) -> [str]:
         pass
 
+    @abstractmethod
+    def get_lines(self) -> [str]:
+        pass
