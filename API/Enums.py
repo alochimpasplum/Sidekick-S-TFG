@@ -23,6 +23,7 @@ class OCR(Enum):
 
 class supported_languages(Enum):
     python = 0
+    java = 1
 
 
 mermaid_delete_characters: () = (

@@ -7,7 +7,6 @@ from FontCode.ANTLR4_Parser.Expressions.Print import Print
 from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
 from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
 from FontCode.ANTLR4_Parser.Expressions.Conditional import Conditional
-from FontCode.ANTLR4_Parser.Expressions.If import If
 
 
 class Language(ABC):

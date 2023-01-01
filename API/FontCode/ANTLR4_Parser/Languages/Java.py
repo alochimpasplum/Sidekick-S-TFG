@@ -16,11 +16,14 @@ from FontCode.ANTLR4_Parser.Expressions.If import If
 from FontCode.ANTLR4_Parser.Expressions.SwitchCase import SwitchCase
 
 
-class Python(Language):
+class Java(Language):
     program: Program
     code_lines: [str] = []
     tab: str = "\t"
-    null: str = "None"
+    null: str = "null"
+    scanner_var: str = "scan"
+
+    append_scanner: bool = False
 
     def __init__(self, program: Program):
         self.program = program
@@ -29,6 +32,12 @@ class Python(Language):
     def __generate_code__(self):
         for expression in self.program.expressions:
             self.code_lines.extend(self.__handle_expression__(expression))
+        self.code_lines.append("}")
+
+        if self.append_scanner:
+            self.code_lines.insert(0, "import java.util.Scanner;")
+            self.code_lines.insert(1, "")
+            self.code_lines.insert(3, "{0}Scanner {1} = new Scanner(System.in);".format(self.tab, self.scanner_var))
 
     def __handle_expression__(self, expression: Expression) -> [str]:
         lines: [str] = []
@@ -44,6 +53,7 @@ class Python(Language):
         if isinstance(expression, MathOperation):
             lines.append("{0}{1}".format(self.tab, self.__handle_math_operation__(expression)))
         if isinstance(expression, Scan):
+            self.append_scanner = True
             lines.append("{0}{1}".format(self.tab, self.__handle_scan__(expression)))
         if isinstance(expression, Conditional):
             if isinstance(expression.condition, If):
@@ -54,30 +64,30 @@ class Python(Language):
         return lines
 
     def __handle_main_function__(self, expression: MainFunction) -> str:
-        return "def main():"
+        return "public static void main(String[] args) {"
 
     def __handle_variable_declaration__(self, expression: VariableDeclaration) -> str:
         var_type: str = ""
         if expression.var_type == Constants.STRING:
-            var_type = "str"
+            var_type = "String"
         elif expression.var_type == Constants.INTEGER:
             var_type = "int"
-        return "{0}: {1} = {2}".format(expression.get_variable_id(), var_type, self.null)
+        return "{0} {1} = {2};".format(var_type, expression.get_variable_id(), self.null)
 
     def __handle_variable_assign__(self, expression: VariableAssign) -> str:
-        return "{0} = {1}".format(expression.get_variable_id(), expression.get_assign_value())
+        return "{0} = {1};".format(expression.get_variable_id(), expression.get_assign_value())
 
     def __handle_print__(self, expression: Print) -> str:
-        return "print({0})".format(expression.get_print())
+        return "System.out.println({0});".format(expression.get_print())
 
     def __handle_math_operation__(self, expression: MathOperation) -> str:
-        return "{0} = {1} {2} {3}".format(expression.get_assign(),
-                                          expression.get_left(),
-                                          expression.operation,
-                                          expression.get_right())
+        return "{0} = {1} {2} {3};".format(expression.get_assign(),
+                                           expression.get_left(),
+                                           expression.operation,
+                                           expression.get_right())
 
     def __handle_scan__(self, expression: Scan) -> str:
-        return "{0} = input()".format(expression.get_var())
+        return "{0} = {1}.nextLine();".format(expression.get_var(), self.scanner_var)
 
     def __handle_if__(self, expression: Conditional) -> [str]:
         lines: [str] = []
@@ -85,10 +95,12 @@ class Python(Language):
         condition_false: [str] = ['NO', 'FALSE', 'FALSO', '0']
 
         if isinstance(expression.condition, If):
-            lines.append("if {0} {1} {2}:".format(
+            temp: str = "if ({0} {1} {2})".format(
                 expression.condition.get_left(),
                 expression.condition.condition,
-                expression.condition.get_right()))
+                expression.condition.get_right())
+
+            lines.append(temp + " {")
 
         if isinstance(expression.conditional_branches, ConditionalBranches):
             branch_true: [ConditionalBranch] = [x for x in expression.conditional_branches.branches if
@@ -107,9 +119,11 @@ class Python(Language):
 
             # False statement
             conditional_lines = false.conditional_lines
-            lines.append("else:")
+            lines.append("} else {")
             for line in conditional_lines.lines:
                 lines.extend(self.__handle_expression__(line))
+
+            lines.append("}")
 
             # Add tabs
             for i in range(0, len(lines)):
