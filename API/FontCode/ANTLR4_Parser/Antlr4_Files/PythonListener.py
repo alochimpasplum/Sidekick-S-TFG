@@ -188,6 +188,15 @@ class PythonListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PythonParser#conditional_lines.
+    def enterConditional_lines(self, ctx:PythonParser.Conditional_linesContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#conditional_lines.
+    def exitConditional_lines(self, ctx:PythonParser.Conditional_linesContext):
+        pass
+
+
     # Enter a parse tree produced by PythonParser#print.
     def enterPrint(self, ctx:PythonParser.PrintContext):
         pass

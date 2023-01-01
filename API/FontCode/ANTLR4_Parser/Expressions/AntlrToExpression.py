@@ -16,6 +16,10 @@ from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
 from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
 from FontCode.ANTLR4_Parser.Expressions.Conditional import Conditional
 from FontCode.ANTLR4_Parser.Expressions.ConditionalBranches import ConditionalBranches
+from FontCode.ANTLR4_Parser.Expressions.ConditionalBranch import ConditionalBranch
+from FontCode.ANTLR4_Parser.Expressions.ConditionalLines import ConditionalLines
+from FontCode.ANTLR4_Parser.Expressions.If import If
+from FontCode.ANTLR4_Parser.Expressions.SwitchCase import SwitchCase
 
 
 class AntlrToExpression(PythonVisitor):
@@ -45,16 +49,31 @@ class AntlrToExpression(PythonVisitor):
         return Variable(name)
 
     def visitConditional_branch(self, ctx: PythonParser.Conditional_branchContext):
-        return super().visitConditional_branch(ctx)
+        condition: Expression = self.visit(ctx.getChild(1))
+        conditional_lines: Expression = self.visit(ctx.getChild(2))
+        return ConditionalBranch(condition, conditional_lines)
 
     def visitConditional_branches(self, ctx: PythonParser.Conditional_branchesContext):
         branches: [Expression] = []
-        expression_visitor: AntlrToExpression = AntlrToExpression()
 
         for i in range(0, ctx.getChildCount()):
-            branches.append(expression_visitor.visit(ctx.getChild(i)))
+            branches.append(self.visit(ctx.getChild(i)))
 
         return ConditionalBranches(branches)
+
+    def visitConditional_lines(self, ctx: PythonParser.Conditional_linesContext):
+        lines: [Expression] = []
+
+        for i in range(0, ctx.getChildCount()):
+            lines.append(self.visit(ctx.getChild(i)))
+
+        return ConditionalLines(lines)
+
+    def visitIf(self, ctx: PythonParser.IfContext):
+        left: Expression = self.visit(ctx.getChild(0))
+        right: Expression = self.visit(ctx.getChild(2))
+        condition: str = ctx.getChild(1).getText()
+        return If(left, right, condition)
 
     def visitNumber(self, ctx: PythonParser.NumberContext):
         num: str = ctx.getChild(0).getText()
@@ -89,3 +108,7 @@ class AntlrToExpression(PythonVisitor):
     def visitPrint(self, ctx: PythonParser.PrintContext):
         child: Expression = self.visit(ctx.getChild(1))
         return Print(child)
+
+    def visitSwitch_Case(self, ctx: PythonParser.Switch_CaseContext):
+        condition: Expression = self.visit(ctx.getChild(0))
+        return SwitchCase(condition)

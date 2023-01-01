@@ -36,7 +36,9 @@ condition: expr                                             # Switch_Case
          | expr (GT | LET | GEQ | LEQ | EQ | NEQ) expr      # If
          ;
 
-conditional_branch: CONDITION_BRANCH_START expr (function | var | math_op)* CONDITION_BRANCH_END;
+conditional_branch: CONDITION_BRANCH_START expr conditional_lines CONDITION_BRANCH_END;
+
+conditional_lines: (function | var | math_op)* ;
 
 print: PRINT expr;
 scan: SCAN expr;

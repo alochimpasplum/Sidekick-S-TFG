@@ -3,13 +3,13 @@ from FontCode.ANTLR4_Parser.Expressions.Variable import Variable
 from FontCode.ANTLR4_Parser.Expressions.Number import Number
 
 
-class Conditional(Expression.Expression):
+class ConditionalBranch(Expression.Expression):
     condition: Expression
-    conditional_branches: Expression
+    conditional_lines: Expression
 
-    def __init__(self, condition: Expression, conditional_branches: Expression):
+    def __init__(self, condition: Expression, conditional_lines: Expression):
         self.condition = condition
-        self.conditional_branches = conditional_branches
+        self.conditional_lines = conditional_lines
 
     def get_condition(self) -> str:
         if isinstance(self.condition, Variable):
@@ -18,7 +18,6 @@ class Conditional(Expression.Expression):
             return str(self.condition.num)
 
     def to_string(self):
-        print("Conditional block")
+        print("Conditional branch")
         print(self.condition.to_string())
-        print(self.conditional_branches.to_string())
-        print("End conditional block")
+        print(self.conditional_lines.to_string())

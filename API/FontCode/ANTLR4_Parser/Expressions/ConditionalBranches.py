@@ -7,7 +7,7 @@ class ConditionalBranches(Expression.Expression):
     def __init__(self, branches: [Expression]):
         self.branches = branches
 
-    # todo: devolver las expresiones
-
     def to_string(self):
-        pass
+        print("Condition branch with {0} branches".format(len(self.branches)))
+        for branch in self.branches:
+            print(branch.to_string())

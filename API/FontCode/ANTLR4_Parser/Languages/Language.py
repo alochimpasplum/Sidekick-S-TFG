@@ -6,6 +6,7 @@ from FontCode.ANTLR4_Parser.Expressions.VariableAssign import VariableAssign
 from FontCode.ANTLR4_Parser.Expressions.Print import Print
 from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
 from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
+from FontCode.ANTLR4_Parser.Expressions.Conditional import Conditional
 
 
 class Language(ABC):
@@ -40,4 +41,8 @@ class Language(ABC):
 
     @abstractmethod
     def __handle_scan__(self, expression: Scan) -> str:
+        pass
+
+    @abstractmethod
+    def __handle_conditional__(self, expression: Conditional):
         pass

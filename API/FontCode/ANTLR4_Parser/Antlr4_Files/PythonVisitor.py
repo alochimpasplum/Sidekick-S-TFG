@@ -109,6 +109,11 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by PythonParser#conditional_lines.
+    def visitConditional_lines(self, ctx:PythonParser.Conditional_linesContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by PythonParser#print.
     def visitPrint(self, ctx:PythonParser.PrintContext):
         return self.visitChildren(ctx)
