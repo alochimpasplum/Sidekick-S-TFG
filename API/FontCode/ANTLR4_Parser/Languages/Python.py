@@ -14,10 +14,15 @@ from FontCode.ANTLR4_Parser.Expressions.VariableAssign import VariableAssign
 from FontCode.ANTLR4_Parser.Expressions.Print import Print
 from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
 from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
+from FontCode.ANTLR4_Parser.Expressions.Conditional import Conditional
+from FontCode.ANTLR4_Parser.Expressions.ConditionalBranches import ConditionalBranches
+from FontCode.ANTLR4_Parser.Expressions.ConditionalBranch import ConditionalBranch
+from FontCode.ANTLR4_Parser.Expressions.ConditionalLines import ConditionalLines
+from FontCode.ANTLR4_Parser.Expressions.If import If
+from FontCode.ANTLR4_Parser.Expressions.SwitchCase import SwitchCase
 
 
 class Python(Language):
-
     program: Program
     code_lines: [str] = []
     tab: str = "\t"
@@ -47,6 +52,11 @@ class Python(Language):
             lines.append("{0}{1}".format(self.tab, self.__handle_math_operation__(expression)))
         if isinstance(expression, Scan):
             lines.append("{0}{1}".format(self.tab, self.__handle_scan__(expression)))
+        if isinstance(expression, Conditional):
+            if isinstance(expression.condition, If):
+                lines.extend(self.__handle_if__(expression))
+            if isinstance(expression.condition, SwitchCase):
+                lines.extend(self.__handle_switch_case__(expression))
 
         return lines
 
@@ -75,3 +85,46 @@ class Python(Language):
 
     def __handle_scan__(self, expression: Scan) -> str:
         return "{0} = input()".format(expression.get_var())
+
+    def __handle_if__(self, expression: Conditional) -> [str]:
+        lines: [str] = []
+        condition_true: [str] = ['YES', 'SI', 'TRUE', 'VERDADERO', '1']
+        condition_false: [str] = ['NO', 'FALSE', 'FALSO', '0']
+
+        if isinstance(expression.condition, If):
+            lines.append("if {0} {1} {2}:".format(
+                expression.condition.get_left(),
+                expression.condition.condition,
+                expression.condition.get_right()))
+
+        if isinstance(expression.conditional_branches, ConditionalBranches):
+            branch_true: [ConditionalBranch] = [x for x in expression.conditional_branches.branches if
+                                                x.get_condition().upper() in condition_true]
+            branch_false: [ConditionalBranch] = [x for x in expression.conditional_branches.branches if
+                                                 x.get_condition().upper() in condition_false]
+
+            true: ConditionalBranch = branch_true[0]
+            false: ConditionalBranch = branch_false[0]
+            conditional_lines: ConditionalLines
+
+            # True statement
+            conditional_lines = true.conditional_lines
+            for line in conditional_lines.lines:
+                lines.extend(self.__handle_expression__(line))
+
+            # False statement
+            conditional_lines = false.conditional_lines
+            lines.append("else:")
+            for line in conditional_lines.lines:
+                lines.extend(self.__handle_expression__(line))
+
+            # Add tabs
+            for i in range(0, len(lines)):
+                lines[i] = "{0}{1}".format(self.tab, lines[i])
+
+        return lines
+
+    def __handle_switch_case__(self, expression: Conditional) -> [str]:
+        lines: [str] = []
+        # TODO: implementar
+        return lines

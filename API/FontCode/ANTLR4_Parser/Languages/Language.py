@@ -7,6 +7,7 @@ from FontCode.ANTLR4_Parser.Expressions.Print import Print
 from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
 from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
 from FontCode.ANTLR4_Parser.Expressions.Conditional import Conditional
+from FontCode.ANTLR4_Parser.Expressions.If import If
 
 
 class Language(ABC):
@@ -44,5 +45,10 @@ class Language(ABC):
         pass
 
     @abstractmethod
-    def __handle_conditional__(self, expression: Conditional):
+    def __handle_switch_case__(self, expression: Conditional) -> [str]:
         pass
+
+    @abstractmethod
+    def __handle_if__(self, expression: Conditional) -> [str]:
+        pass
+
