@@ -1,6 +1,6 @@
 grammar Python;
 
-prog: (function | var | math_op)+ EOF
+prog: (function | var | math_op | conditional)+ EOF
     ;
 
 function: main_function         # Function_A
@@ -28,6 +28,16 @@ var_assign: expr ASSIGN expr;
 math_op: expr ASSIGN expr (PLUS | MINUS | MULT | DIV) expr      # Math_Operation
        ;
 
+conditional: CONDITIONAL_START condition conditional_branches CONDITIONAL_END;
+
+conditional_branches: conditional_branch+;
+
+condition: expr                                             # Switch_Case
+         | expr (GT | LET | GEQ | LEQ | EQ | NEQ) expr      # If
+         ;
+
+conditional_branch: CONDITION_BRANCH_START expr (function | var | math_op)* CONDITION_BRANCH_END;
+
 print: PRINT expr;
 scan: SCAN expr;
 
@@ -38,11 +48,10 @@ PRINT : '<PRINT>';
 SCAN : '<SCAN>';
 FUNCTION : '<FUNC>';
 MAIN_FUNCTION : '<BASE_FUNC>';
-IF : '<IF>';
-IF_TRUE_START : '<IF_TRUE>';
-IF_TRUE_END : '</IF_TRUE>';
-IF_FALSE_START : '<IF_FALSE>';
-IF_FALSE_END : '</IF_FALSE>';
+CONDITIONAL_START : '<CONDITIONAL>';
+CONDITIONAL_END : '</CONDITIONAL>';
+CONDITION_BRANCH_START : '<CONDITION>';
+CONDITION_BRANCH_END : '</CONDITION>';
 END_CODE : '<END>' -> skip;
 
 PLUS : '+';

@@ -14,6 +14,8 @@ from FontCode.ANTLR4_Parser.Expressions.VariableAssign import VariableAssign
 from FontCode.ANTLR4_Parser.Expressions.Print import Print
 from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
 from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
+from FontCode.ANTLR4_Parser.Expressions.Conditional import Conditional
+from FontCode.ANTLR4_Parser.Expressions.ConditionalBranches import ConditionalBranches
 
 
 class AntlrToExpression(PythonVisitor):
@@ -33,9 +35,26 @@ class AntlrToExpression(PythonVisitor):
         operation: str = ctx.getChild(3).getText()
         return MathOperation(operation, assign, left, right)
 
+    def visitConditional(self, ctx: PythonParser.ConditionalContext):
+        condition: Expression = self.visit(ctx.getChild(1))
+        branches: Expression = self.visit(ctx.getChild(2))
+        return Conditional(condition, branches)
+
     def visitVariable(self, ctx: PythonParser.VariableContext):
         name: str = ctx.getChild(0).getText()
         return Variable(name)
+
+    def visitConditional_branch(self, ctx: PythonParser.Conditional_branchContext):
+        return super().visitConditional_branch(ctx)
+
+    def visitConditional_branches(self, ctx: PythonParser.Conditional_branchesContext):
+        branches: [Expression] = []
+        expression_visitor: AntlrToExpression = AntlrToExpression()
+
+        for i in range(0, ctx.getChildCount()):
+            branches.append(expression_visitor.visit(ctx.getChild(i)))
+
+        return ConditionalBranches(branches)
 
     def visitNumber(self, ctx: PythonParser.NumberContext):
         num: str = ctx.getChild(0).getText()

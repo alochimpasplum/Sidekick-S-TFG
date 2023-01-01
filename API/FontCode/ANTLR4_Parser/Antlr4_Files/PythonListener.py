@@ -143,6 +143,51 @@ class PythonListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PythonParser#conditional.
+    def enterConditional(self, ctx:PythonParser.ConditionalContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#conditional.
+    def exitConditional(self, ctx:PythonParser.ConditionalContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#conditional_branches.
+    def enterConditional_branches(self, ctx:PythonParser.Conditional_branchesContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#conditional_branches.
+    def exitConditional_branches(self, ctx:PythonParser.Conditional_branchesContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#Switch_Case.
+    def enterSwitch_Case(self, ctx:PythonParser.Switch_CaseContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Switch_Case.
+    def exitSwitch_Case(self, ctx:PythonParser.Switch_CaseContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#If.
+    def enterIf(self, ctx:PythonParser.IfContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#If.
+    def exitIf(self, ctx:PythonParser.IfContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#conditional_branch.
+    def enterConditional_branch(self, ctx:PythonParser.Conditional_branchContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#conditional_branch.
+    def exitConditional_branch(self, ctx:PythonParser.Conditional_branchContext):
+        pass
+
+
     # Enter a parse tree produced by PythonParser#print.
     def enterPrint(self, ctx:PythonParser.PrintContext):
         pass

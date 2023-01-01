@@ -88,7 +88,6 @@ def __block_operation(mermaid_block: Block, variables: {}, functions: []) -> str
     return line
 
 
-# todo: implementar
 def __conditional_block_operation(conditional_block: Block, next_blocks: [Block],
                                   mermaid_blocks: [Block], variables: {}, functions: [])\
                                     -> [[str], Block]:
@@ -99,45 +98,22 @@ def __conditional_block_operation(conditional_block: Block, next_blocks: [Block]
     next_blocks_side: [Block] = []
     final_conditional_block: Block = __check_final_conditional_block(next_blocks, mermaid_blocks)
 
-    # If statement
-    if len(next_blocks) == 2:
+    lines.append("{0} {1}".format(Constants.CONDITIONAL_START, conditional_block.Texts[0].text))
 
-        if_statement: str = "{}{}{}".format(Constants.IF, conditional_block.text, Constants.IF_TRUE_START)
-        if Constants.VAR_SUFFIX in if_statement:
-            if_statement = if_statement.replace(Constants.VAR_SUFFIX, "")
-            if_statement = "{}{}".format(Constants.VARIABLE, if_statement)
-        lines.append(if_statement)
+    for block_index in conditional_block.Next_Blocks:
+        lines.append("{0} {1}".format(Constants.CONDITION_BRANCH_START,
+                                      conditional_block.Next_Blocks_Conditionals[block_index]))
 
-        next_block_name: str = "Block"
-        for key, value in conditional_block.next_blocks_conditionals.items():
-            if value == "yes":
-                next_block_name = "Block{}".format(key)
-        next_block = [x for x in mermaid_blocks if x.block_name == next_block_name][0]
+        block_side: Block = [x for x in next_blocks if x.id == block_index][0]
 
-        while next_block != final_conditional_block:
-            if not ("decision" in next_block.object_type):
-                if not ("start-end" in next_block.text):
-                    line: str = __block_operation(next_block, variables, functions)
-                    line = __add_tabs(line, 1)
-                    lines.append(line)
-                    next_blocks_side = __get_next_block(mermaid_blocks, next_block)
-                    next_block = next_blocks_side[0]
+        while block_side.id != final_conditional_block.id:
+            lines.append(__block_operation(block_side, variables, functions))
+            next_blocks_side = __get_next_block(mermaid_blocks, block_side)
+            block_side = next_blocks_side[0]
 
-        lines.append("{}{}".format(Constants.IF_TRUE_END, Constants.IF_FALSE_START))
-        for key, value in conditional_block.next_blocks_conditionals.items():
-            if value == "no":
-                next_block_name = "Block{}".format(key)
-        next_block = [x for x in mermaid_blocks if x.block_name == next_block_name][0]
-        while next_block != final_conditional_block:
-            if not ("decision" in next_block.object_type):
-                if not ("start-end" in next_block.text):
-                    line: str = __block_operation(next_block, variables, functions)
-                    line = __add_tabs(line, 1)
-                    lines.append(line)
-                    next_blocks_side = __get_next_block(mermaid_blocks, next_block)
-                    next_block = next_blocks_side[0]
+        lines.append(Constants.CONDITION_BRANCH_END)
 
-        lines.append("{}".format(Constants.IF_FALSE_END))
+    lines.append(Constants.CONDITIONAL_END)
 
     return [lines, final_conditional_block]
 
@@ -164,6 +140,7 @@ def __print_operation(mermaid_block: Block, variables: {}) -> str:
         if word in variables:
             code_line += word
         else:
+            # todo: agregar en antlr esta posibilidad
             code_line += Constants.STRING
             code_line += word
     code_line = code_line.rstrip()
@@ -231,7 +208,7 @@ def __check_final_conditional_block(next_blocks: [Block],
     for next_block in initial_next_blocks:
         next_block_side = next_block
 
-        while len(next_block_side.previous_blocks) < 2:
+        while len(next_block_side.Previous_Blocks) < 2:
             next_blocks_side = __get_next_block(mermaid_blocks, next_block_side)
             next_block_side = next_blocks_side[0]
 

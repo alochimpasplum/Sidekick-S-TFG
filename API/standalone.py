@@ -14,7 +14,7 @@ def main():
         dropped_file = sys.argv[1]
         img = Image.open(dropped_file)
     except IndexError:
-        img = Image.open('./TestStuff/HelloWorld13.jpg')
+        img = Image.open('./TestStuff/HelloWorld14.jpg')
     blocks: [Block] = FlowchartObjectDetection.get_blocks(img, ocr_system=OCR.AZURE)
     # Debug.print_blocks(blocks)
     code: FontCode.FontCode = FontCode.FontCode(blocks)

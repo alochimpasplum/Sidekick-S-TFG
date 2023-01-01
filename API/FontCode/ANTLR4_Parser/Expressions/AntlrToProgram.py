@@ -12,6 +12,6 @@ class AntlrToProgram(PythonVisitor):
 
         for i in range(0, ctx.getChildCount()):
             if i < ctx.getChildCount() - 1:  # Así no visito el nodo EOF
-                temp = ctx.getChild(i)
                 prog.add_expression(expression_visitor.visit(ctx.getChild(i)))
+
         return prog

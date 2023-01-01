@@ -84,6 +84,31 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by PythonParser#conditional.
+    def visitConditional(self, ctx:PythonParser.ConditionalContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#conditional_branches.
+    def visitConditional_branches(self, ctx:PythonParser.Conditional_branchesContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#Switch_Case.
+    def visitSwitch_Case(self, ctx:PythonParser.Switch_CaseContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#If.
+    def visitIf(self, ctx:PythonParser.IfContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#conditional_branch.
+    def visitConditional_branch(self, ctx:PythonParser.Conditional_branchContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by PythonParser#print.
     def visitPrint(self, ctx:PythonParser.PrintContext):
         return self.visitChildren(ctx)
