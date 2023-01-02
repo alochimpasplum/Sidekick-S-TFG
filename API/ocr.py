@@ -37,7 +37,7 @@ def __fix_whitespaces(blocks: [Block]):
                 if (c in special_characters) and (not is_last_char_special_char):
                     is_last_char_special_char = True
                     text += " "
-                elif is_last_char_special_char:
+                elif (c not in special_characters) and is_last_char_special_char:
                     is_last_char_special_char = False
                     text += " "
                 text += c
