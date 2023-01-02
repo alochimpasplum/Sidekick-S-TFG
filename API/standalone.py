@@ -53,20 +53,30 @@ def main():
 
         code: FontCode.FontCode = FontCode.FontCode(blocks, Enums.supported_languages(selection_language))
 
-        file_path: str = "r{0}{1}".format(os.getcwd(), Constants.OUTPUT_FOLDER)
+        file_path: str = "{0}{1}".format(os.getcwd(), Constants.OUTPUT_FOLDER)
+        file_name: str = dir_list[selection].split(".")[0]
 
         if Enums.supported_languages(selection_language) == Enums.supported_languages.python:
-            file_path += "{0}.py".format(dir_list[selection])
+            file_path += r"\{0}.py".format(file_name)
         if Enums.supported_languages(selection_language) == Enums.supported_languages.java:
-            file_path += "{0}.java".format(dir_list[selection])
+            file_path += r"\{0}.java".format(file_name)
 
         if os.path.exists(file_path):
             os.remove(file_path)
+
+        print(file_path)
 
         with open(file_path, 'w') as f:
             for line in code.lines:
                 f.write(line)
                 f.write('\n')
+
+        print("")
+        print("")
+
+        print("Process finished, output saved at: {0}".format(file_path))
+        print("Press a button to exit")
+        s = input()
 
 
 if __name__ == "__main__":
