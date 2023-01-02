@@ -39,6 +39,16 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by PythonParser#Str.
+    def visitStr(self, ctx:PythonParser.StrContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by PythonParser#string.
+    def visitString(self, ctx:PythonParser.StringContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by PythonParser#main_function.
     def visitMain_function(self, ctx:PythonParser.Main_functionContext):
         return self.visitChildren(ctx)

@@ -48,11 +48,8 @@ def main():
             f.write('\n')
 
     print("")
-
     print("")
-
     print("Process finished, output saved at: {0}".format(file_path))
-
     print("Press a button to exit")
 
     s = input()

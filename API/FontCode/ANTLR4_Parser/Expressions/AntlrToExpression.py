@@ -3,6 +3,7 @@ from FontCode.ANTLR4_Parser.Antlr4_Files.PythonParser import PythonParser
 from FontCode.ANTLR4_Parser.Antlr4_Files.PythonVisitor import PythonVisitor
 from FontCode.ANTLR4_Parser.Expressions.Number import Number
 from FontCode.ANTLR4_Parser.Expressions.Variable import Variable
+from FontCode.ANTLR4_Parser.Expressions.String import String
 from FontCode.ANTLR4_Parser.Expressions.Expression import Expression
 from FontCode.ANTLR4_Parser.Expressions.Function import Function
 from FontCode.ANTLR4_Parser.Expressions.MainFunction import MainFunction
@@ -87,6 +88,10 @@ class AntlrToExpression(PythonVisitor):
     def visitCustom_function(self, ctx: PythonParser.Custom_functionContext):
         child: Expression = self.visit(ctx.getChild(1))
         return CustomFunction(child)
+
+    def visitString(self, ctx: PythonParser.StringContext):
+        value: str = ctx.getChild(0).getText()
+        return String(value)
 
     def visitMath_Operation_Simplified(self, ctx: PythonParser.Math_Operation_SimplifiedContext):
         left: Expression = self.visit(ctx.getChild(0))

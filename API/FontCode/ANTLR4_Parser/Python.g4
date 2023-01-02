@@ -10,7 +10,10 @@ function: main_function         # Function_A
 
 expr: ID        # Variable
     | NUMBER    # Number
+    | string    # Str
     ;
+
+string: ANY*;
 
 main_function: MAIN_FUNCTION;
 custom_function: FUNCTION expr;
@@ -80,3 +83,4 @@ ID : [a-zA-Z_][a-zA-Z0-9_]*;
 NUMBER : [0-9]+;
 
 WS : [ \t\n]+ -> skip;
+ANY: .;

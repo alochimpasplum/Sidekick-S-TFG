@@ -62,6 +62,24 @@ class PythonListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PythonParser#Str.
+    def enterStr(self, ctx:PythonParser.StrContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Str.
+    def exitStr(self, ctx:PythonParser.StrContext):
+        pass
+
+
+    # Enter a parse tree produced by PythonParser#string.
+    def enterString(self, ctx:PythonParser.StringContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#string.
+    def exitString(self, ctx:PythonParser.StringContext):
+        pass
+
+
     # Enter a parse tree produced by PythonParser#main_function.
     def enterMain_function(self, ctx:PythonParser.Main_functionContext):
         pass
