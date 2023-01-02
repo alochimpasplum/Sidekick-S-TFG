@@ -165,7 +165,8 @@ def __process_operation(mermaid_block: Block, variables: {}, functions: []) -> s
     # Process with math operation
     # elif ("+" or "-" or "*" or "/" or "=") in text:
     # todo: eliminar la necesidad de indicar que es una variable en el texto OCR escrito
-    elif ("-" in text) or ("+" in text) or ("*" in text) or ("/" in text) or ("=" in text):
+    elif ("-" in text) or ("+" in text) or ("*" in text) or ("/" in text) or ("=" in text) or (
+            "+=" in text) or ("-=" in text) or ("*=" in text) or ("/=" in text):
         for t in text:
             # compruebo si se trata de una variable
             if re.match(r"[a-zA-Z_][a-zA-Z0-9_]*", t):
