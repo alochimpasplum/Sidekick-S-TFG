@@ -90,7 +90,7 @@ class Java(Language):
                                            expression.get_right())
 
     def __handle_math_operation_simplified__(self, expression: MathOperationSimplified) -> str:
-        return "{0} {1} {2}".format(expression.get_left(), expression.operation, expression.get_right())
+        return "{0} {1} {2};".format(expression.get_left(), expression.operation, expression.get_right())
 
     def __handle_scan__(self, expression: Scan) -> str:
         return "{0} = {1}.nextLine();".format(expression.get_var(), self.scanner_var)
