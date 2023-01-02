@@ -14,6 +14,7 @@ from FontCode.ANTLR4_Parser.Expressions.ConditionalBranch import ConditionalBran
 from FontCode.ANTLR4_Parser.Expressions.ConditionalLines import ConditionalLines
 from FontCode.ANTLR4_Parser.Expressions.If import If
 from FontCode.ANTLR4_Parser.Expressions.SwitchCase import SwitchCase
+from FontCode.ANTLR4_Parser.Expressions.MathOperationSimplified import MathOperationSimplified
 
 
 class Python(Language):
@@ -33,6 +34,8 @@ class Python(Language):
     def __handle_expression__(self, expression: Expression) -> [str]:
         lines: [str] = []
 
+        print(type(expression))
+
         if isinstance(expression, MainFunction):
             lines.append(self.__handle_main_function__(expression))
         if isinstance(expression, VariableDeclaration):
@@ -43,6 +46,8 @@ class Python(Language):
             lines.append("{0}{1}".format(self.tab, self.__handle_print__(expression)))
         if isinstance(expression, MathOperation):
             lines.append("{0}{1}".format(self.tab, self.__handle_math_operation__(expression)))
+        if isinstance(expression, MathOperationSimplified):
+            lines.append("{0}{1}".format(self.tab, self.__handle_math_operation_simplified__(expression)))
         if isinstance(expression, Scan):
             lines.append("{0}{1}".format(self.tab, self.__handle_scan__(expression)))
         if isinstance(expression, Conditional):
@@ -75,6 +80,9 @@ class Python(Language):
                                           expression.get_left(),
                                           expression.operation,
                                           expression.get_right())
+
+    def __handle_math_operation_simplified__(self, expression: MathOperationSimplified) -> str:
+        return "{0} {1} {2}".format(expression.get_left(), expression.operation, expression.get_right())
 
     def __handle_scan__(self, expression: Scan) -> str:
         return "{0} = input()".format(expression.get_var())

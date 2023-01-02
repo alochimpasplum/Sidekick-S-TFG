@@ -20,6 +20,7 @@ from FontCode.ANTLR4_Parser.Expressions.ConditionalBranch import ConditionalBran
 from FontCode.ANTLR4_Parser.Expressions.ConditionalLines import ConditionalLines
 from FontCode.ANTLR4_Parser.Expressions.If import If
 from FontCode.ANTLR4_Parser.Expressions.SwitchCase import SwitchCase
+from FontCode.ANTLR4_Parser.Expressions.MathOperationSimplified import MathOperationSimplified
 
 
 class AntlrToExpression(PythonVisitor):
@@ -86,6 +87,12 @@ class AntlrToExpression(PythonVisitor):
     def visitCustom_function(self, ctx: PythonParser.Custom_functionContext):
         child: Expression = self.visit(ctx.getChild(1))
         return CustomFunction(child)
+
+    def visitMath_Operation_Simplified(self, ctx: PythonParser.Math_Operation_SimplifiedContext):
+        left: Expression = self.visit(ctx.getChild(0))
+        right: Expression = self.visit(ctx.getChild(3))
+        operation: str = ctx.getChild(1).getText()
+        return MathOperationSimplified(left, right, operation)
 
     def visitBuilt_function(self, ctx: PythonParser.Built_functionContext):
         child: Expression = self.visit(ctx.getChild(1))

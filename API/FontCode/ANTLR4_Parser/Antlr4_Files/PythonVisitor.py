@@ -84,6 +84,11 @@ class PythonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by PythonParser#Math_Operation_Simplified.
+    def visitMath_Operation_Simplified(self, ctx:PythonParser.Math_Operation_SimplifiedContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by PythonParser#conditional.
     def visitConditional(self, ctx:PythonParser.ConditionalContext):
         return self.visitChildren(ctx)

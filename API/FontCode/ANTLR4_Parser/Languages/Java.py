@@ -14,6 +14,7 @@ from FontCode.ANTLR4_Parser.Expressions.ConditionalBranch import ConditionalBran
 from FontCode.ANTLR4_Parser.Expressions.ConditionalLines import ConditionalLines
 from FontCode.ANTLR4_Parser.Expressions.If import If
 from FontCode.ANTLR4_Parser.Expressions.SwitchCase import SwitchCase
+from FontCode.ANTLR4_Parser.Expressions.MathOperationSimplified import MathOperationSimplified
 
 
 class Java(Language):
@@ -52,6 +53,8 @@ class Java(Language):
             lines.append("{0}{1}".format(self.tab, self.__handle_print__(expression)))
         if isinstance(expression, MathOperation):
             lines.append("{0}{1}".format(self.tab, self.__handle_math_operation__(expression)))
+        if isinstance(expression, MathOperationSimplified):
+            lines.append("{0}{1}".format(self.tab, self.__handle_math_operation_simplified__(expression)))
         if isinstance(expression, Scan):
             self.append_scanner = True
             lines.append("{0}{1}".format(self.tab, self.__handle_scan__(expression)))
@@ -85,6 +88,9 @@ class Java(Language):
                                            expression.get_left(),
                                            expression.operation,
                                            expression.get_right())
+
+    def __handle_math_operation_simplified__(self, expression: MathOperationSimplified) -> str:
+        return "{0} {1} {2}".format(expression.get_left(), expression.operation, expression.get_right())
 
     def __handle_scan__(self, expression: Scan) -> str:
         return "{0} = {1}.nextLine();".format(expression.get_var(), self.scanner_var)

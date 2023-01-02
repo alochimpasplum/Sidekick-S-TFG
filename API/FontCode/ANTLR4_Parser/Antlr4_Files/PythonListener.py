@@ -143,6 +143,15 @@ class PythonListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PythonParser#Math_Operation_Simplified.
+    def enterMath_Operation_Simplified(self, ctx:PythonParser.Math_Operation_SimplifiedContext):
+        pass
+
+    # Exit a parse tree produced by PythonParser#Math_Operation_Simplified.
+    def exitMath_Operation_Simplified(self, ctx:PythonParser.Math_Operation_SimplifiedContext):
+        pass
+
+
     # Enter a parse tree produced by PythonParser#conditional.
     def enterConditional(self, ctx:PythonParser.ConditionalContext):
         pass

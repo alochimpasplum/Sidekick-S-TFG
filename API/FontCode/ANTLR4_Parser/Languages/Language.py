@@ -7,6 +7,7 @@ from FontCode.ANTLR4_Parser.Expressions.Print import Print
 from FontCode.ANTLR4_Parser.Expressions.MathOperation import MathOperation
 from FontCode.ANTLR4_Parser.Expressions.Scan import Scan
 from FontCode.ANTLR4_Parser.Expressions.Conditional import Conditional
+from FontCode.ANTLR4_Parser.Expressions.MathOperationSimplified import MathOperationSimplified
 
 
 class Language(ABC):
@@ -37,6 +38,10 @@ class Language(ABC):
 
     @abstractmethod
     def __handle_math_operation__(self, expression: MathOperation) -> str:
+        pass
+
+    @abstractmethod
+    def __handle_math_operation_simplified__(self, expression: MathOperationSimplified) -> str:
         pass
 
     @abstractmethod

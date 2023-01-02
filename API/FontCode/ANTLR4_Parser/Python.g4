@@ -26,6 +26,7 @@ var_decl: VARIABLE_DECLARATIONS expr VARIABLE_TYPE;
 var_assign: expr ASSIGN expr;
 
 math_op: expr ASSIGN expr (PLUS | MINUS | MULT | DIV) expr      # Math_Operation
+       | expr (PLUS | MINUS | MULT | DIV) ASSIGN expr           # Math_Operation_Simplified
        ;
 
 conditional: CONDITIONAL_START condition conditional_branches CONDITIONAL_END;
