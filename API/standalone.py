@@ -85,6 +85,7 @@ def image_selection(dir_list: [str]) -> int:
             return int(selection)
         elif selection == "q":
             print("Closing program...")
+            sys.exit(0)
         else:
             print_header()
             print("Please, choose a valid option")
@@ -107,6 +108,7 @@ def detection_system() -> int:
             return int(selection)
         elif selection == "q":
             print("Closing program...")
+            sys.exit(0)
         else:
             print_header()
             print("Please, choose a valid option")
@@ -129,6 +131,7 @@ def language_selection() -> int:
             return int(selection)
         elif selection == "q":
             print("Closing program...")
+            sys.exit(0)
         else:
             print_header()
             print("Please, choose a valid option")
