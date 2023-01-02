@@ -21,6 +21,8 @@ def main():
     selection_ocr = detection_system()
     selection_language = language_selection()
 
+    print_header()
+
     blocks: [Block] = FlowchartObjectDetection.get_blocks(img, ocr_system=OCR(selection_ocr))
 
     # Debug.print_blocks(blocks)

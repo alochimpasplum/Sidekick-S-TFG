@@ -34,8 +34,6 @@ class Python(Language):
     def __handle_expression__(self, expression: Expression) -> [str]:
         lines: [str] = []
 
-        print(type(expression))
-
         if isinstance(expression, MainFunction):
             lines.append(self.__handle_main_function__(expression))
         if isinstance(expression, VariableDeclaration):
