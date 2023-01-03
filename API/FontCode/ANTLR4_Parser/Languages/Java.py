@@ -23,6 +23,7 @@ class Java(Language):
     tab: str = "\t"
     null: str = "null"
     scanner_var: str = "scan"
+    switch_break: str = "break"
 
     append_scanner: bool = False
 
@@ -139,7 +140,31 @@ class Java(Language):
 
     def __handle_switch_case__(self, expression: Conditional) -> [str]:
         lines: [str] = []
-        # TODO: implementar
+        condition: str = ""
+
+        if isinstance(expression.condition, SwitchCase):
+            condition = expression.condition.get_condition()
+
+        if isinstance(expression.conditional_branches, ConditionalBranches):
+            branches: [ConditionalBranch] = [x for x in expression.conditional_branches.branches]
+            branch: [ConditionalBranch]
+
+            temp: str = "switch ({0})".format(condition)
+            temp += " {"
+
+            lines.append(temp)
+
+            for i in range(0, len(branches)):
+                conditional_lines: ConditionalLines = branches[i].conditional_lines
+                lines.append("{0}case {1}:".format(self.tab, expression.condition.get_condition()))
+
+                for line in conditional_lines.lines:
+                    lines.extend("{0}{1}".format(self.tab, self.__handle_expression__(line)))
+
+                lines.append("{0}{1};".format(self.tab, self.switch_break))
+
+            lines.append("}")
+
         return lines
 
     def get_lines(self) -> [str]:
