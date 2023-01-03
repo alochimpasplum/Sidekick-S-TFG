@@ -161,12 +161,12 @@ class Java(Language):
                 is_default: bool = False
                 conditional_lines: ConditionalLines = branches[i].conditional_lines
 
-                if Constants.DEFAULT == expression.condition.get_condition().upper():
-                    default_lines.append("{0}{1}:".format(self.tab, expression.condition.get_condition()))
+                if Constants.DEFAULT == branches[i].get_condition().upper():
+                    default_lines.append("{0}{1}:".format(self.tab, branches[i].get_condition()))
                     is_default = True
                     default_exist = True
                 else:
-                    lines.append("{0}case {1}:".format(self.tab, expression.condition.get_condition()))
+                    lines.append("{0}case {1}:".format(self.tab, branches[i].get_condition()))
 
                 if not is_default:
                     for line in conditional_lines.lines:

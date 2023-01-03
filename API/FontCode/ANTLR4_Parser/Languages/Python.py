@@ -133,30 +133,54 @@ class Python(Language):
         if isinstance(expression.conditional_branches, ConditionalBranches):
             branches: [ConditionalBranch] = [x for x in expression.conditional_branches.branches]
             branch: [ConditionalBranch]
+            first_printed: bool = False
+            first_branch_lines: [str] = []
             default_lines: [str] = []
             default_exist: bool = False
+            branch_lines: [[str]] = []
 
             for i in range(0, len(branches)):
                 is_default: bool = False
+                is_first: bool = False
+                is_normal: bool = False
+
                 conditional_lines: ConditionalLines = branches[i].conditional_lines
-                if i == 0:
-                    lines.append("if {0} == {1}:".format(condition, expression.condition.get_condition()))
-                elif Constants.DEFAULT == expression.condition.get_condition().upper():
+                temp_branch_lines: [str] = []
+
+                if (not first_printed) and (Constants.DEFAULT != branches[i].get_condition().upper()):
+                    first_printed = True
+                    is_first = True
+                    first_branch_lines.append("if {0} == {1}:".format(condition, branches[i].get_condition()))
+                elif Constants.DEFAULT == branches[i].get_condition().upper():
                     default_lines.append("else:")
                     default_exist = True
                     is_default = True
                 else:
-                    lines.append("elif {0} == {1}:".format(condition, expression.condition.get_condition()))
+                    is_normal = True
+                    temp_branch_lines.append("elif {0} == {1}:".format(condition, branches[i].get_condition()))
 
-                if not is_default:
-                    for line in conditional_lines.lines:
-                        lines.extend(self.__handle_expression__(line))
-                else:
+                if is_default:
                     for line in conditional_lines.lines:
                         default_lines.extend(self.__handle_expression__(line))
+                elif is_first:
+                    for line in conditional_lines.lines:
+                        first_branch_lines.extend(self.__handle_expression__(line))
+                elif is_normal:
+                    for line in conditional_lines.lines:
+                        temp_branch_lines.extend(self.__handle_expression__(line))
+                    branch_lines.append(temp_branch_lines)
+
+            lines.extend(first_branch_lines)
+
+            for b in branch_lines:
+                lines.extend(b)
 
             if default_exist:
                 lines.extend(default_lines)
+
+            # Add tabs
+            for i in range(0, len(lines)):
+                lines[i] = "{0}{1}".format(self.tab, lines[i])
 
         return lines
 

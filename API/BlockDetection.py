@@ -23,6 +23,7 @@ def detect_blocks(img: Image, ocr_system: Enums.OCR) -> [Block]:
 
     blocks = get_text(img, blocks, ocr_system=ocr_system)
     blocks = __sort_arrows(blocks)
+    # Debug.get_detections(blocks, img).show()
     blocks = __find_neighbours(blocks)
     blocks = __sort_blocks(blocks)
     blocks = __remove_arrows(blocks)
@@ -234,8 +235,13 @@ def __find_block_neighbours(block: Block, blocks: [Block]) -> [[int], [int]]:
                 p = (block.x_min, (block.y_min + block.y_max) / 2)
                 previous_neighbour[neighbour.id] = Math_Calcs.distance_point_to_segment(a, b, p)
 
-    return [[sorted(next_neighbour.items(), key=lambda x: x[1])[0][0]], [sorted(
-        previous_neighbour.items(), key=lambda x: x[1])[0][0]]]
+    if block.id == 35:
+        print("a")
+
+    next_neighbour = [sorted(next_neighbour.items(), key=lambda x: x[1])[0][0]]
+    previous_neighbour = [sorted(previous_neighbour.items(), key=lambda x: x[1])[0][0]]
+
+    return [next_neighbour, previous_neighbour]
 
 
 def __sort_blocks(blocks: [Block]) -> [Block]:
