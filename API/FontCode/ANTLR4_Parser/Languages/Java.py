@@ -149,19 +149,35 @@ class Java(Language):
             branches: [ConditionalBranch] = [x for x in expression.conditional_branches.branches]
             branch: [ConditionalBranch]
 
+            default_lines: [str] = []
+            default_exist: bool = False
+
             temp: str = "switch ({0})".format(condition)
             temp += " {"
 
             lines.append(temp)
 
             for i in range(0, len(branches)):
+                is_default: bool = False
                 conditional_lines: ConditionalLines = branches[i].conditional_lines
-                lines.append("{0}case {1}:".format(self.tab, expression.condition.get_condition()))
 
-                for line in conditional_lines.lines:
-                    lines.extend("{0}{1}".format(self.tab, self.__handle_expression__(line)))
+                if Constants.DEFAULT == expression.condition.get_condition().upper():
+                    default_lines.append("{0}{1}:".format(self.tab, expression.condition.get_condition()))
+                    is_default = True
+                    default_exist = True
+                else:
+                    lines.append("{0}case {1}:".format(self.tab, expression.condition.get_condition()))
 
-                lines.append("{0}{1};".format(self.tab, self.switch_break))
+                if not is_default:
+                    for line in conditional_lines.lines:
+                        lines.extend("{0}{1}".format(self.tab, self.__handle_expression__(line)))
+                    lines.append("{0}{1};".format(self.tab, self.switch_break))
+                else:
+                    for line in conditional_lines.lines:
+                        default_lines.extend("{0}{1}".format(self.tab, self.__handle_expression__(line)))
+
+            if default_exist:
+                lines.extend(default_lines)
 
             lines.append("}")
 

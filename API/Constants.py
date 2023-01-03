@@ -34,6 +34,7 @@ VAR_SUFFIX = "_var"
 FUNC_SUFFIX = '_func'
 
 # Symbols used to mark pseudocode
+DEFAULT = "DEFAULT"
 TAB = "<TAB>"
 VARIABLE_DECLARATIONS = "<VAR_DECLARATION>"
 PRINT = "<PRINT>"

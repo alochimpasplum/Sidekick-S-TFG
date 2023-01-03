@@ -133,16 +133,31 @@ class Python(Language):
         if isinstance(expression.conditional_branches, ConditionalBranches):
             branches: [ConditionalBranch] = [x for x in expression.conditional_branches.branches]
             branch: [ConditionalBranch]
+            default_lines: [str] = []
+            default_exist: bool = False
 
             for i in range(0, len(branches)):
+                is_default: bool = False
                 conditional_lines: ConditionalLines = branches[i].conditional_lines
                 if i == 0:
                     lines.append("if {0} == {1}:".format(condition, expression.condition.get_condition()))
+                elif Constants.DEFAULT == expression.condition.get_condition().upper():
+                    default_lines.append("else:")
+                    default_exist = True
+                    is_default = True
                 else:
                     lines.append("elif {0} == {1}:".format(condition, expression.condition.get_condition()))
 
-                for line in conditional_lines.lines:
-                    lines.extend(self.__handle_expression__(line))
+                if not is_default:
+                    for line in conditional_lines.lines:
+                        lines.extend(self.__handle_expression__(line))
+                else:
+                    for line in conditional_lines.lines:
+                        default_lines.extend(self.__handle_expression__(line))
+
+            if default_exist:
+                lines.extend(default_lines)
+
         return lines
 
     def get_lines(self) -> [str]:
