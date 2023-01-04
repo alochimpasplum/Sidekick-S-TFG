@@ -1,0 +1,13 @@
+keras>=2.10.0
+numpy>=1.23.2
+pandas>=1.4.4
+tensorflow>=2.10.0
+scikit-learn>=1.1.2
+matplotlib>=3.5.3
+imutils>=0.5.4
+opencv-python>=4.6.0.66
+scipy>=1.9.1
+opencv-python>=4.6.0.66
+matplotlib>=3.5.3
+imutils>=0.5.4
+tensorflow_datasets>=4.6.0
