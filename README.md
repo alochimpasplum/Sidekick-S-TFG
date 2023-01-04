@@ -55,12 +55,6 @@ graph LR
 ## Blocks flowcharts
 ```mermaid
 graph LR
-  subgraph SUB3[Code Parsing]
-    direction LR
-      G --> H
-      H --> I
-  end
-  
   subgraph SUB1[User Input]
     direction LR
       A --> B
@@ -73,7 +67,11 @@ graph LR
       E --> F
   end
   
-  
+  subgraph SUB3[Code Parsing]
+    direction LR
+      G --> H
+      H --> I
+  end
   
   A[Choose image]
   B[Choose detection system]
