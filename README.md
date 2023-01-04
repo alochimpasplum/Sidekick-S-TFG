@@ -133,6 +133,50 @@ graph LR
 - For loop support
 - Switch-case support
 
+## Examples
+### Test 1
+![Object list](https://raw.githubusercontent.com/alochimpasplum/Sidekick-S-TFG/Entregable_TFG/TestStuff/TestIf.jpg)
+// TODO: meter el arbol de sintaxis abstracto
+**Python**
+```
+def main():
+	VAR1: int = None
+	VAR2: int = None
+	VAR1 = 2
+	VAR2 = input()
+	VAR1 *= VAR2
+	if VAR1 <= 10:
+		VAR1 = 15 * VAR2
+	else:
+		VAR1 -= VAR2
+		VAR1 = VAR1 + 5
+		VAR2 = 10 / 5
+	VAR1 = VAR1 + VAR2
+	print(VAR1)
+```
+**Java**
+```
+import java.util.Scanner;
+
+public static void main(String[] args) {
+	Scanner scan = new Scanner(System.in);
+	int VAR1 = null;
+	int VAR2 = null;
+	VAR1 = 2;
+	VAR2 = scan.nextInt();
+	VAR1 *= VAR2;
+	if (VAR1 <= 10) {
+		VAR1 = 15 * VAR2;
+	} else {
+		VAR1 -= VAR2;
+		VAR1 = VAR1 + 5;
+		VAR2 = 10 / 5;
+	}
+	VAR1 = VAR1 + VAR2;
+	System.out.println(VAR1);
+}
+```
+
 
 ## Objects detected by model
 ![Object list](https://raw.githubusercontent.com/dbetm/handwritten-flowchart-with-cnn/master/model/set_shapes.png)
