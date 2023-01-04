@@ -16,7 +16,7 @@ classDiagram
         Block: +List~int~ Next_Blocks
         Block: +List~int~ Previous_Blocks
         Block: +Dict~int,str~ Next_Blocks_Conditionals
-        Block: +sort_text()
+        Block: +sort_text() none
         Block: +to_string() str
       
     class Text
