@@ -94,24 +94,24 @@ graph LR
 - Decision:
   - It's mandatory draw almost 2 options
   - Inside must be the clause
-    - Examples:
-      - If statement
-        - Box clause: 
-          - A <= 1
-          - B == 1
-          - A != 2
-          - ...
-        - Options
-          - option 1: True
-          - option 2: False
-      - Switch statement:
-        - Box clause: (You must set the variable)
-          - VAR
-        - Options
-          - option 1: 5
-          - option 2: 1
-          - option 3: 10
-          - option default: DEFAULT
+  - Examples:
+    - If statement
+      - Box clause: 
+        - A <= 1
+        - B == 1
+        - A != 2
+        - ...
+      - Options
+        - option 1: True
+        - option 2: False
+    - Switch statement:
+      - Box clause: (You must set the variable)
+        - VAR
+      - Options
+        - option 1: 5
+        - option 2: 1
+        - option 3: 10
+        - option default: DEFAULT
     
 
 ## Limitations
