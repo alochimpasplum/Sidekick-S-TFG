@@ -81,6 +81,7 @@ def image_selection(dir_list: [str]) -> int:
         print("Choose your image:")
         for i in range(0, len(dir_list)):
             print("{0} - {1}".format(i, dir_list[i]))
+        print("")
         print("{0} - Exit program".format("q"))
         selection = input()
         if selection.isdecimal() and (0 <= int(selection) < len(dir_list)):
@@ -104,6 +105,7 @@ def detection_system() -> int:
         print("Choose detection system:")
         for i in range(0, len(values)):
             print("{0} - {1}".format(values[i], names[i]))
+        print("")
         print("{0} - Exit program".format("q"))
         selection = input()
         if selection.isdecimal() and (0 <= int(selection) < len(values)):
@@ -127,6 +129,7 @@ def language_selection() -> int:
         print("Choose language output:")
         for i in range(0, len(values)):
             print("{0} - {1}".format(values[i], names[i]))
+        print("")
         print("{0} - Exit program".format("q"))
         selection = input()
         if selection.isdecimal() and (0 <= int(selection) < len(values)):

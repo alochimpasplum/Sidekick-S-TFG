@@ -15,6 +15,7 @@ from FontCode.ANTLR4_Parser.Expressions.ConditionalLines import ConditionalLines
 from FontCode.ANTLR4_Parser.Expressions.If import If
 from FontCode.ANTLR4_Parser.Expressions.SwitchCase import SwitchCase
 from FontCode.ANTLR4_Parser.Expressions.MathOperationSimplified import MathOperationSimplified
+from FontCode.ANTLR4_Parser.Expressions.Number import Number
 
 
 class Java(Language):
@@ -94,7 +95,10 @@ class Java(Language):
         return "{0} {1} {2};".format(expression.get_left(), expression.operation, expression.get_right())
 
     def __handle_scan__(self, expression: Scan) -> str:
-        return "{0} = {1}.nextLine();".format(expression.get_var(), self.scanner_var)
+        if isinstance(expression.storing_var, Number):
+            return "{0} = {1}.nextInt();".format(expression.get_var(), self.scanner_var)
+        else:
+            return "{0} = {1}.nextLine();".format(expression.get_var(), self.scanner_var)
 
     def __handle_if__(self, expression: Conditional) -> [str]:
         lines: [str] = []
@@ -160,9 +164,10 @@ class Java(Language):
             for i in range(0, len(branches)):
                 is_default: bool = False
                 conditional_lines: ConditionalLines = branches[i].conditional_lines
+                temp_branch_lines: [str] = []
 
                 if Constants.DEFAULT == branches[i].get_condition().upper():
-                    default_lines.append("{0}{1}:".format(self.tab, branches[i].get_condition()))
+                    default_lines.append("default:")
                     is_default = True
                     default_exist = True
                 else:
@@ -170,16 +175,24 @@ class Java(Language):
 
                 if not is_default:
                     for line in conditional_lines.lines:
-                        lines.extend("{0}{1}".format(self.tab, self.__handle_expression__(line)))
-                    lines.append("{0}{1};".format(self.tab, self.switch_break))
+                        line_temp: [str] = self.__handle_expression__(line)
+                        for lt in line_temp:
+                            lines.append("{0}{1}".format(self.tab, lt))
+                    lines.append("{0}{0}{1};".format(self.tab, self.switch_break))
                 else:
                     for line in conditional_lines.lines:
-                        default_lines.extend("{0}{1}".format(self.tab, self.__handle_expression__(line)))
+                        default_lines.extend(self.__handle_expression__(line))
 
             if default_exist:
+                for i in range(0, len(default_lines)):
+                    default_lines[i] = self.tab + default_lines[i]
                 lines.extend(default_lines)
 
             lines.append("}")
+
+            # Add tabs
+            for i in range(0, len(lines)):
+                lines[i] = "{0}{1}".format(self.tab, lines[i])
 
         return lines
 
