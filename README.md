@@ -134,7 +134,7 @@ graph LR
 - Switch-case support
 
 ## Examples
-### Test 1
+### Test 1 (TestIf)
 ![Object list](https://raw.githubusercontent.com/alochimpasplum/Sidekick-S-TFG/Entregable_TFG/TestStuff/TestIf.jpg)
 **Abstract syntax tree**
 ![Object list](https://raw.githubusercontent.com/alochimpasplum/Sidekick-S-TFG/Entregable_TFG/TestStuff/parseTreeIf.png)
@@ -175,6 +175,47 @@ public static void main(String[] args) {
 	}
 	VAR1 = VAR1 + VAR2;
 	System.out.println(VAR1);
+}
+```
+
+### Test 2 (TestSwitch)
+![Object list](https://raw.githubusercontent.com/alochimpasplum/Sidekick-S-TFG/Entregable_TFG/User%20Files/Input%20Images/TestSwitch.jpg)
+**Abstract syntax tree**
+![Object list](https://raw.githubusercontent.com/alochimpasplum/Sidekick-S-TFG/Entregable_TFG/TestStuff/parseTreeSwitch.png)
+**Python**
+```
+def main():
+	VAR: int = None
+	VAR = input()
+	if VAR == 1:
+		VAR -= 1
+	elif VAR == 4:
+		VAR += 7
+		VAR /= 2
+	else:
+		VAR *= 10
+	print(VAR)
+```
+**Java**
+```
+import java.util.Scanner;
+
+public static void main(String[] args) {
+	Scanner scan = new Scanner(System.in);
+	int VAR = null;
+	VAR = scan.nextInt();
+	switch (VAR) {
+		case 1:
+			VAR -= 1;
+			break;
+		case 4:
+			VAR += 7;
+			VAR /= 2;
+			break;
+		default:
+			VAR *= 10;
+	}
+	System.out.println(VAR);
 }
 ```
 
