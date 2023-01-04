@@ -52,7 +52,7 @@ graph LR
     J[Save font code file]
 ```
 
-## Blocks flowcharts
+## Steps flowcharts
 ```mermaid
 graph LR
   subgraph SUB3[Code Parsing]
