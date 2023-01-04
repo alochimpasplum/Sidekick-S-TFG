@@ -50,17 +50,38 @@ graph LR
     S2[Block Recognition]
     S3[Code Parsing]
     J[Save font code file]
-    
-    subgraph SS1[User Choices]
-        direction TB
-            A --> B
-            B --> C
-    end
 ```
 
-## User Input flowchart
+## Blocks flowcharts
 ```mermaid
-
+graph LR
+  subgraph SUB1[User Input]
+    direction LR
+      A --> B
+      B --> C
+  end
+  
+  subgraph SUB2[Block Recognition]
+    direction LR
+      D --> E
+      E --> F
+  end
+  
+  subgraph SUB3[Code Parsing]
+    direction LR
+      G --> H
+      H --> I
+  end
+  
+  A[Choose image]
+  B[Choose detection system]
+  C[Choose output language]
+  D[Detect figures]
+  E[OCR]
+  F[Sort blocks]
+  G[Blocks to pseudocode]
+  H[ANTRL4 parsing]
+  I[ANTLR4 concrete tree to language]
 ```
 
 ## Operations in Process box
