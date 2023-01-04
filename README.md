@@ -84,6 +84,10 @@ graph LR
   I[ANTLR4 concrete tree to language]
 ```
 
+## User folders
+- Input images: .\User Files\Input Images
+- Output files: .\User Files\Output Files
+
 ## Operations in Process box
 - Print:
   - Write any variable without anything
@@ -112,7 +116,6 @@ graph LR
         - option 2: 1
         - option 3: 10
         - option default: DEFAULT
-    
 
 ## Limitations
 - Maintain a good separation between arrows in arrow chains
