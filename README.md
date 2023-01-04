@@ -42,36 +42,25 @@ classDiagram
 ## General flowchart
 ```mermaid
 graph LR
-    subgraph User_Choices
-        direction TB
-            A-->B
-            B-->C
-    end
-    subgraph Block_Recognition
-        direction TB
-            D-->E
-            E-->F
-    end
-    subgraph Code_Parsing
-        direction TB
-            G-->H
-            H-->I
+    S1 --> S2
+    S2 --> S3
+    S3 --> J
 
-    end
-    User_Choices --> Block_Recognition
-    Block_Recognition --> Code_Parsing
-    Code_Parsing --> J
-
-    A[Choose image]
-    B[Choose detection system]
-    C[Choose output language]
-    D[Detect figures]
-    E[OCR]
-    F[Sort blocks]
-    G[Blocks to pseudocode]
-    H[ANTRL4 parsing]
-    I[ANTLR4 concrete tree to language]
+    S1[User Input]
+    S2[Block Recognition]
+    S3[Code Parsing]
     J[Save font code file]
+    
+    subgraph SS1[User Choices]
+        direction TB
+            A --> B
+            B --> C
+    end
+```
+
+## User Input flowchart
+```mermaid
+
 ```
 
 ## Operations in Process box
