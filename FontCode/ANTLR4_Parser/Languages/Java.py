@@ -21,6 +21,7 @@ from FontCode.ANTLR4_Parser.Expressions.Number import Number
 class Java(Language):
     program: Program
     code_lines: [str] = []
+    variables: {str, str} = {}
     tab: str = "\t"
     null: str = "null"
     scanner_var: str = "scan"
@@ -73,6 +74,7 @@ class Java(Language):
 
     def __handle_variable_declaration__(self, expression: VariableDeclaration) -> str:
         var_type: str = ""
+        self.variables[expression.get_variable_id()] = expression.var_type
         if expression.var_type == Constants.STRING:
             var_type = "String"
         elif expression.var_type == Constants.INTEGER:
@@ -95,9 +97,9 @@ class Java(Language):
         return "{0} {1} {2};".format(expression.get_left(), expression.operation, expression.get_right())
 
     def __handle_scan__(self, expression: Scan) -> str:
-        if isinstance(expression.storing_var, Number):
+        if self.variables[expression.get_var()] == Constants.INTEGER:
             return "{0} = {1}.nextInt();".format(expression.get_var(), self.scanner_var)
-        else:
+        elif self.variables[expression.get_var()] == Constants.STRING:
             return "{0} = {1}.nextLine();".format(expression.get_var(), self.scanner_var)
 
     def __handle_if__(self, expression: Conditional) -> [str]:

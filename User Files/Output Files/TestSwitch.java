@@ -3,7 +3,7 @@ import java.util.Scanner;
 public static void main(String[] args) {
 	Scanner scan = new Scanner(System.in);
 	int VAR = null;
-	VAR = scan.nextLine();
+	VAR = scan.nextInt();
 	switch (VAR) {
 		case 1:
 			VAR -= 1;
