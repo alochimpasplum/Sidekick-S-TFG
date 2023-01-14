@@ -37,7 +37,7 @@ def __get_blocks(img: Image) -> [Block]:
     image: Image = correct_image(copy.deepcopy(img))
 
     # Model
-    model = torch.hub.load('./yolov5', 'custom', source='local', path='./TestStuff/best(L).pt', force_reload=True)
+    model = torch.hub.load('./yolov5', 'custom', source='local', path=Constants.block_detection_model, force_reload=True)
 
     # Inference
     results = model(image)

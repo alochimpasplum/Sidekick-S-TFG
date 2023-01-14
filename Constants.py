@@ -1,3 +1,6 @@
+# Path to block detection model
+block_detection_model = './best(L).pt'
+
 # If any detection have less than this value, it will not be considered
 CONFIDENCE_THRESHOLD = 0.4
 
